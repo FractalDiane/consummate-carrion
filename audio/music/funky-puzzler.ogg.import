@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/funky-puzzler.ogg-a67d55b83b23a446d56105156ef73f86.oggstr"
+
+[deps]
+
+source_file="res://audio/music/funky-puzzler.ogg"
+dest_files=[ "res://.import/funky-puzzler.ogg-a67d55b83b23a446d56105156ef73f86.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

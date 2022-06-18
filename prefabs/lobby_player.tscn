@@ -1,0 +1,41 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://fonts/Caveat-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://scripts/lobby_player.gd" type="Script" id=3]
+[ext_resource path="res://textures/lobby_player.png" type="Texture" id=4]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
+
+[node name="LobbyPlayer" type="VBoxContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 59.0
+margin_bottom = 74.0
+texture = ExtResource( 4 )
+stretch_mode = 4
+
+[node name="Name" type="Label" parent="."]
+margin_top = 78.0
+margin_right = 59.0
+margin_bottom = 99.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "Namename"
+align = 1
+
+[node name="You" type="Label" parent="."]
+visible = false
+margin_top = 101.0
+margin_right = 77.0
+margin_bottom = 120.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "You!"
+align = 1
