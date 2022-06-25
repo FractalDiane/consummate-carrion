@@ -11,6 +11,12 @@ onready var edit_join_ip := $EditJoinIp as LineEdit
 onready var edit_join_port := $EditJoinPort as LineEdit
 onready var edit_host_port := $EditHostPort as LineEdit
 
+func _process(_delta: float) -> void:
+	var shd := $Vignette.get_material() as ShaderMaterial
+	shd.set_shader_param("mouse_pos", get_global_mouse_position() / OS.get_window_size())
+	shd.set_shader_param("mouse_button", Vector2(float(Input.is_action_pressed("mouse")), float(Input.is_action_just_pressed("mouse"))))
+	
+
 
 func _on_ButtonHost_button_down() -> void:
 	var peer := NetworkedMultiplayerENet.new()

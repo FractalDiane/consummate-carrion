@@ -19,8 +19,6 @@ func _ready() -> void:
 		$SettingsBlocker.hide()
 		$ButtonStart.show()
 		
-		randomize()
-		
 	add_player(NetworkManager.players[get_tree().get_network_unique_id()]["name"], true)
 	NetworkManager.connect("player_connected", self, "_on_player_connected")
 	NetworkManager.connect("player_disconnected", self, "_on_player_disconnected")

@@ -22,6 +22,7 @@ var timer := -1
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_player_connect")
 	get_tree().connect("network_peer_disconnected", self, "_on_player_disconnect")
+	randomize()
 	
 
 func set_my_name(player_name: String) -> void:

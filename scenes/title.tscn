@@ -1,8 +1,46 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://fonts/font_display.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display2.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/scenes/title.gd" type="Script" id=3]
+[ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=4]
+[ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=5]
+[ext_resource path="res://demons.png" type="Texture" id=6]
+[ext_resource path="res://prefabs/eyes.tscn" type="PackedScene" id=7]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform vec4 color : hint_color;
+
+void fragment() {
+	COLOR.rgb = color.rgb;
+	COLOR.a = distance(vec2(0.5), UV);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/color = Color( 0.0156863, 0, 0.0941176, 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "tail"
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float amount = 0.0;
+
+void vertex() {
+	VERTEX.x += sin(VERTEX.y) * amount;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
+shader_param/amount = 0.0
 
 [node name="Title" type="Control"]
 anchor_right = 1.0
@@ -17,22 +55,159 @@ lobby_scene = "res://scenes/lobby.tscn"
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.313726, 0.313726, 0.313726, 1 )
+color = Color( 0.0716858, 0.210938, 0.176125, 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
+[node name="Decorations" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Vignette" type="ColorRect" parent="."]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Demons" type="Sprite" parent="."]
+visible = false
+position = Vector2( 640, 360 )
+texture = ExtResource( 6 )
+
+[node name="Demon" type="Control" parent="."]
+anchor_top = 1.0
+anchor_bottom = 1.0
+margin_top = -720.0
+margin_right = 1280.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Body" type="Polygon2D" parent="Demon"]
+position = Vector2( 531, 360 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( -260, 360, -264, 332, -237, 262, -264, 231, -248, 201, -249, 140, -228, 201, -225, 201, -221, 173, -216, 201, -213, 201, -207, 173, -203, 201, -200, 201, -180, 141, -181, 201, -164, 231, -190, 262, -164, 333, -168, 360 )
+
+[node name="Tail" type="Polygon2D" parent="Demon"]
+position = Vector2( 256, 720 )
+color = Color( 0, 0, 0, 1 )
+offset = Vector2( 94, -382 )
+antialiased = true
+polygon = PoolVector2Array( -88, 382, -107, 340, -86, 316, -76, 326, -74, 297, -101, 299, -93, 310, -118, 335, -102, 382 )
+
+[node name="Eyes" parent="Demon" instance=ExtResource( 7 )]
+position = Vector2( 317, 589 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Demon"]
+anims/tail = SubResource( 3 )
+
+[node name="Demon2" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -640.0
+margin_top = -720.0
+margin_right = 640.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Body" type="Polygon2D" parent="Demon2"]
+position = Vector2( 992, 360 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( -347, 360, -352, 331, -347, 249, -377, 215, -359, 182, -360, 113, -337, 181, -333, 181, -329, 151, -322, 181, -319, 181, -312, 151, -307, 181, -305, 181, -283, 113, -283, 181, -265, 215, -294, 249, -240, 329, -244, 360 )
+
+[node name="Tail" type="Polygon2D" parent="Demon2"]
+material = SubResource( 5 )
+position = Vector2( 784, 720 )
+color = Color( 0, 0, 0, 1 )
+offset = Vector2( 208, -360 )
+antialiased = true
+polygon = PoolVector2Array( -222, 360, -171, 326, -190, 282, -222, 302, -214, 313, -246, 310, -233, 281, -227, 293, -186, 264, -157, 329, -197, 360 )
+
+[node name="Eyes" parent="Demon2" instance=ExtResource( 7 )]
+position = Vector2( 672, 570 )
+scale = Vector2( 1.16571, 1.16571 )
+
+[node name="Demon3" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -1280.0
+margin_bottom = 720.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Body" type="Polygon2D" parent="Demon3"]
+position = Vector2( 992, 360 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( -10, -360, -13, -334, 57, -262, 31, -231, 48, -201, 47, -141, 67, -201, 70, -201, 73, -174, 78, -201, 82, -201, 88, -174, 91, -201, 95, -201, 116, -141, 115, -202, 131, -231, 104, -262, 86, -340, 84, -360 )
+
+[node name="Tail" type="Polygon2D" parent="Demon3"]
+position = Vector2( 1104, 0 )
+color = Color( 0, 0, 0, 1 )
+offset = Vector2( -112, 360 )
+antialiased = true
+polygon = PoolVector2Array( 96, -360, 155, -318, 158, -262, 149, -262, 163, -240, 175, -262, 167, -262, 170, -322, 121, -360 )
+
+[node name="Eyes" parent="Demon3" instance=ExtResource( 7 )]
+position = Vector2( 1072, 136 )
+
+[node name="Demon4" type="Control" parent="."]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -1280.0
+margin_top = -720.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Body" type="Polygon2D" parent="Demon4"]
+position = Vector2( 992, 360 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 8, 215, 9, 255, -2, 274, 16, 295, -2, 343, 1, 360, 61, 360, 65, 342, 47, 294, 65, 274, 54, 255, 54, 215, 41, 254, 39, 254, 36, 236, 33, 253, 30, 253, 27, 236, 24, 253, 22, 253 )
+
+[node name="Tail" type="Polygon2D" parent="Demon4"]
+position = Vector2( 1056, 720 )
+color = Color( 0, 0, 0, 1 )
+offset = Vector2( -64, -360 )
+antialiased = true
+polygon = PoolVector2Array( 69, 360, 87, 339, 78, 318, 86, 314, 69, 305, 64, 323, 72, 320, 79, 340, 56, 360 )
+
+[node name="Eyes" parent="Demon4" instance=ExtResource( 7 )]
+position = Vector2( 1024, 632 )
+scale = Vector2( 0.675981, 0.675981 )
+
 [node name="Title" type="RichTextLabel" parent="."]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -442.0
-margin_top = 77.0
+margin_top = 88.0
 margin_right = 442.0
-margin_bottom = 222.0
+margin_bottom = 233.0
+custom_colors/default_color = Color( 0.917647, 0.839216, 0.572549, 1 )
 custom_fonts/normal_font = ExtResource( 1 )
 bbcode_enabled = true
-bbcode_text = "[wave amp=20]Consummate Carrion[/wave]"
+bbcode_text = "[tornado radius=5]Consummate Carrion[/tornado]"
 meta_underlined = false
 text = "Consummate Carrion"
 scroll_active = false
@@ -46,10 +221,10 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -208.0
-margin_top = -101.0
+margin_top = -88.0
 margin_right = 208.0
-margin_bottom = -19.0
-custom_fonts/font = ExtResource( 2 )
+margin_bottom = -6.0
+custom_fonts/font = ExtResource( 4 )
 text = "What's your name?"
 align = 1
 __meta__ = {
@@ -65,7 +240,9 @@ margin_left = -190.0
 margin_top = -25.0
 margin_right = 190.0
 margin_bottom = 25.0
+custom_fonts/font = ExtResource( 5 )
 align = 1
+caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -75,27 +252,12 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -512.0
-margin_top = 88.0
-margin_right = -192.0
-margin_bottom = 170.0
-custom_fonts/font = ExtResource( 2 )
+margin_left = -576.0
+margin_top = -40.0
+margin_right = -256.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 4 )
 text = "Host Game"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ButtonJoin" type="Button" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = 192.0
-margin_top = 88.0
-margin_right = 512.0
-margin_bottom = 170.0
-custom_fonts/font = ExtResource( 2 )
-text = "Join Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -105,12 +267,29 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -512.0
-margin_top = 176.0
-margin_right = -192.0
-margin_bottom = 212.0
+margin_left = -576.0
+margin_top = 48.0
+margin_right = -256.0
+margin_bottom = 84.0
+custom_fonts/font = ExtResource( 5 )
 align = 1
 placeholder_text = "Port"
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonJoin" type="Button" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = 256.0
+margin_top = -40.0
+margin_right = 576.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 4 )
+text = "Join Game"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -120,12 +299,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 192.0
-margin_top = 176.0
-margin_right = 512.0
-margin_bottom = 212.0
+margin_left = 256.0
+margin_top = 48.0
+margin_right = 576.0
+margin_bottom = 84.0
+custom_fonts/font = ExtResource( 5 )
 align = 1
 placeholder_text = "IP"
+caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -135,17 +316,20 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = 192.0
-margin_top = 216.0
-margin_right = 512.0
-margin_bottom = 252.0
+margin_left = 256.0
+margin_top = 88.0
+margin_right = 576.0
+margin_bottom = 124.0
+custom_fonts/font = ExtResource( 5 )
 align = 1
 placeholder_text = "Port"
+caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="ButtonExit" type="Button" parent="."]
+visible = false
 margin_left = 32.0
 margin_top = 32.0
 margin_right = 104.0

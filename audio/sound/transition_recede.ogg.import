@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/transition_recede.ogg-3b5353f29983a279c7b0a90c569baf58.oggstr"
+
+[deps]
+
+source_file="res://audio/sound/transition_recede.ogg"
+dest_files=[ "res://.import/transition_recede.ogg-3b5353f29983a279c7b0a90c569baf58.oggstr" ]
+
+[params]
+
+loop=false
+loop_offset=0

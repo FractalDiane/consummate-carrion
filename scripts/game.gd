@@ -69,7 +69,7 @@ remotesync func start_new_round(after_first: bool) -> void:
 	if after_first:
 		current_round += 1
 		
-	if current_round <= NetworkManager.get_player_count():
+	if current_round < NetworkManager.get_player_count():
 		timer_count = NetworkManager.timer_max
 		var current_story: Dictionary = stories[player_order.find(get_tree().get_network_unique_id())]
 		
@@ -82,7 +82,7 @@ remotesync func start_new_round(after_first: bool) -> void:
 				
 			result.push_back(split_total[-(i + 1)])
 			
-		result.invert()
+		#result.invert()
 		my_current_prefix = result.join(" ")
 		current_story_text = my_current_prefix
 		story_text.set_text(my_current_prefix)
@@ -90,6 +90,8 @@ remotesync func start_new_round(after_first: bool) -> void:
 		NetworkManager.players_ready.clear()
 		my_timer_up = false
 		game_started = true
+	else:
+		print("FINISHED")
 
 
 func _on_Story_text_changed() -> void:
