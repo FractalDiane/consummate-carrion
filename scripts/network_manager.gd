@@ -18,6 +18,8 @@ var peek_words := 10
 var show_theme := false
 var timer := -1
 
+var title_transition := false
+
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_player_connect")

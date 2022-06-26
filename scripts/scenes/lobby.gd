@@ -5,6 +5,35 @@ export(String, FILE, "*.tscn") var game_scene := String()
 
 const LobbyPlayer := preload("res://prefabs/lobby_player.tscn")
 
+const Themes := [
+	"Trains",
+	"Witchcraft",
+	"Art",
+	"Money",
+	"Action Movie",
+	"Nature",
+	"Spies",
+	"Video Games",
+	"Music",
+	"Underworld",
+	"Transformation",
+	"Amusement Park",
+	"Comic Books",
+	"Stunts",
+	"Shopping",
+	"Travel",
+	"Horror",
+	"Mystery",
+	"Adventure",
+	"Animals",
+	"Dark Alley",
+	"Imagination",
+	"Dinner",
+	"Royalty",
+	"Fire",
+	"Business",
+]
+
 onready var players_grid := $Players as GridContainer
 
 onready var spinbox_timer := $Settings/HBoxContainer/SpinBoxTime as SpinBox
@@ -24,6 +53,9 @@ func _ready() -> void:
 	NetworkManager.connect("player_disconnected", self, "_on_player_disconnected")
 	if not get_tree().is_network_server():
 		get_tree().connect("server_disconnected", self, "_on_server_disconnect")
+		
+	$AnimationPlayer.play_backwards("transition")
+	$SoundTransition2.play()
 		
 		
 func add_player(player_name: String, is_me: bool) -> void:
@@ -95,7 +127,20 @@ remotesync func start_game() -> void:
 
 
 func _on_ButtonExit_pressed() -> void:
+	$ClickBlock.show()
+	$TimerTransition.start()
+
+
+func _on_TimerTransition_timeout() -> void:
+	NetworkManager.title_transition = true
+	$SoundTransition.play(0.25)
+	$AnimationPlayer.play("transition")
+	$TimerTitle.start()
+
+
+func _on_TimerTitle_timeout() -> void:
 	NetworkManager.my_connection.close_connection()
 	NetworkManager.my_connection = null
 	NetworkManager.clear_players()
+	
 	get_tree().change_scene(title_scene)

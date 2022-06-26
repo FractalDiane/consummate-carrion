@@ -11,6 +11,14 @@ onready var edit_join_ip := $EditJoinIp as LineEdit
 onready var edit_join_port := $EditJoinPort as LineEdit
 onready var edit_host_port := $EditHostPort as LineEdit
 
+
+func _ready() -> void:
+	if NetworkManager.title_transition:
+		$AnimationPlayer.play_backwards("transition")
+		$SoundTransition2.play()
+		NetworkManager.title_transition = false
+
+
 func _process(_delta: float) -> void:
 	var shd := $Vignette.get_material() as ShaderMaterial
 	shd.set_shader_param("mouse_pos", get_global_mouse_position() / OS.get_window_size())
@@ -18,17 +26,19 @@ func _process(_delta: float) -> void:
 	
 
 
-func _on_ButtonHost_button_down() -> void:
+func _on_ButtonHost_pressed() -> void:
 	var peer := NetworkedMultiplayerENet.new()
 	var port := edit_host_port.get_text()
 	peer.create_server(int(port) if not port.empty() else DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
 	
 	init_network_manager(peer)
-	get_tree().change_scene(lobby_scene)
+	$ClickBlock.show()
+	$TimerTransition.start()
+	#get_tree().change_scene(lobby_scene)
 
 
-func _on_ButtonJoin_button_down() -> void:
+func _on_ButtonJoin_pressed() -> void:
 	var peer := NetworkedMultiplayerENet.new()
 	var ip := edit_join_ip.get_text()
 	var port := edit_join_port.get_text()
@@ -36,14 +46,26 @@ func _on_ButtonJoin_button_down() -> void:
 	get_tree().set_network_peer(peer)
 	
 	init_network_manager(peer)
-	get_tree().change_scene(lobby_scene)
+	$ClickBlock.show()
+	$TimerTransition.start()
+	#get_tree().change_scene(lobby_scene)
 	
 	
 func init_network_manager(peer: NetworkedMultiplayerENet) -> void:
-	NetworkManager.set_my_name(edit_name.get_text())
+	NetworkManager.set_my_name(edit_name.get_text().strip_edges())
 	NetworkManager.my_connection = peer
 	NetworkManager.add_player(get_tree().get_network_unique_id())
 
 
 func _on_ButtonExit_button_down() -> void:
 	get_tree().quit()
+
+
+func _on_TimerTransition_timeout() -> void:
+	$SoundTransition.play(0.25)
+	$AnimationPlayer.play("transition")
+	$TimerLobby.start()
+
+
+func _on_TimerLobby_timeout() -> void:
+	get_tree().change_scene(lobby_scene)

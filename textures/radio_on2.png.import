@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/demons.png-e9eb03cf82736f98f2d3bc6dec7e3188.stex"
+path="res://.import/radio_on2.png-e64cabe86b4cfc21470f17af2de5855d.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://demons.png"
-dest_files=[ "res://.import/demons.png-e9eb03cf82736f98f2d3bc6dec7e3188.stex" ]
+source_file="res://textures/radio_on2.png"
+dest_files=[ "res://.import/radio_on2.png-e64cabe86b4cfc21470f17af2de5855d.stex" ]
 
 [params]
 

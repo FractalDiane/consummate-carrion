@@ -1,0 +1,189 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://scripts/cc_button.gd" type="Script" id=1]
+[ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=2]
+[ext_resource path="res://audio/sound/hover.ogg" type="AudioStream" id=3]
+[ext_resource path="res://audio/sound/click2.ogg" type="AudioStream" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "click"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -68, -33 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "click_small"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -12.8, 28.2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+
+[node name="CCButton" type="Button"]
+margin_right = 320.0
+margin_bottom = 72.0
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Polygon2D2" type="Polygon2D" parent="."]
+position = Vector2( 8, -9 )
+scale = Vector2( 1, 1.125 )
+color = Color( 0.137255, 0.533333, 0.470588, 1 )
+antialiased = true
+polygon = PoolVector2Array( 0, 8, 304, 8, 328, 40, 304, 72, 0, 72, -24, 40 )
+
+[node name="Polygon2D" type="Polygon2D" parent="."]
+position = Vector2( 8, -9 )
+scale = Vector2( 1, 1.125 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 0, 8, 304, 8, 328, 40, 304, 72, 0, 72, -24, 40 )
+
+[node name="Text" type="Label" parent="."]
+margin_right = 320.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 2 )
+text = "Button"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+
+[node name="SoundClick" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 7 )
+anims/click = SubResource( 6 )
+anims/click_small = SubResource( 8 )
+
+[connection signal="focus_entered" from="." to="." method="_on_CCButton_focus_entered"]
+[connection signal="focus_exited" from="." to="." method="_on_CCButton_focus_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_CCButton_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_CCButton_mouse_exited"]
+[connection signal="pressed" from="." to="." method="_on_CCButton_pressed"]

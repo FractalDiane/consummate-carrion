@@ -1,11 +1,9 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://fonts/Caveat-Regular.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=1]
+[ext_resource path="res://prefabs/eyes.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/lobby_player.gd" type="Script" id=3]
 [ext_resource path="res://textures/lobby_player.png" type="Texture" id=4]
-
-[sub_resource type="DynamicFont" id=1]
-font_data = ExtResource( 2 )
 
 [node name="LobbyPlayer" type="VBoxContainer"]
 margin_right = 40.0
@@ -15,27 +13,53 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Polygon" type="Control" parent="."]
+margin_right = 103.0
+margin_bottom = 80.0
+rect_min_size = Vector2( 103, 80 )
+
+[node name="Body" type="Polygon2D" parent="Polygon"]
+position = Vector2( 24, 16 )
+scale = Vector2( 0.545455, 0.583333 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 40, 0, 24, -40, 24, 8, 8, 32, 32, 56, 14.6667, 109.714, 88, 109.714, 72, 56, 96, 32, 80, 8, 80, -40, 64, 0, 56, -24, 56, 0, 48, 0, 48, -24 )
+
+[node name="Tail" type="Polygon2D" parent="Polygon"]
+position = Vector2( 80, 80 )
+rotation = 0.263721
+scale = Vector2( -0.470269, 0.470269 )
+color = Color( 0, 0, 0, 1 )
+offset = Vector2( 94, -382 )
+antialiased = true
+polygon = PoolVector2Array( -77.5766, 386.434, -107, 340, -86, 316, -76, 326, -74, 297, -101, 299, -93, 310, -118, 335, -94, 382 )
+
+[node name="Eyes" parent="Polygon" instance=ExtResource( 2 )]
+position = Vector2( 52, 32 )
+scale = Vector2( 0.5, 0.5 )
+
 [node name="TextureRect" type="TextureRect" parent="."]
-margin_right = 59.0
-margin_bottom = 74.0
+visible = false
+margin_top = 4.0
+margin_right = 103.0
+margin_bottom = 78.0
 texture = ExtResource( 4 )
 stretch_mode = 4
 
 [node name="Name" type="Label" parent="."]
-margin_top = 78.0
-margin_right = 59.0
-margin_bottom = 99.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 1 )
+margin_top = 84.0
+margin_right = 103.0
+margin_bottom = 110.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 1 )
 text = "Namename"
 align = 1
 
 [node name="You" type="Label" parent="."]
-visible = false
-margin_top = 101.0
-margin_right = 77.0
-margin_bottom = 120.0
-custom_colors/font_color = Color( 0, 0, 0, 1 )
-custom_fonts/font = SubResource( 1 )
+margin_top = 114.0
+margin_right = 103.0
+margin_bottom = 140.0
+custom_colors/font_color = Color( 0.917647, 0.839216, 0.572549, 1 )
+custom_fonts/font = ExtResource( 1 )
 text = "You!"
 align = 1

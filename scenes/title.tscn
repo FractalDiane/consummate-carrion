@@ -1,27 +1,20 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display2.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/scenes/title.gd" type="Script" id=3]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=5]
-[ext_resource path="res://demons.png" type="Texture" id=6]
+[ext_resource path="res://shaders/vignette.gdshader" type="Shader" id=6]
 [ext_resource path="res://prefabs/eyes.tscn" type="PackedScene" id=7]
-
-[sub_resource type="Shader" id=1]
-code = "shader_type canvas_item;
-render_mode unshaded;
-
-uniform vec4 color : hint_color;
-
-void fragment() {
-	COLOR.rgb = color.rgb;
-	COLOR.a = distance(vec2(0.5), UV);
-}
-"
+[ext_resource path="res://prefabs/cc_button.tscn" type="PackedScene" id=8]
+[ext_resource path="res://shaders/transition.gdshader" type="Shader" id=9]
+[ext_resource path="res://textures/transition_swirl.png" type="Texture" id=10]
+[ext_resource path="res://audio/sound/whoosh.ogg" type="AudioStream" id=11]
+[ext_resource path="res://audio/sound/whoosh2.ogg" type="AudioStream" id=12]
 
 [sub_resource type="ShaderMaterial" id=2]
-shader = SubResource( 1 )
+shader = ExtResource( 6 )
 shader_param/color = Color( 0.0156863, 0, 0.0941176, 1 )
 
 [sub_resource type="Animation" id=3]
@@ -42,6 +35,67 @@ void vertex() {
 shader = SubResource( 4 )
 shader_param/amount = 0.0
 
+[sub_resource type="StyleBoxFlat" id=6]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = ExtResource( 9 )
+shader_param/cutoff = 1.0
+shader_param/mask = ExtResource( 10 )
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "transition"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
+
+[sub_resource type="Shader" id=10]
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+vec2 rotate(vec2 uv, float rotation) {
+	const float mid = 0.5;
+	return vec2(
+		cos(rotation) * (uv.x - mid) + sin(rotation) * (uv.y - mid) + mid,
+        cos(rotation) * (uv.y - mid) - sin(rotation) * (uv.x - mid) + mid
+	);
+}
+
+void fragment() {
+	vec2 checker = floor(FRAGCOORD.xy / 100.0);
+	float mask = mod(checker.x + mod(checker.y, 2.0), 2.0);
+	COLOR = mask * vec4(1.0);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=11]
+shader = SubResource( 10 )
+
 [node name="Title" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -55,7 +109,7 @@ lobby_scene = "res://scenes/lobby.tscn"
 [node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.0716858, 0.210938, 0.176125, 1 )
+color = Color( 0.0705882, 0.211765, 0.176471, 1 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -65,8 +119,15 @@ __meta__ = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
+
+[node name="Polygon2D" type="Polygon2D" parent="Decorations"]
+visible = false
+color = Color( 0, 0.0745098, 0, 0.584314 )
+antialiased = true
+polygon = PoolVector2Array( 1224, 624, 1136, 368, 896, 616, 712, 216, 480, 640, 392, 344, 328, 648, 200, 256, 64, 656, -56, 256, -40, 776, 1320, 768, 1312, 256 )
 
 [node name="Vignette" type="ColorRect" parent="."]
 material = SubResource( 2 )
@@ -76,11 +137,6 @@ __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
 }
-
-[node name="Demons" type="Sprite" parent="."]
-visible = false
-position = Vector2( 640, 360 )
-texture = ExtResource( 6 )
 
 [node name="Demon" type="Control" parent="."]
 anchor_top = 1.0
@@ -221,9 +277,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -208.0
-margin_top = -88.0
+margin_top = -104.0
 margin_right = 208.0
-margin_bottom = -6.0
+margin_bottom = -22.0
 custom_fonts/font = ExtResource( 4 )
 text = "What's your name?"
 align = 1
@@ -237,17 +293,18 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -190.0
-margin_top = -25.0
+margin_top = -41.0
 margin_right = 190.0
-margin_bottom = 25.0
+margin_bottom = 9.0
 custom_fonts/font = ExtResource( 5 )
+custom_styles/normal = SubResource( 6 )
 align = 1
 caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonHost" type="Button" parent="."]
+[node name="ButtonHost" parent="." instance=ExtResource( 8 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -255,12 +312,8 @@ anchor_bottom = 0.5
 margin_left = -576.0
 margin_top = -40.0
 margin_right = -256.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 4 )
+margin_bottom = 32.0
 text = "Host Game"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="EditHostPort" type="LineEdit" parent="."]
 anchor_left = 0.5
@@ -272,6 +325,7 @@ margin_top = 48.0
 margin_right = -256.0
 margin_bottom = 84.0
 custom_fonts/font = ExtResource( 5 )
+custom_styles/normal = SubResource( 6 )
 align = 1
 placeholder_text = "Port"
 caret_blink = true
@@ -279,7 +333,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonJoin" type="Button" parent="."]
+[node name="ButtonJoin" parent="." instance=ExtResource( 8 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -287,12 +341,8 @@ anchor_bottom = 0.5
 margin_left = 256.0
 margin_top = -40.0
 margin_right = 576.0
-margin_bottom = 42.0
-custom_fonts/font = ExtResource( 4 )
+margin_bottom = 32.0
 text = "Join Game"
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="EditJoinIp" type="LineEdit" parent="."]
 anchor_left = 0.5
@@ -304,6 +354,7 @@ margin_top = 48.0
 margin_right = 576.0
 margin_bottom = 84.0
 custom_fonts/font = ExtResource( 5 )
+custom_styles/normal = SubResource( 6 )
 align = 1
 placeholder_text = "IP"
 caret_blink = true
@@ -321,6 +372,7 @@ margin_top = 88.0
 margin_right = 576.0
 margin_bottom = 124.0
 custom_fonts/font = ExtResource( 5 )
+custom_styles/normal = SubResource( 6 )
 align = 1
 placeholder_text = "Port"
 caret_blink = true
@@ -340,6 +392,57 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="button_down" from="ButtonHost" to="." method="_on_ButtonHost_button_down"]
-[connection signal="button_down" from="ButtonJoin" to="." method="_on_ButtonJoin_button_down"]
+[node name="ClickBlock" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Transition" type="ColorRect" parent="."]
+material = SubResource( 7 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 9 )
+anims/transition = SubResource( 8 )
+
+[node name="SoundTransition" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+
+[node name="SoundTransition2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -2.0
+
+[node name="TimerTransition" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="TimerLobby" type="Timer" parent="."]
+wait_time = 1.2
+one_shot = true
+
+[node name="ColorRect" type="ColorRect" parent="."]
+visible = false
+material = SubResource( 11 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="pressed" from="ButtonHost" to="." method="_on_ButtonHost_pressed"]
+[connection signal="pressed" from="ButtonJoin" to="." method="_on_ButtonJoin_pressed"]
 [connection signal="button_down" from="ButtonExit" to="." method="_on_ButtonExit_button_down"]
+[connection signal="timeout" from="TimerTransition" to="." method="_on_TimerTransition_timeout"]
+[connection signal="timeout" from="TimerLobby" to="." method="_on_TimerLobby_timeout"]
