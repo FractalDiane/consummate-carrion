@@ -56,6 +56,7 @@ text = "Namename"
 align = 1
 
 [node name="You" type="Label" parent="."]
+visible = false
 margin_top = 114.0
 margin_right = 103.0
 margin_bottom = 140.0

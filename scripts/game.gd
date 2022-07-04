@@ -13,7 +13,7 @@ var game_started := false
 var current_story_text := String()
 
 onready var story_text := $StoryBase/Story as TextEdit
-onready var label_timer := $LabelTimer as Label
+onready var timer_node := $Timer as Control
 
 
 func _ready() -> void:
@@ -29,8 +29,9 @@ func _ready() -> void:
 		
 func _process(delta: float) -> void:
 	if game_started:
-		timer_count -= delta
-		label_timer.set_text(get_time_string())
+		timer_count = max(timer_count - delta, 0.0)
+		#label_timer.set_bbcode("[center][tornado radius=3]%d[/tornado][/center]" % ceil(timer_count))
+		timer_node.time_value = timer_count
 		
 		if not my_timer_up and timer_count <= 0.0:
 			rpc_id(1, "send_story_info", current_story_text.replace(my_current_prefix, "").strip_edges())

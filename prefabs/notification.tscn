@@ -1,0 +1,104 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/font_display_new_l.tres" type="DynamicFont" id=2]
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "appear"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("..:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 4, 5 ),
+"transitions": PoolRealArray( 0.5, 1, 2, 0.5 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -224 ), Vector2( 0, -224 ), Vector2( 0, 0 ) ]
+}
+
+[node name="CanvasLayer" type="CanvasLayer"]
+layer = 5
+
+[node name="Notification" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -368.0
+margin_top = 48.0
+margin_right = 368.0
+margin_bottom = 208.0
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Polygon2D" type="Polygon2D" parent="Notification"]
+position = Vector2( -40, 368 )
+color = Color( 0, 0, 0, 0.784314 )
+polygon = PoolVector2Array( 144, -360, 80, -288, 144, -216, 664, -216, 728, -288, 664, -360 )
+
+[node name="Text" type="Label" parent="Notification"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -184.0
+margin_top = -64.0
+margin_right = 256.0
+margin_bottom = 64.0
+custom_fonts/font = ExtResource( 1 )
+text = "THIS IS A NOTIFICATION, YEAH"
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Triangle" type="Polygon2D" parent="Notification"]
+position = Vector2( -1, 10 )
+color = Color( 0.917647, 0.839216, 0.572549, 1 )
+antialiased = true
+polygon = PoolVector2Array( 136, 32, 97, 104, 177, 104 )
+
+[node name="Point" type="Label" parent="Notification"]
+margin_left = 129.0
+margin_top = 51.0
+margin_right = 169.0
+margin_bottom = 142.0
+custom_colors/font_color = Color( 0, 0, 0, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Notification"]
+anims/RESET = SubResource( 13 )
+anims/appear = SubResource( 12 )
+
+[node name="Timer" type="Timer" parent="Notification"]
+wait_time = 5.1
+one_shot = true
+autostart = true
+
+[connection signal="ready" from="Notification" to="Notification/AnimationPlayer" method="play" binds= [ "appear" ]]
+[connection signal="timeout" from="Notification/Timer" to="Notification" method="queue_free"]

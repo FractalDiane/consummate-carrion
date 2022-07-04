@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display2.tres" type="DynamicFont" id=2]
@@ -12,10 +12,46 @@
 [ext_resource path="res://textures/transition_swirl.png" type="Texture" id=10]
 [ext_resource path="res://audio/sound/whoosh.ogg" type="AudioStream" id=11]
 [ext_resource path="res://audio/sound/whoosh2.ogg" type="AudioStream" id=12]
+[ext_resource path="res://audio/music/funky-puzzler.ogg" type="AudioStream" id=13]
+[ext_resource path="res://audio/sound/ding2.ogg" type="AudioStream" id=14]
+[ext_resource path="res://fonts/font_display_new_l.tres" type="DynamicFont" id=15]
+[ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=16]
+[ext_resource path="res://scripts/scenes/lobby.gd" type="Script" id=17]
+[ext_resource path="res://theme_main.tres" type="Theme" id=18]
 
 [sub_resource type="ShaderMaterial" id=2]
 shader = ExtResource( 6 )
 shader_param/color = Color( 0.0156863, 0, 0.0941176, 1 )
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("TitleScreen:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=12]
+resource_name = "to_lobby"
+tracks/0/type = "value"
+tracks/0/path = NodePath("TitleScreen:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
 
 [sub_resource type="Animation" id=3]
 resource_name = "tail"
@@ -43,37 +79,6 @@ shader = ExtResource( 9 )
 shader_param/cutoff = 1.0
 shader_param/mask = ExtResource( 10 )
 
-[sub_resource type="Animation" id=9]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 1.0 ]
-}
-
-[sub_resource type="Animation" id=8]
-resource_name = "transition"
-length = 1.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 1.0, 0.0 ]
-}
-
 [sub_resource type="Shader" id=10]
 code = "shader_type canvas_item;
 render_mode unshaded;
@@ -95,6 +100,61 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id=11]
 shader = SubResource( 10 )
+
+[sub_resource type="ShaderMaterial" id=1]
+shader = ExtResource( 6 )
+shader_param/color = Color( 0.0156863, 0, 0.0941176, 1 )
+
+[sub_resource type="ShaderMaterial" id=14]
+shader = ExtResource( 9 )
+shader_param/cutoff = 1.0
+shader_param/mask = ExtResource( 10 )
+
+[sub_resource type="Animation" id=9]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "init"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "transition"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.0 ]
+}
 
 [node name="Title" type="Control"]
 anchor_right = 1.0
@@ -138,7 +198,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Demon" type="Control" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 13 )
+anims/to_lobby = SubResource( 12 )
+
+[node name="TitleScreen" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Demon" type="Control" parent="TitleScreen"]
 anchor_top = 1.0
 anchor_bottom = 1.0
 margin_top = -720.0
@@ -148,26 +219,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Body" type="Polygon2D" parent="Demon"]
+[node name="Body" type="Polygon2D" parent="TitleScreen/Demon"]
 position = Vector2( 531, 360 )
 color = Color( 0, 0, 0, 1 )
 antialiased = true
 polygon = PoolVector2Array( -260, 360, -264, 332, -237, 262, -264, 231, -248, 201, -249, 140, -228, 201, -225, 201, -221, 173, -216, 201, -213, 201, -207, 173, -203, 201, -200, 201, -180, 141, -181, 201, -164, 231, -190, 262, -164, 333, -168, 360 )
 
-[node name="Tail" type="Polygon2D" parent="Demon"]
+[node name="Tail" type="Polygon2D" parent="TitleScreen/Demon"]
 position = Vector2( 256, 720 )
 color = Color( 0, 0, 0, 1 )
 offset = Vector2( 94, -382 )
 antialiased = true
 polygon = PoolVector2Array( -88, 382, -107, 340, -86, 316, -76, 326, -74, 297, -101, 299, -93, 310, -118, 335, -102, 382 )
 
-[node name="Eyes" parent="Demon" instance=ExtResource( 7 )]
+[node name="Eyes" parent="TitleScreen/Demon" instance=ExtResource( 7 )]
 position = Vector2( 317, 589 )
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Demon"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TitleScreen/Demon"]
 anims/tail = SubResource( 3 )
 
-[node name="Demon2" type="Control" parent="."]
+[node name="Demon2" type="Control" parent="TitleScreen"]
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
@@ -180,13 +251,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Body" type="Polygon2D" parent="Demon2"]
+[node name="Body" type="Polygon2D" parent="TitleScreen/Demon2"]
 position = Vector2( 992, 360 )
 color = Color( 0, 0, 0, 1 )
 antialiased = true
 polygon = PoolVector2Array( -347, 360, -352, 331, -347, 249, -377, 215, -359, 182, -360, 113, -337, 181, -333, 181, -329, 151, -322, 181, -319, 181, -312, 151, -307, 181, -305, 181, -283, 113, -283, 181, -265, 215, -294, 249, -240, 329, -244, 360 )
 
-[node name="Tail" type="Polygon2D" parent="Demon2"]
+[node name="Tail" type="Polygon2D" parent="TitleScreen/Demon2"]
 material = SubResource( 5 )
 position = Vector2( 784, 720 )
 color = Color( 0, 0, 0, 1 )
@@ -194,11 +265,11 @@ offset = Vector2( 208, -360 )
 antialiased = true
 polygon = PoolVector2Array( -222, 360, -171, 326, -190, 282, -222, 302, -214, 313, -246, 310, -233, 281, -227, 293, -186, 264, -157, 329, -197, 360 )
 
-[node name="Eyes" parent="Demon2" instance=ExtResource( 7 )]
+[node name="Eyes" parent="TitleScreen/Demon2" instance=ExtResource( 7 )]
 position = Vector2( 672, 570 )
 scale = Vector2( 1.16571, 1.16571 )
 
-[node name="Demon3" type="Control" parent="."]
+[node name="Demon3" type="Control" parent="TitleScreen"]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -1280.0
@@ -208,23 +279,23 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Body" type="Polygon2D" parent="Demon3"]
+[node name="Body" type="Polygon2D" parent="TitleScreen/Demon3"]
 position = Vector2( 992, 360 )
 color = Color( 0, 0, 0, 1 )
 antialiased = true
 polygon = PoolVector2Array( -10, -360, -13, -334, 57, -262, 31, -231, 48, -201, 47, -141, 67, -201, 70, -201, 73, -174, 78, -201, 82, -201, 88, -174, 91, -201, 95, -201, 116, -141, 115, -202, 131, -231, 104, -262, 86, -340, 84, -360 )
 
-[node name="Tail" type="Polygon2D" parent="Demon3"]
+[node name="Tail" type="Polygon2D" parent="TitleScreen/Demon3"]
 position = Vector2( 1104, 0 )
 color = Color( 0, 0, 0, 1 )
 offset = Vector2( -112, 360 )
 antialiased = true
 polygon = PoolVector2Array( 96, -360, 155, -318, 158, -262, 149, -262, 163, -240, 175, -262, 167, -262, 170, -322, 121, -360 )
 
-[node name="Eyes" parent="Demon3" instance=ExtResource( 7 )]
+[node name="Eyes" parent="TitleScreen/Demon3" instance=ExtResource( 7 )]
 position = Vector2( 1072, 136 )
 
-[node name="Demon4" type="Control" parent="."]
+[node name="Demon4" type="Control" parent="TitleScreen"]
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
@@ -236,24 +307,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Body" type="Polygon2D" parent="Demon4"]
+[node name="Body" type="Polygon2D" parent="TitleScreen/Demon4"]
 position = Vector2( 992, 360 )
 color = Color( 0, 0, 0, 1 )
 antialiased = true
 polygon = PoolVector2Array( 8, 215, 9, 255, -2, 274, 16, 295, -2, 343, 1, 360, 61, 360, 65, 342, 47, 294, 65, 274, 54, 255, 54, 215, 41, 254, 39, 254, 36, 236, 33, 253, 30, 253, 27, 236, 24, 253, 22, 253 )
 
-[node name="Tail" type="Polygon2D" parent="Demon4"]
+[node name="Tail" type="Polygon2D" parent="TitleScreen/Demon4"]
 position = Vector2( 1056, 720 )
 color = Color( 0, 0, 0, 1 )
 offset = Vector2( -64, -360 )
 antialiased = true
 polygon = PoolVector2Array( 69, 360, 87, 339, 78, 318, 86, 314, 69, 305, 64, 323, 72, 320, 79, 340, 56, 360 )
 
-[node name="Eyes" parent="Demon4" instance=ExtResource( 7 )]
+[node name="Eyes" parent="TitleScreen/Demon4" instance=ExtResource( 7 )]
 position = Vector2( 1024, 632 )
 scale = Vector2( 0.675981, 0.675981 )
 
-[node name="Title" type="RichTextLabel" parent="."]
+[node name="Title" type="RichTextLabel" parent="TitleScreen"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -442.0
@@ -271,7 +342,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelName" type="Label" parent="."]
+[node name="LabelName" type="Label" parent="TitleScreen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -287,7 +358,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EditName" type="LineEdit" parent="."]
+[node name="EditName" type="LineEdit" parent="TitleScreen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -304,7 +375,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonHost" parent="." instance=ExtResource( 8 )]
+[node name="ButtonHost" parent="TitleScreen" instance=ExtResource( 8 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -315,7 +386,7 @@ margin_right = -256.0
 margin_bottom = 32.0
 text = "Host Game"
 
-[node name="EditHostPort" type="LineEdit" parent="."]
+[node name="EditHostPort" type="LineEdit" parent="TitleScreen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -333,7 +404,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonJoin" parent="." instance=ExtResource( 8 )]
+[node name="ButtonJoin" parent="TitleScreen" instance=ExtResource( 8 )]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -344,7 +415,7 @@ margin_right = 576.0
 margin_bottom = 32.0
 text = "Join Game"
 
-[node name="EditJoinIp" type="LineEdit" parent="."]
+[node name="EditJoinIp" type="LineEdit" parent="TitleScreen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -362,7 +433,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="EditJoinPort" type="LineEdit" parent="."]
+[node name="EditJoinPort" type="LineEdit" parent="TitleScreen"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -380,7 +451,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonExit" type="Button" parent="."]
+[node name="ButtonExit" type="Button" parent="TitleScreen"]
 visible = false
 margin_left = 32.0
 margin_top = 32.0
@@ -392,7 +463,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ClickBlock" type="ColorRect" parent="."]
+[node name="ClickBlock" type="ColorRect" parent="TitleScreen"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -402,7 +473,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Transition" type="ColorRect" parent="."]
+[node name="Transition" type="ColorRect" parent="TitleScreen"]
 material = SubResource( 7 )
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -413,26 +484,22 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/RESET = SubResource( 9 )
-anims/transition = SubResource( 8 )
-
-[node name="SoundTransition" type="AudioStreamPlayer" parent="."]
+[node name="SoundTransition" type="AudioStreamPlayer" parent="TitleScreen"]
 stream = ExtResource( 11 )
 
-[node name="SoundTransition2" type="AudioStreamPlayer" parent="."]
+[node name="SoundTransition2" type="AudioStreamPlayer" parent="TitleScreen"]
 stream = ExtResource( 12 )
 volume_db = -2.0
 
-[node name="TimerTransition" type="Timer" parent="."]
+[node name="TimerTransition" type="Timer" parent="TitleScreen"]
 wait_time = 0.3
 one_shot = true
 
-[node name="TimerLobby" type="Timer" parent="."]
-wait_time = 1.2
+[node name="TimerLobby" type="Timer" parent="TitleScreen"]
+wait_time = 1.235
 one_shot = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="TitleScreen"]
 visible = false
 material = SubResource( 11 )
 anchor_right = 1.0
@@ -441,8 +508,298 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[connection signal="pressed" from="ButtonHost" to="." method="_on_ButtonHost_pressed"]
-[connection signal="pressed" from="ButtonJoin" to="." method="_on_ButtonJoin_pressed"]
-[connection signal="button_down" from="ButtonExit" to="." method="_on_ButtonExit_button_down"]
-[connection signal="timeout" from="TimerTransition" to="." method="_on_TimerTransition_timeout"]
-[connection signal="timeout" from="TimerLobby" to="." method="_on_TimerLobby_timeout"]
+[node name="Lobby" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1408.0
+margin_right = 1408.0
+script = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+title_scene = "res://scenes/title.tscn"
+game_scene = "res://scenes/game.tscn"
+
+[node name="Background" type="ColorRect" parent="Lobby"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0716858, 0.210938, 0.176125, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Decorations" type="Control" parent="Lobby"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Vignette" type="ColorRect" parent="Lobby"]
+material = SubResource( 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="LabelLobby" type="RichTextLabel" parent="Lobby"]
+margin_left = 848.0
+margin_top = 32.0
+margin_right = 1264.0
+margin_bottom = 184.0
+custom_colors/default_color = Color( 0.917647, 0.839216, 0.572549, 1 )
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[center][tornado radius=5]Lobby[/tornado][/center]"
+meta_underlined = false
+text = "Lobby"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Players" type="GridContainer" parent="Lobby"]
+margin_left = 160.0
+margin_top = 128.0
+margin_right = 504.0
+margin_bottom = 512.0
+custom_constants/vseparation = 30
+custom_constants/hseparation = 30
+columns = 4
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelPlayers" type="Label" parent="Lobby"]
+margin_left = 96.0
+margin_top = 56.0
+margin_right = 512.0
+margin_bottom = 138.0
+custom_fonts/font = ExtResource( 15 )
+text = "Players"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LabelSettings" type="Label" parent="Lobby"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -440.0
+margin_top = -304.0
+margin_right = -24.0
+margin_bottom = -222.0
+custom_fonts/font = ExtResource( 15 )
+text = "Game Settings"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonStart" parent="Lobby" instance=ExtResource( 8 )]
+margin_left = 480.0
+margin_top = 536.0
+margin_right = 800.0
+margin_bottom = 608.0
+text = "Start Game"
+
+[node name="Settings" type="VBoxContainer" parent="Lobby"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -424.0
+margin_top = -224.0
+margin_right = -9.0
+margin_bottom = -56.0
+custom_constants/separation = 16
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Lobby/Settings"]
+margin_right = 415.0
+margin_bottom = 41.0
+custom_constants/separation = 20
+
+[node name="LabelTimeLimit" type="Label" parent="Lobby/Settings/HBoxContainer"]
+margin_right = 157.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 16 )
+text = "Time Limit"
+
+[node name="SpinBoxTime" type="SpinBox" parent="Lobby/Settings/HBoxContainer"]
+margin_left = 177.0
+margin_right = 415.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+theme = ExtResource( 18 )
+min_value = 10.0
+max_value = 300.0
+value = 60.0
+align = 1
+suffix = "sec"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Lobby/Settings"]
+margin_top = 57.0
+margin_right = 415.0
+margin_bottom = 98.0
+custom_constants/separation = 20
+
+[node name="LabelWords" type="Label" parent="Lobby/Settings/HBoxContainer2"]
+margin_right = 254.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 16 )
+text = "Peek Word Count"
+align = 2
+
+[node name="SpinBoxWords" type="SpinBox" parent="Lobby/Settings/HBoxContainer2"]
+margin_left = 274.0
+margin_right = 415.0
+margin_bottom = 41.0
+size_flags_horizontal = 3
+theme = ExtResource( 18 )
+min_value = 1.0
+max_value = 500.0
+value = 10.0
+align = 1
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Lobby/Settings"]
+margin_top = 114.0
+margin_right = 415.0
+margin_bottom = 155.0
+custom_constants/separation = 20
+
+[node name="LabelTheme" type="Label" parent="Lobby/Settings/HBoxContainer3"]
+margin_right = 319.0
+margin_bottom = 41.0
+custom_fonts/font = ExtResource( 16 )
+text = "Show Random Theme"
+
+[node name="CheckButtonTheme" type="CheckButton" parent="Lobby/Settings/HBoxContainer3"]
+margin_left = 339.0
+margin_right = 405.0
+margin_bottom = 41.0
+theme = ExtResource( 18 )
+
+[node name="SettingsBlocker" type="ColorRect" parent="Lobby"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -448.0
+margin_top = -336.0
+color = Color( 1, 1, 1, 0 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="ButtonExit" parent="Lobby" instance=ExtResource( 8 )]
+margin_left = 24.0
+margin_top = 32.0
+margin_right = 128.0
+margin_bottom = 112.0
+is_small = true
+
+[node name="Polygon2D2" parent="Lobby/ButtonExit" index="0"]
+polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
+
+[node name="Polygon2D" parent="Lobby/ButtonExit" index="1"]
+position = Vector2( -120, -9 )
+polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
+
+[node name="Arrow" type="Polygon2D" parent="Lobby/ButtonExit"]
+position = Vector2( 10, 2 )
+antialiased = true
+polygon = PoolVector2Array( 40, 16, 16, 40, 40, 64, 40, 48, 70, 46, 70, 30, 40, 32 )
+
+[node name="Music" type="AudioStreamPlayer" parent="Lobby"]
+stream = ExtResource( 13 )
+volume_db = -12.0
+bus = "Music"
+
+[node name="ClickBlock" type="ColorRect" parent="Lobby"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Transition" type="ColorRect" parent="Lobby"]
+material = SubResource( 14 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Lobby"]
+anims/RESET = SubResource( 9 )
+anims/init = SubResource( 15 )
+anims/transition = SubResource( 8 )
+
+[node name="SoundStart" type="AudioStreamPlayer" parent="Lobby"]
+stream = ExtResource( 14 )
+volume_db = -5.0
+
+[node name="SoundTransition" type="AudioStreamPlayer" parent="Lobby"]
+stream = ExtResource( 11 )
+
+[node name="SoundTransition2" type="AudioStreamPlayer" parent="Lobby"]
+stream = ExtResource( 12 )
+volume_db = -2.0
+
+[node name="TimerConnectTimeout" type="Timer" parent="Lobby"]
+wait_time = 3.0
+one_shot = true
+
+[node name="TimerAddMe" type="Timer" parent="Lobby"]
+wait_time = 0.1
+one_shot = true
+
+[node name="TimerTransition" type="Timer" parent="Lobby"]
+wait_time = 0.3
+one_shot = true
+
+[node name="TimerTitle" type="Timer" parent="Lobby"]
+wait_time = 1.2
+one_shot = true
+
+[node name="TimerStart" type="Timer" parent="Lobby"]
+wait_time = 2.5
+one_shot = true
+
+[node name="TimerStart2" type="Timer" parent="Lobby"]
+wait_time = 1.5
+one_shot = true
+
+[connection signal="pressed" from="TitleScreen/ButtonHost" to="." method="_on_ButtonHost_pressed"]
+[connection signal="pressed" from="TitleScreen/ButtonJoin" to="." method="_on_ButtonJoin_pressed"]
+[connection signal="button_down" from="TitleScreen/ButtonExit" to="." method="_on_ButtonExit_button_down"]
+[connection signal="timeout" from="TitleScreen/TimerTransition" to="." method="_on_TimerTransition_timeout"]
+[connection signal="timeout" from="TitleScreen/TimerLobby" to="." method="_on_TimerLobby_timeout"]
+[connection signal="pressed" from="Lobby/ButtonStart" to="Lobby" method="_on_ButtonStart_pressed"]
+[connection signal="value_changed" from="Lobby/Settings/HBoxContainer/SpinBoxTime" to="Lobby" method="_on_SpinBoxTime_value_changed"]
+[connection signal="value_changed" from="Lobby/Settings/HBoxContainer2/SpinBoxWords" to="Lobby" method="_on_SpinBoxWords_value_changed"]
+[connection signal="toggled" from="Lobby/Settings/HBoxContainer3/CheckButtonTheme" to="Lobby" method="_on_CheckButtonTheme_toggled"]
+[connection signal="pressed" from="Lobby/ButtonExit" to="Lobby" method="_on_ButtonExit_pressed"]
+[connection signal="timeout" from="Lobby/TimerConnectTimeout" to="Lobby" method="_on_TimerConnectTimeout_timeout"]
+[connection signal="timeout" from="Lobby/TimerAddMe" to="Lobby" method="_on_TimerAddMe_timeout"]
+[connection signal="timeout" from="Lobby/TimerTransition" to="Lobby" method="_on_TimerTransition_timeout"]
+[connection signal="timeout" from="Lobby/TimerTitle" to="Lobby" method="_on_TimerTitle_timeout"]
+[connection signal="timeout" from="Lobby/TimerStart" to="Lobby" method="_on_TimerStart_timeout"]
+[connection signal="timeout" from="Lobby/TimerStart2" to="Lobby" method="_on_TimerStart2_timeout"]
+
+[editable path="Lobby/ButtonExit"]

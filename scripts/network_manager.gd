@@ -3,6 +3,8 @@ extends Node
 signal player_connected(id)
 signal player_disconnected(id, player_name)
 
+const NotificationPrefab := preload("res://prefabs/notification.tscn")
+
 var my_connection: NetworkedMultiplayerENet = null
 
 var player_order := []
@@ -17,6 +19,11 @@ var timer_max := 60
 var peek_words := 10
 var show_theme := false
 var timer := -1
+
+var client_ip := String()
+var client_port := String()
+var client_name := String()
+var is_client := false
 
 var title_transition := false
 
@@ -42,6 +49,12 @@ func _on_player_disconnect(id: int) -> void:
 	var player_name: String = players[id]["name"]
 	remove_player(id)
 	emit_signal("player_disconnected", id, player_name)
+	
+	
+func show_notification(what: String) -> void:
+	var notif := NotificationPrefab.instance()
+	notif.get_node("Notification/Text").set_text(what)
+	get_tree().get_root().call_deferred("add_child", notif)
 	
 
 func add_player(id: int) -> void:

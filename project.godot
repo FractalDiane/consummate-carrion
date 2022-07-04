@@ -12,6 +12,9 @@ config_version=4
 
 config/name="Consummate Carrion"
 run/main_scene="res://scenes/title.tscn"
+boot_splash/image="res://textures/splash.png"
+boot_splash/use_filter=false
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://demontail.png"
 
 [audio]

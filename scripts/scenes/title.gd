@@ -6,55 +6,58 @@ const DEFAULT_IP := "127.0.0.1"
 const DEFAULT_PORT := 31400
 const MAX_PLAYERS := 12
 
-onready var edit_name := $EditName as LineEdit
-onready var edit_join_ip := $EditJoinIp as LineEdit
-onready var edit_join_port := $EditJoinPort as LineEdit
-onready var edit_host_port := $EditHostPort as LineEdit
+onready var edit_name := $TitleScreen/EditName as LineEdit
+onready var edit_join_ip := $TitleScreen/EditJoinIp as LineEdit
+onready var edit_join_port := $TitleScreen/EditJoinPort as LineEdit
+onready var edit_host_port := $TitleScreen/EditHostPort as LineEdit
 
 
 func _ready() -> void:
-	if NetworkManager.title_transition:
-		$AnimationPlayer.play_backwards("transition")
-		$SoundTransition2.play()
-		NetworkManager.title_transition = false
-
-
-func _process(_delta: float) -> void:
-	var shd := $Vignette.get_material() as ShaderMaterial
-	shd.set_shader_param("mouse_pos", get_global_mouse_position() / OS.get_window_size())
-	shd.set_shader_param("mouse_button", Vector2(float(Input.is_action_pressed("mouse")), float(Input.is_action_just_pressed("mouse"))))
-	
+	pass
+	#$TitleScreen/AnimationPlayer.play_backwards("transition")
+#	if NetworkManager.title_transition:
+#		$SoundTransition2.play()
+#		NetworkManager.title_transition = false
+		
+	#NetworkManager.show_notification("HELLO THIS IS A NOTIFICATION YEAH")
 
 
 func _on_ButtonHost_pressed() -> void:
-	var peer := NetworkedMultiplayerENet.new()
+	#var peer := NetworkedMultiplayerENet.new()
 	var port := edit_host_port.get_text()
-	peer.create_server(int(port) if not port.empty() else DEFAULT_PORT, MAX_PLAYERS)
-	get_tree().set_network_peer(peer)
+	#peer.create_server(int(port) if not port.empty() else DEFAULT_PORT, MAX_PLAYERS)
+	#get_tree().set_network_peer(peer)
+	#NetworkManager.client_ip = ip
+	NetworkManager.client_port = port
+	NetworkManager.client_name = edit_name.get_text().strip_edges()
 	
-	init_network_manager(peer)
+	#init_network_manager(peer)
 	$ClickBlock.show()
 	$TimerTransition.start()
 	#get_tree().change_scene(lobby_scene)
 
 
 func _on_ButtonJoin_pressed() -> void:
-	var peer := NetworkedMultiplayerENet.new()
+	#var peer := NetworkedMultiplayerENet.new()
 	var ip := edit_join_ip.get_text()
 	var port := edit_join_port.get_text()
-	peer.create_client(ip if not ip.empty() else DEFAULT_IP, int(port) if not port.empty() else DEFAULT_PORT)
-	get_tree().set_network_peer(peer)
+	#peer.create_client(ip if not ip.empty() else DEFAULT_IP, int(port) if not port.empty() else DEFAULT_PORT)
+	#get_tree().set_network_peer(peer)
+	NetworkManager.client_ip = ip
+	NetworkManager.client_port = port
+	NetworkManager.is_client = true
+	NetworkManager.client_name = edit_name.get_text().strip_edges()
 	
-	init_network_manager(peer)
+	#init_network_manager(peer)
 	$ClickBlock.show()
 	$TimerTransition.start()
 	#get_tree().change_scene(lobby_scene)
 	
 	
-func init_network_manager(peer: NetworkedMultiplayerENet) -> void:
-	NetworkManager.set_my_name(edit_name.get_text().strip_edges())
-	NetworkManager.my_connection = peer
-	NetworkManager.add_player(get_tree().get_network_unique_id())
+#func init_network_manager(peer: NetworkedMultiplayerENet, my_name: String) -> void:
+#	NetworkManager.set_my_name(edit_name.get_text().strip_edges())
+#	NetworkManager.my_connection = peer
+#	NetworkManager.add_player(get_tree().get_network_unique_id())
 
 
 func _on_ButtonExit_button_down() -> void:
@@ -69,3 +72,4 @@ func _on_TimerTransition_timeout() -> void:
 
 func _on_TimerLobby_timeout() -> void:
 	get_tree().change_scene(lobby_scene)
+

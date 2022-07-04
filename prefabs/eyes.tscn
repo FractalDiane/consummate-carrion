@@ -74,7 +74,7 @@ script = ExtResource( 1 )
 
 [node name="Eye" type="Sprite" parent="."]
 material = SubResource( 4 )
-position = Vector2( -18.5001, 0.499878 )
+position = Vector2( -18.5001, -0.500122 )
 scale = Vector2( 0.656248, 0.656246 )
 texture = ExtResource( 3 )
 

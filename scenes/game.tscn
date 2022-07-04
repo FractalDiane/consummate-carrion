@@ -1,8 +1,21 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://scripts/game.gd" type="Script" id=1]
-[ext_resource path="res://fonts/font_display2.tres" type="DynamicFont" id=2]
-[ext_resource path="res://fonts/font_text.tres" type="DynamicFont" id=3]
+[ext_resource path="res://fonts/font_display_new_xl.tres" type="DynamicFont" id=2]
+[ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=3]
+[ext_resource path="res://shaders/vignette.gdshader" type="Shader" id=4]
+[ext_resource path="res://scripts/cosmetic/timer.gd" type="Script" id=5]
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 4 )
+shader_param/color = Color( 0.0156863, 0, 0.0941176, 1 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=3]
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
@@ -13,10 +26,19 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.25098, 0.243137, 0.278431, 1 )
+color = Color( 0.0705882, 0.211765, 0.176471, 1 )
+__meta__ = {
+"_edit_lock_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="Vignette" type="ColorRect" parent="."]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -35,11 +57,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Story" type="TextEdit" parent="StoryBase"]
+[node name="Panel" type="Panel" parent="StoryBase"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Story" type="TextEdit" parent="StoryBase"]
+anchor_left = 0.017
+anchor_top = 0.025
+anchor_right = 0.983
+anchor_bottom = 0.975
+margin_left = -0.0480003
+margin_right = 0.0479736
 custom_fonts/font = ExtResource( 3 )
-text = "testestestsetsetset"
+custom_styles/focus = SubResource( 5 )
+custom_styles/normal = SubResource( 3 )
 context_menu_enabled = false
 shortcut_keys_enabled = false
 caret_blink = true
@@ -47,16 +82,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LabelTimer" type="Label" parent="."]
-margin_left = 8.0
-margin_top = 32.0
-margin_right = 152.0
-margin_bottom = 114.0
-custom_fonts/font = ExtResource( 2 )
-text = "0:00"
-align = 1
+[node name="Timer" type="Control" parent="."]
+margin_left = 16.0
+margin_top = 56.0
+margin_right = 160.0
+margin_bottom = 168.0
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+font = ExtResource( 2 )
 
 [connection signal="text_changed" from="StoryBase/Story" to="." method="_on_Story_text_changed"]

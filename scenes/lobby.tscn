@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://shaders/transition.gdshader" type="Shader" id=1]
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://prefabs/cc_button.tscn" type="PackedScene" id=10]
 [ext_resource path="res://audio/sound/whoosh.ogg" type="AudioStream" id=11]
 [ext_resource path="res://audio/sound/whoosh2.ogg" type="AudioStream" id=12]
+[ext_resource path="res://audio/sound/ding2.ogg" type="AudioStream" id=13]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 6 )
@@ -35,6 +36,21 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ 1.0 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "init"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
 }
 
 [sub_resource type="Animation" id=8]
@@ -291,7 +307,12 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 9 )
+anims/init = SubResource( 10 )
 anims/transition = SubResource( 8 )
+
+[node name="SoundStart" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = -5.0
 
 [node name="SoundTransition" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 11 )
@@ -299,6 +320,14 @@ stream = ExtResource( 11 )
 [node name="SoundTransition2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 12 )
 volume_db = -2.0
+
+[node name="TimerConnectTimeout" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[node name="TimerAddMe" type="Timer" parent="."]
+wait_time = 0.1
+one_shot = true
 
 [node name="TimerTransition" type="Timer" parent="."]
 wait_time = 0.3
@@ -308,12 +337,24 @@ one_shot = true
 wait_time = 1.2
 one_shot = true
 
+[node name="TimerStart" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+
+[node name="TimerStart2" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
 [connection signal="pressed" from="ButtonStart" to="." method="_on_ButtonStart_pressed"]
 [connection signal="value_changed" from="Settings/HBoxContainer/SpinBoxTime" to="." method="_on_SpinBoxTime_value_changed"]
 [connection signal="value_changed" from="Settings/HBoxContainer2/SpinBoxWords" to="." method="_on_SpinBoxWords_value_changed"]
 [connection signal="toggled" from="Settings/HBoxContainer3/CheckButtonTheme" to="." method="_on_CheckButtonTheme_toggled"]
 [connection signal="pressed" from="ButtonExit" to="." method="_on_ButtonExit_pressed"]
+[connection signal="timeout" from="TimerConnectTimeout" to="." method="_on_TimerConnectTimeout_timeout"]
+[connection signal="timeout" from="TimerAddMe" to="." method="_on_TimerAddMe_timeout"]
 [connection signal="timeout" from="TimerTransition" to="." method="_on_TimerTransition_timeout"]
 [connection signal="timeout" from="TimerTitle" to="." method="_on_TimerTitle_timeout"]
+[connection signal="timeout" from="TimerStart" to="." method="_on_TimerStart_timeout"]
+[connection signal="timeout" from="TimerStart2" to="." method="_on_TimerStart2_timeout"]
 
 [editable path="ButtonExit"]
