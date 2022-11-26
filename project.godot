@@ -80,3 +80,4 @@ common/enable_pause_aware_picking=true
 
 quality/depth/hdr=false
 environment/default_environment="res://default_env.tres"
+gles3/shaders/shader_compilation_mode=2

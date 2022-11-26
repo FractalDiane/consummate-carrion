@@ -139,7 +139,7 @@ func add_player(player_name: String, is_me: bool) -> void:
 	players_grid.add_child(this_player)
 	
 	if NetworkManager.get_player_count() >= 3:
-		$ButtonStart.set_disabled(false)
+		$ButtonStart.set_cc_button_enabled(true)
 
 
 func remove_player(player_name: String) -> void:

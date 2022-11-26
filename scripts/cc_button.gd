@@ -19,7 +19,13 @@ func _ready() -> void:
 #
 #	polygon.polygon = new_points
 	
-		
+
+func set_cc_button_enabled(enabled: bool) -> void:
+	disabled = not enabled
+	if enabled:
+		$Polygon2D.color = Color.black
+	else:
+		$Polygon2D.color = Color(0.2, 0.2, 0.2)		
 
 
 func _on_CCButton_mouse_entered() -> void:
@@ -31,12 +37,14 @@ func _on_CCButton_mouse_exited() -> void:
 
 
 func _on_CCButton_focus_entered() -> void:
-	sound_hover.play()
-	polygon.color = COLOR_HOVER
+	if not disabled:
+		sound_hover.play()
+		polygon.color = COLOR_HOVER
 
 
 func _on_CCButton_focus_exited() -> void:
-	polygon.color = COLOR_UNHOVER
+	if not disabled:
+		polygon.color = COLOR_UNHOVER
 
 
 func _on_CCButton_pressed() -> void:

@@ -55,6 +55,16 @@ custom_fonts/font = ExtResource( 1 )
 text = "Namename"
 align = 1
 
+[node name="Host" type="Label" parent="."]
+visible = false
+margin_top = 144.0
+margin_right = 103.0
+margin_bottom = 170.0
+custom_colors/font_color = Color( 0.917647, 0.572549, 0.741176, 1 )
+custom_fonts/font = ExtResource( 1 )
+text = "Host"
+align = 1
+
 [node name="You" type="Label" parent="."]
 visible = false
 margin_top = 114.0

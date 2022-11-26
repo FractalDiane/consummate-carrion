@@ -17,6 +17,7 @@ var player_stories := {}
 
 var timer_max := 60
 var peek_words := 10
+var random_theme := String()
 var show_theme := false
 var timer := -1
 
@@ -80,6 +81,22 @@ func randomize_player_order() -> void:
 	player_order.shuffle()
 	
 	
+func set_player_ready(ready_stage: int, player: int) -> void:
+	if not players_ready.has(ready_stage):
+		players_ready[ready_stage] = {}
+		
+	players_ready[ready_stage][player] = true
+	
+	
+func are_all_players_ready(ready_stage: int) -> bool:
+	return players_ready.has(ready_stage) and players_ready[ready_stage].size() == NetworkManager.player_order.size()
+	
+	
+func clear_players_ready(ready_stage: int) -> void:
+	if players_ready.has(ready_stage):
+		players_ready[ready_stage].clear()
+	
+	
 remotesync func set_timer(value: int) -> void:
 	timer = value
 	
@@ -94,6 +111,10 @@ remotesync func set_peek_words(value: int) -> void:
 	
 remotesync func set_show_theme(value: bool) -> void:
 	show_theme = value
+	
+	
+remotesync func set_random_theme(value: String) -> void:
+	random_theme = value
 	
 	
 remotesync func set_player_story(player_id: int, story: String) -> void:

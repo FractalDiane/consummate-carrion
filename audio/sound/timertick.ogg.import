@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/timertick.ogg-02c3396ea3a7da39b368d4142da6414a.oggstr"
+
+[deps]
+
+source_file="res://audio/sound/timertick.ogg"
+dest_files=[ "res://.import/timertick.ogg-02c3396ea3a7da39b368d4142da6414a.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
