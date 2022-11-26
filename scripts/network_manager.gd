@@ -13,7 +13,7 @@ var self_data := { "name": "" }
 
 var players_ready := {}
 
-var player_stories := {}
+var player_stories := []
 
 var timer_max := 60
 var peek_words := 10
@@ -97,31 +97,23 @@ func clear_players_ready(ready_stage: int) -> void:
 		players_ready[ready_stage].clear()
 	
 	
-remotesync func set_timer(value: int) -> void:
-	timer = value
-	
-	
-remotesync func set_timer_max(value: int) -> void:
+puppetsync func set_timer_max(value: int) -> void:
 	timer_max = value
 	
 	
-remotesync func set_peek_words(value: int) -> void:
+puppetsync func set_peek_words(value: int) -> void:
 	peek_words = value
 	
 	
-remotesync func set_show_theme(value: bool) -> void:
+puppetsync func set_show_theme(value: bool) -> void:
 	show_theme = value
 	
 	
-remotesync func set_random_theme(value: String) -> void:
+puppetsync func set_random_theme(value: String) -> void:
 	random_theme = value
 	
 	
-remotesync func set_player_story(player_id: int, story: String) -> void:
-	players[player_id]["story"] = story
-	
-	
-remote func set_player_order(order: Array) -> void:
+puppet func set_player_order(order: Array) -> void:
 	player_order = order
 	
 	

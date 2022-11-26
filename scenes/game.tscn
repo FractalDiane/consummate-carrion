@@ -1,16 +1,14 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font_display_new_xl.tres" type="DynamicFont" id=2]
 [ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=3]
-[ext_resource path="res://shaders/vignette.gdshader" type="Shader" id=4]
+[ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=4]
 [ext_resource path="res://scripts/cosmetic/timer.gd" type="Script" id=5]
 [ext_resource path="res://audio/sound/round_end.ogg" type="AudioStream" id=6]
 [ext_resource path="res://audio/sound/timertick.ogg" type="AudioStream" id=7]
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = ExtResource( 4 )
-shader_param/color = Color( 0.0156863, 0, 0.0941176, 1 )
+[ext_resource path="res://audio/sound/text_click.ogg" type="AudioStream" id=8]
+[ext_resource path="res://audio/sound/theme_ding.ogg" type="AudioStream" id=9]
 
 [sub_resource type="StyleBoxFlat" id=4]
 bg_color = Color( 0, 0, 0, 1 )
@@ -49,6 +47,21 @@ tracks/1/keys = {
 "values": [  ]
 }
 
+[sub_resource type="Animation" id=12]
+resource_name = "to_review"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -4, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -1280, 0 ) ]
+}
+
 [sub_resource type="Animation" id=8]
 resource_name = "to_title"
 tracks/0/type = "value"
@@ -62,30 +75,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( -4, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 2560, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Background:rect_position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( -4, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( -2560, 0 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Vignette:rect_position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( -4, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ), Vector2( -2560, 0 ) ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -101,6 +90,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 0.25, 1 ),
 "update": 0,
 "values": [ Vector2( 0, 0 ), Vector2( 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StoryBase:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=10]
@@ -132,6 +133,113 @@ tracks/0/keys = {
 "update": 0,
 "values": [ Vector2( 0, 1 ), Vector2( 1, 1 ) ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("StoryBase/GameComplete:rect_scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.33, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 1 ), Vector2( 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "flip_prompt"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Prompt:rect_scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 3, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "type_prompt"
+length = 3.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Prompt:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("SoundType")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "stop"
+} ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "type_prompt_theme"
+length = 4.0
+tracks/0/type = "method"
+tracks/0/path = NodePath("SoundType")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "stop"
+} ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("SoundTheme")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Prompt:visible_characters")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 2, 3 ),
+"transitions": PoolRealArray( 1, 0, 1 ),
+"update": 0,
+"values": [ 0.0, 31, 100 ]
+}
 
 [node name="Game" type="Control"]
 anchor_right = 1.0
@@ -142,25 +250,25 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Background" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.0705882, 0.211765, 0.176471, 1 )
+[node name="Prompt" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -640.0
+margin_top = 6.0
+margin_right = 640.0
+margin_bottom = 57.0
+rect_pivot_offset = Vector2( 640, 0 )
+custom_colors/font_color = Color( 0.917647, 0.839216, 0.572549, 1 )
+custom_fonts/font = ExtResource( 4 )
+text = "Start writing a story with the theme: THEMETHEMETHEME"
+align = 1
+percent_visible = 0.0
 __meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
-[node name="Vignette" type="ColorRect" parent="."]
-material = SubResource( 2 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
 [node name="StoryBase" type="Control" parent="."]
+visible = false
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
@@ -195,6 +303,7 @@ anchor_right = 0.983
 anchor_bottom = 0.975
 margin_left = -0.0480003
 margin_right = 0.0479736
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_color_readonly = Color( 1, 1, 1, 1 )
 custom_fonts/font = ExtResource( 3 )
 custom_styles/read_only = SubResource( 9 )
@@ -203,7 +312,27 @@ custom_styles/normal = SubResource( 3 )
 readonly = true
 context_menu_enabled = false
 shortcut_keys_enabled = false
+wrap_enabled = true
 caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GameComplete" type="Label" parent="StoryBase"]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -257.0
+margin_top = -45.5
+margin_right = 257.0
+margin_bottom = 45.5
+rect_pivot_offset = Vector2( 257, 0 )
+custom_colors/font_color = Color( 0.917647, 0.839216, 0.572549, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Game Complete"
+align = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -221,8 +350,8 @@ __meta__ = {
 font = ExtResource( 2 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "transition"
 anims/RESET = SubResource( 7 )
+anims/to_review = SubResource( 12 )
 anims/to_title = SubResource( 8 )
 anims/transition = SubResource( 6 )
 
@@ -231,12 +360,29 @@ playback_speed = 1.2
 anims/flip_story = SubResource( 10 )
 anims/unflip_story = SubResource( 11 )
 
+[node name="AnimationPlayerRound2" type="AnimationPlayer" parent="."]
+playback_speed = 1.2
+anims/flip_prompt = SubResource( 15 )
+
+[node name="AnimationPlayerPrompt" type="AnimationPlayer" parent="."]
+anims/type_prompt = SubResource( 13 )
+anims/type_prompt_theme = SubResource( 14 )
+
 [node name="SoundTick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = 8.0
 
 [node name="SoundRoundEnd" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+
+[node name="SoundType" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = 2.0
+pitch_scale = 0.8
+
+[node name="SoundTheme" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 9 )
+volume_db = 4.0
 
 [node name="TimerRoundEnd" type="Timer" parent="."]
 wait_time = 1.55
@@ -245,4 +391,5 @@ one_shot = true
 [connection signal="text_changed" from="StoryBase/Story" to="." method="_on_Story_text_changed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayerRound" to="." method="_on_AnimationPlayerRound_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayerPrompt" to="." method="_on_AnimationPlayerPrompt_animation_finished"]
 [connection signal="timeout" from="TimerRoundEnd" to="." method="_on_TimerRoundEnd_timeout"]

@@ -24,6 +24,7 @@ mix_rate=48000
 [autoload]
 
 NetworkManager="*res://prefabs/network_manager.tscn"
+Background="*res://prefabs/background.tscn"
 
 [debug]
 

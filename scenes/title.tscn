@@ -1,11 +1,10 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display2.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/scenes/title.gd" type="Script" id=3]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=5]
-[ext_resource path="res://shaders/vignette.gdshader" type="Shader" id=6]
 [ext_resource path="res://prefabs/eyes.tscn" type="PackedScene" id=7]
 [ext_resource path="res://prefabs/cc_button.tscn" type="PackedScene" id=8]
 [ext_resource path="res://shaders/transition.gdshader" type="Shader" id=9]
@@ -17,10 +16,6 @@
 [ext_resource path="res://fonts/font_display_new_l.tres" type="DynamicFont" id=15]
 [ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=16]
 [ext_resource path="res://theme_main.tres" type="Theme" id=18]
-
-[sub_resource type="ShaderMaterial" id=2]
-shader = ExtResource( 6 )
-shader_param/color = Color( 0.0156863, 0, 0.0941176, 1 )
 
 [sub_resource type="Animation" id=13]
 length = 0.001
@@ -252,15 +247,6 @@ __meta__ = {
 }
 game_scene = "res://scenes/game.tscn"
 
-[node name="Background" type="ColorRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-color = Color( 0.0705882, 0.211765, 0.176471, 1 )
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
-
 [node name="Decorations" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -274,15 +260,6 @@ visible = false
 color = Color( 0, 0.0745098, 0, 0.584314 )
 antialiased = true
 polygon = PoolVector2Array( 1224, 624, 1136, 368, 896, 616, 712, 216, 480, 640, 392, 344, 328, 648, 200, 256, 64, 656, -56, 256, -40, 776, 1320, 768, 1312, 256 )
-
-[node name="Vignette" type="ColorRect" parent="."]
-material = SubResource( 2 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 13 )

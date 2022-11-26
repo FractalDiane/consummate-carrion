@@ -37,7 +37,7 @@ const Themes := [
 	"Stunts",
 	"Shopping",
 	"Travel",
-	"Horror",
+	"Talent Show",
 	"Mystery",
 	"Adventure",
 	"Animals",
@@ -59,6 +59,18 @@ const Themes := [
 	"Demons",
 	"Sports",
 	"Camping",
+	"Circus",
+	"Magic Show",
+	"Medieval",
+	"Ghosts",
+	"Holidays",
+	"Celebrities",
+	"Stormy Night",
+	"Pirates",
+	"Spring Cleaning",
+	"Outer Space",
+	"Royal Ball",
+	"Haunted House",
 ]
 
 
@@ -152,6 +164,10 @@ func lobby_init() -> void:
 	else:
 		$Lobby/SettingsBlocker.hide()
 		$Lobby/LabelWaiting.hide()
+		
+		#_on_SpinBoxTime_value_changed(spinbox_timer.value)
+		#_on_SpinBoxWords_value_changed(spinbox_words.value)
+		#_on_CheckButtonTheme_toggled(button_theme.pressed)
 	
 	
 func lobby_deinit() -> void:
@@ -185,29 +201,43 @@ func remove_player(player_name: String) -> void:
 		$Lobby/ButtonStart.set_cc_button_enabled(false)
 		
 		
-sync func sync_setting_displays(time: float, words: float, show_theme: bool) -> void:
+puppet func sync_setting_displays(time: float, words: float, show_theme: bool) -> void:
+	spinbox_timer.disconnect("value_changed", self, "_on_SpinBoxTime_value_changed")
+	spinbox_words.disconnect("value_changed", self, "_on_SpinBoxWords_value_changed")
+	button_theme.disconnect("toggled", self, "_on_CheckButtonTheme_toggled")
+	
 	spinbox_timer.set_value(time)
 	spinbox_words.set_value(words)
 	button_theme.set_pressed(show_theme)
+	
+	spinbox_timer.connect("value_changed", self, "_on_SpinBoxTime_value_changed")
+	spinbox_words.connect("value_changed", self, "_on_SpinBoxWords_value_changed")
+	button_theme.connect("toggled", self, "_on_CheckButtonTheme_toggled")
 
 
 func _on_SpinBoxTime_value_changed(value: float) -> void:
-	NetworkManager.rpc("set_timer_max", int(value))
-	rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
+	if get_tree().is_network_server():
+		NetworkManager.rpc("set_timer_max", int(value))
+		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
 	
 	
 func _on_SpinBoxWords_value_changed(value: float) -> void:
-	NetworkManager.rpc("set_peek_words", int(value))
-	rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
+	if get_tree().is_network_server():
+		NetworkManager.rpc("set_peek_words", int(value))
+		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
 	
 	
 func _on_CheckButtonTheme_toggled(button_pressed: bool) -> void:
-	NetworkManager.rpc("set_show_theme", button_pressed)
-	rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
+	if get_tree().is_network_server():
+		NetworkManager.rpc("set_show_theme", button_pressed)
+		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
 	
 	
 func _on_player_connected(id: int) -> void:
 	add_player(NetworkManager.players[id]["name"], false, id == 1)
+	_on_SpinBoxTime_value_changed(spinbox_timer.value)
+	_on_SpinBoxWords_value_changed(spinbox_words.value)
+	_on_CheckButtonTheme_toggled(button_theme.pressed)
 	
 	
 func _on_player_disconnected(_id: int, player_name: String) -> void:
