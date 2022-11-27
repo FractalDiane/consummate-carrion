@@ -78,6 +78,11 @@ func _ready() -> void:
 	$TitleScreen/ButtonHost.set_cc_button_enabled(false)
 	$TitleScreen/ButtonJoin.set_cc_button_enabled(false)
 	$Lobby/ButtonStart.set_cc_button_enabled(false)
+	
+	if get_tree().get_current_scene() == self:
+		$Music.play()
+		$TitleScreen/Title.set_bbcode("[tornado radius=5]Consummate Carrion[/tornado]")
+		
 	#$AnimationPlayer.play_backwards("transition")
 	#if NetworkManager.title_transition:
 	#	$SoundTransition2.play()
@@ -287,6 +292,7 @@ func _on_ButtonStart_pressed() -> void:
 	
 	
 remotesync func start_game_effects() -> void:
+	$Music.stop()
 	$Lobby/SoundStart.play()
 	$ClickBlock.show()
 	$Lobby/TimerStart.start()

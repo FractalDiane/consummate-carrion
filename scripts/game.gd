@@ -49,6 +49,7 @@ func _process(delta: float) -> void:
 		if not my_timer_up and timer_count <= 0.0:
 			sound_tick.stop()
 			$SoundRoundEnd.play()
+			$Music.set_stream_paused(true)
 			
 			rpc_id(1, "send_story_info", current_story_text.replace(my_current_prefix, "").strip_edges())
 			rpc_id(1, "set_player_ready", NetworkManager.ReadyState.RoundTimer)
@@ -76,6 +77,7 @@ remotesync func set_player_ready(ready_state: int) -> void:
 			NetworkManager.ReadyState.RoundEndFullFlip:
 				if not game_completed:
 					rpc("start_new_round", false)
+					$Music.set_stream_paused(false)
 				else:
 					rpc("goto_results")
 				
@@ -160,6 +162,9 @@ puppetsync func start_new_round(first_round: bool) -> void:
 	NetworkManager.players_ready.clear()
 	timer_count = NetworkManager.timer_max
 	$Timer.show()
+	if first_round:
+		$Music.play()
+		
 	story_text.set_readonly(false)
 	my_timer_up = false
 	game_started = true
