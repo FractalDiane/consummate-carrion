@@ -1,0 +1,514 @@
+[gd_scene load_steps=22 format=2]
+
+[ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scripts/scenes/results.gd" type="Script" id=3]
+[ext_resource path="res://audio/sound/text_click.ogg" type="AudioStream" id=4]
+[ext_resource path="res://prefabs/cc_button.tscn" type="PackedScene" id=6]
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="StyleBoxEmpty" id=12]
+
+[sub_resource type="Animation" id=7]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "click"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -68, -33 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "click_small"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -12.8, 28.2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=13]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "click"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -68, -33 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "click_small"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -12.8, 28.2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "type_prompt"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Prompt:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 1.0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("SoundType")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"values": [ {
+"args": [ 0.0 ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "stop"
+} ]
+}
+
+[node name="Results" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Prompt" type="Label" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -640.0
+margin_top = 6.0
+margin_right = 640.0
+margin_bottom = 57.0
+rect_pivot_offset = Vector2( 640, 0 )
+custom_colors/font_color = Color( 0.917647, 0.839216, 0.572549, 1 )
+custom_fonts/font = ExtResource( 2 )
+text = "Story started by BLANKY BLANK"
+align = 1
+percent_visible = 0.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StoryBase" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -472.0
+margin_top = -296.0
+margin_right = 472.0
+margin_bottom = 344.0
+rect_pivot_offset = Vector2( 472, 295 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Border" type="Polygon2D" parent="StoryBase"]
+position = Vector2( -168, -64 )
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 168, 64, 104, 224, 152, 384, 112, 592, 168, 704, 624, 712, 1112, 704, 1200, 520, 1136, 312, 1176, 216, 1112, 64 )
+
+[node name="Panel" type="Panel" parent="StoryBase"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Story" type="TextEdit" parent="StoryBase"]
+anchor_left = 0.017
+anchor_top = 0.025
+anchor_right = 0.983
+anchor_bottom = 0.975
+margin_left = -0.0480003
+margin_right = 0.0479736
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_colors/font_color_readonly = Color( 1, 1, 1, 1 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/read_only = SubResource( 9 )
+custom_styles/focus = SubResource( 5 )
+custom_styles/normal = SubResource( 3 )
+readonly = true
+context_menu_enabled = false
+shortcut_keys_enabled = false
+wrap_enabled = true
+caret_blink = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TimerStart" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+autostart = true
+
+[node name="ButtonLeft" parent="." instance=ExtResource( 6 )]
+margin_left = 16.0
+margin_top = 624.0
+margin_right = 120.0
+margin_bottom = 704.0
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 10 )
+custom_styles/disabled = SubResource( 11 )
+custom_styles/normal = SubResource( 12 )
+is_small = true
+
+[node name="Polygon2D2" parent="ButtonLeft" index="0"]
+polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
+
+[node name="Polygon2D" parent="ButtonLeft" index="1"]
+position = Vector2( -120, -9 )
+polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
+
+[node name="AnimationPlayer" parent="ButtonLeft" index="5"]
+anims/RESET = SubResource( 7 )
+anims/click = SubResource( 6 )
+anims/click_small = SubResource( 8 )
+
+[node name="Arrow" type="Polygon2D" parent="ButtonLeft"]
+position = Vector2( 10, 2 )
+antialiased = true
+polygon = PoolVector2Array( 40, 16, 16, 40, 40, 64, 40, 48, 70, 46, 70, 30, 40, 32 )
+
+[node name="ButtonRight" parent="." instance=ExtResource( 6 )]
+margin_left = 1152.0
+margin_top = 624.0
+margin_right = 1256.0
+margin_bottom = 704.0
+is_small = true
+
+[node name="Polygon2D2" parent="ButtonRight" index="0"]
+polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
+
+[node name="Polygon2D" parent="ButtonRight" index="1"]
+position = Vector2( -120, -9 )
+polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
+
+[node name="AnimationPlayer" parent="ButtonRight" index="5"]
+anims/RESET = SubResource( 13 )
+anims/click = SubResource( 14 )
+anims/click_small = SubResource( 15 )
+
+[node name="Arrow" type="Polygon2D" parent="ButtonRight"]
+position = Vector2( 102, 2 )
+scale = Vector2( -1, 1 )
+antialiased = true
+polygon = PoolVector2Array( 40, 16, 16, 40, 40, 64, 40, 48, 70, 46, 70, 30, 40, 32 )
+
+[node name="AnimationPlayerPrompt" type="AnimationPlayer" parent="."]
+anims/type_prompt = SubResource( 16 )
+
+[node name="SoundType" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = 2.0
+pitch_scale = 0.8
+
+[connection signal="timeout" from="TimerStart" to="." method="_on_TimerStart_timeout"]
+[connection signal="pressed" from="ButtonLeft" to="." method="_on_ButtonLeft_pressed"]
+[connection signal="pressed" from="ButtonRight" to="." method="_on_ButtonRight_pressed"]
+
+[editable path="ButtonLeft"]
+[editable path="ButtonRight"]

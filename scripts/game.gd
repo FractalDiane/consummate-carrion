@@ -1,13 +1,5 @@
 extends Control
 
-enum ReadyState {
-	GameStart,
-	RoundTimer,
-	StorySync,
-	RoundEndHalfFlip,
-	RoundEndFullFlip,
-}
-
 var stories := []
 var player_order := []
 
@@ -32,7 +24,7 @@ func _ready() -> void:
 	if get_tree().is_network_server():
 		for player in NetworkManager.player_order:
 			var new_story := {}
-			new_story["text"] = [String()]
+			new_story["text"] = []
 			new_story["owner"] = player
 			stories.push_back(new_story)
 	else:
@@ -59,7 +51,7 @@ func _process(delta: float) -> void:
 			$SoundRoundEnd.play()
 			
 			rpc_id(1, "send_story_info", current_story_text.replace(my_current_prefix, "").strip_edges())
-			rpc_id(1, "set_player_ready", ReadyState.RoundTimer)
+			rpc_id(1, "set_player_ready", NetworkManager.ReadyState.RoundTimer)
 			story_text.set_readonly(true)
 			my_timer_up = true
 		
@@ -68,24 +60,24 @@ remotesync func set_player_ready(ready_state: int) -> void:
 	NetworkManager.set_player_ready(ready_state, get_tree().get_rpc_sender_id())
 	if get_tree().is_network_server() and NetworkManager.are_all_players_ready(ready_state):
 		match ready_state:
-			ReadyState.GameStart:
+			NetworkManager.ReadyState.GameStart:
 				rotate_players(true)
 				rpc("sync_story_info", stories, player_order, false)
 				rpc("begin_game")
-			ReadyState.RoundTimer:
+			NetworkManager.ReadyState.RoundTimer:
 				rpc("end_round")
-			ReadyState.StorySync:
+			NetworkManager.ReadyState.StorySync:
 				rpc("setup_story", true)
-			ReadyState.RoundEndHalfFlip:
+			NetworkManager.ReadyState.RoundEndHalfFlip:
 				if game_completed:
 					rpc("show_game_finished")
 					
 				rpc("end_round_2")
-			ReadyState.RoundEndFullFlip:
+			NetworkManager.ReadyState.RoundEndFullFlip:
 				if not game_completed:
 					rpc("start_new_round", false)
 				else:
-					rpc("goto_review")
+					rpc("goto_results")
 				
 		NetworkManager.clear_players_ready(ready_state)
 			
@@ -94,7 +86,7 @@ puppet func sync_story_info(total_stories: Array, rotated_players: Array, set_re
 	stories = total_stories
 	player_order = rotated_players
 	if set_ready:
-		rpc_id(1, "set_player_ready", ReadyState.StorySync)
+		rpc_id(1, "set_player_ready", NetworkManager.ReadyState.StorySync)
 	
 	
 remotesync func send_story_info(text: String) -> void:
@@ -121,10 +113,13 @@ puppetsync func show_game_finished() -> void:
 	story_text.hide()
 	
 	
-puppetsync func goto_review() -> void:
+puppetsync func goto_results() -> void:
 	NetworkManager.player_stories = stories.duplicate()
 	
-	#var review := preload("res://scenes/review.tscn").instance() as Control
+	var results := preload("res://scenes/results.tscn").instance() as Control
+	results.rect_position.x = 1280
+	get_tree().get_current_scene().add_child(results)
+	anim_player.play("to_results")
 	
 	
 puppetsync func setup_story(after_first_round: bool) -> void:
@@ -149,7 +144,7 @@ puppetsync func setup_story(after_first_round: bool) -> void:
 	else:
 		game_completed = true
 		
-	rpc_id(1, "set_player_ready", ReadyState.RoundEndHalfFlip)
+	rpc_id(1, "set_player_ready", NetworkManager.ReadyState.RoundEndHalfFlip)
 	
 
 puppetsync func start_new_round(first_round: bool) -> void:
@@ -171,8 +166,12 @@ puppetsync func start_new_round(first_round: bool) -> void:
 
 
 func _on_Story_text_changed() -> void:
-	if not story_text.get_text().begins_with(my_current_prefix) or story_text.get_text().count("\n") > 0:
+	#var cursor_col := story_text.cursor_get_column()
+	#var cursor_line := story_text.cursor_get_line()
+	if not story_text.get_text().begins_with(my_current_prefix) or story_text.get_text().count("\n") > 0 or story_text.get_text().count("\t") > 0:
 		story_text.set_text(current_story_text)
+		#story_text.cursor_set_column(cursor_col)
+		#story_text.cursor_set_line(cursor_line)
 	else:
 		current_story_text = story_text.get_text()
 
@@ -197,9 +196,11 @@ func rotate_array(array: Array, amount: int) -> Array:
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	if anim_name == "transition":
 		story_text.set_readonly(false)
-		rpc_id(1, "set_player_ready", ReadyState.GameStart)
+		rpc_id(1, "set_player_ready", NetworkManager.ReadyState.GameStart)
 	elif anim_name == "to_title":
 		get_tree().change_scene("res://scenes/title.tscn")
+	elif anim_name == "to_results":
+		get_tree().change_scene("res://scenes/results.tscn")
 		
 		
 func _on_server_disconnect() -> void:
@@ -224,10 +225,10 @@ func _on_AnimationPlayerRound_animation_finished(anim_name: String) -> void:
 	if anim_name == "flip_story":
 		if get_tree().is_network_server():
 			rotate_players(not game_started)
-			rpc_id(1, "set_player_ready", ReadyState.StorySync)
+			rpc_id(1, "set_player_ready", NetworkManager.ReadyState.StorySync)
 			rpc("sync_story_info", stories, player_order, true)
 	elif anim_name == "unflip_story":
-		rpc_id(1, "set_player_ready", ReadyState.RoundEndFullFlip)
+		rpc_id(1, "set_player_ready", NetworkManager.ReadyState.RoundEndFullFlip)
 	
 
 func _on_AnimationPlayerPrompt_animation_finished(_anim_name: String) -> void:

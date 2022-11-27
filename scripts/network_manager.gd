@@ -28,6 +28,16 @@ var is_client := false
 
 var title_transition := false
 
+enum ReadyState {
+	GameStart,
+	RoundTimer,
+	StorySync,
+	RoundEndHalfFlip,
+	RoundEndFullFlip,
+	
+	ResultsStart,
+}
+
 
 func _ready() -> void:
 	get_tree().connect("network_peer_connected", self, "_on_player_connect")
