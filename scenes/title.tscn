@@ -586,6 +586,7 @@ margin_bottom = 9.0
 custom_fonts/font = ExtResource( 5 )
 custom_styles/normal = SubResource( 6 )
 align = 1
+max_length = 8
 caret_blink = true
 __meta__ = {
 "_edit_use_anchors_": false
