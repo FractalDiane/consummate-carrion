@@ -3,7 +3,7 @@
 [ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/scenes/results.gd" type="Script" id=3]
-[ext_resource path="res://audio/sound/text_click.ogg" type="AudioStream" id=4]
+[ext_resource path="res://audio/sound/key_loop.ogg" type="AudioStream" id=4]
 [ext_resource path="res://prefabs/cc_button.tscn" type="PackedScene" id=6]
 
 [sub_resource type="StyleBoxFlat" id=4]
@@ -503,8 +503,6 @@ anims/type_prompt = SubResource( 16 )
 
 [node name="SoundType" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
-volume_db = 2.0
-pitch_scale = 0.8
 
 [connection signal="timeout" from="TimerStart" to="." method="_on_TimerStart_timeout"]
 [connection signal="pressed" from="ButtonLeft" to="." method="_on_ButtonLeft_pressed"]

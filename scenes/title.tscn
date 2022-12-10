@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display2.tres" type="DynamicFont" id=2]
@@ -12,7 +12,6 @@
 [ext_resource path="res://textures/transition_swirl.png" type="Texture" id=10]
 [ext_resource path="res://audio/sound/whoosh.ogg" type="AudioStream" id=11]
 [ext_resource path="res://audio/sound/whoosh2.ogg" type="AudioStream" id=12]
-[ext_resource path="res://audio/music/funky-puzzler.ogg" type="AudioStream" id=13]
 [ext_resource path="res://audio/sound/ding2.ogg" type="AudioStream" id=14]
 [ext_resource path="res://fonts/font_display_new_l.tres" type="DynamicFont" id=15]
 [ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=16]
@@ -990,11 +989,6 @@ position = Vector2( 10, 2 )
 antialiased = true
 polygon = PoolVector2Array( 40, 16, 16, 40, 40, 64, 40, 48, 70, 46, 70, 30, 40, 32 )
 
-[node name="Music" type="AudioStreamPlayer" parent="Lobby"]
-stream = ExtResource( 13 )
-volume_db = -12.0
-bus = "Music"
-
 [node name="Transition" type="ColorRect" parent="Lobby"]
 material = SubResource( 14 )
 anchor_right = 1.0
@@ -1063,7 +1057,7 @@ __meta__ = {
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
-volume_db = -8.0
+volume_db = -60.0
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="text_changed" from="TitleScreen/EditName" to="." method="_on_EditName_text_changed"]

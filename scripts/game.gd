@@ -138,8 +138,9 @@ puppetsync func setup_story(after_first_round: bool) -> void:
 			if i >= split_total.size():
 				break
 				
-			result.push_back(split_total[-(i + 1)])
+			result.push_back(split_total[(i)])
 			
+		result.invert()
 		my_current_prefix = result.join(" ")
 		current_story_text = my_current_prefix
 		story_text.set_text(my_current_prefix)
