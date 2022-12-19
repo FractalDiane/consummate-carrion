@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=2]
@@ -332,6 +332,159 @@ tracks/3/keys = {
 "values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=17]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=18]
+resource_name = "click"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -68, -33 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "click_small"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -12.8, 28.2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
 [sub_resource type="Animation" id=16]
 resource_name = "type_prompt"
 tracks/0/type = "value"
@@ -498,15 +651,70 @@ scale = Vector2( -1, 1 )
 antialiased = true
 polygon = PoolVector2Array( 40, 16, 16, 40, 40, 64, 40, 48, 70, 46, 70, 30, 40, 32 )
 
+[node name="ButtonSave" parent="." instance=ExtResource( 6 )]
+margin_left = 1154.0
+margin_top = 272.0
+margin_right = 1258.0
+margin_bottom = 352.0
+is_small = true
+
+[node name="Polygon2D2" parent="ButtonSave" index="0"]
+polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
+
+[node name="Polygon2D" parent="ButtonSave" index="1"]
+position = Vector2( -120, -9 )
+polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
+
+[node name="AnimationPlayer" parent="ButtonSave" index="5"]
+anims/RESET = SubResource( 17 )
+anims/click = SubResource( 18 )
+anims/click_small = SubResource( 19 )
+
+[node name="Disk" type="Polygon2D" parent="ButtonSave"]
+antialiased = true
+polygon = PoolVector2Array( 24, 24, 32, 72, 88, 64, 80, 24, 72, 16 )
+
+[node name="Disk2" type="Polygon2D" parent="ButtonSave"]
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 40, 48, 40, 64, 78, 59, 73, 43 )
+
+[node name="Disk3" type="Polygon2D" parent="ButtonSave"]
+color = Color( 0, 0, 0, 1 )
+antialiased = true
+polygon = PoolVector2Array( 45, 25, 48, 41, 60, 39, 55, 23 )
+
 [node name="AnimationPlayerPrompt" type="AnimationPlayer" parent="."]
 anims/type_prompt = SubResource( 16 )
 
 [node name="SoundType" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="SaveDialog" type="FileDialog" parent="CanvasLayer"]
+margin_left = 64.0
+margin_top = 64.0
+margin_right = 1216.0
+margin_bottom = 680.0
+popup_exclusive = true
+window_title = "Save Story"
+mode_overrides_title = false
+access = 2
+filters = PoolStringArray( "*.txt ; Text File" )
+current_dir = "/Users/Duncan Sparks/Documents/Godot/Projects/exquisite_corpse"
+current_path = "/Users/Duncan Sparks/Documents/Godot/Projects/exquisite_corpse/"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [connection signal="timeout" from="TimerStart" to="." method="_on_TimerStart_timeout"]
 [connection signal="pressed" from="ButtonLeft" to="." method="_on_ButtonLeft_pressed"]
 [connection signal="pressed" from="ButtonRight" to="." method="_on_ButtonRight_pressed"]
+[connection signal="pressed" from="ButtonSave" to="." method="_on_ButtonSave_pressed"]
+[connection signal="file_selected" from="CanvasLayer/SaveDialog" to="." method="_on_SaveDialog_file_selected"]
 
 [editable path="ButtonLeft"]
 [editable path="ButtonRight"]
+[editable path="ButtonSave"]

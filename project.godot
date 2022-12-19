@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Consummate Carrion"
-run/main_scene="res://scenes/title.tscn"
+run/main_scene="res://scenes/logo.tscn"
 boot_splash/image="res://textures/splash.png"
 boot_splash/use_filter=false
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
@@ -25,6 +25,7 @@ mix_rate=48000
 [autoload]
 
 NetworkManager="*res://prefabs/network_manager.tscn"
+OptionsManager="*res://scripts/options_manager.gd"
 Background="*res://prefabs/background.tscn"
 
 [debug]
@@ -35,8 +36,9 @@ gdscript/warnings/return_value_discarded=false
 
 window/size/width=1280
 window/size/height=720
+window/size/resizable=false
 window/stretch/mode="2d"
-window/stretch/aspect="expand"
+window/stretch/aspect="keep"
 
 [importer_defaults]
 
@@ -73,6 +75,11 @@ mouse={
 "events": [ Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":0,"alt":false,"shift":false,"control":false,"meta":false,"command":false,"button_mask":0,"position":Vector2( 0, 0 ),"global_position":Vector2( 0, 0 ),"factor":1.0,"button_index":1,"pressed":false,"doubleclick":false,"script":null)
  ]
 }
+
+[locale]
+
+translations=PoolStringArray( "res://i18n/cc_i18n.en.translation", "res://i18n/cc_i18n.es.translation" )
+locale_filter=[ 0, [  ] ]
 
 [physics]
 

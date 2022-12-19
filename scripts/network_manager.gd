@@ -50,13 +50,13 @@ func set_my_name(player_name: String) -> void:
 	
 
 func _on_player_connect(id: int) -> void:
-	print("%s connected" % id)
+	print_debug("%s connected" % id)
 	add_player(id)
 	rpc_id(id, "send_player_info", self_data)
 
 
 func _on_player_disconnect(id: int) -> void:
-	print("%s disconnected" % id)
+	print_debug("%s disconnected" % id)
 	var player_name: String = players[id]["name"]
 	remove_player(id)
 	emit_signal("player_disconnected", id, player_name)

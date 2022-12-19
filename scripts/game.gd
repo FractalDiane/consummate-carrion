@@ -93,7 +93,7 @@ puppet func sync_story_info(total_stories: Array, rotated_players: Array, set_re
 	
 remotesync func send_story_info(text: String) -> void:
 	var index := player_order.find(get_tree().get_rpc_sender_id())
-	print(get_tree().get_rpc_sender_id(), " -> ", text, "(index ", index, ")")
+	print_debug(get_tree().get_rpc_sender_id(), " -> ", text, "(index ", index, ")")
 	stories[index]["text"].push_back(text)
 
 		

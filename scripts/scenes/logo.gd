@@ -1,8 +1,8 @@
 extends Control
 
-#func _input(event: InputEvent) -> void:
-#	if event is InputEventKey:
-#		goto_title()
+func _ready() -> void:
+	if OS.has_feature("editor"):
+		_on_AnimationPlayerTransition_animation_finished("")
 
 
 func goto_title() -> void:

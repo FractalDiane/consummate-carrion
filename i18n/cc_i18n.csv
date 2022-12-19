@@ -1,0 +1,27 @@
+,en,es
+TEXTEDIT_NAME,What's your name?,¿Cómo se llama?
+BUTTON_HOST,Host Game,Alojar Juego
+BUTTON_JOIN,Join Game,Unir Juego
+PROMPT_PORT,Port,Puerto
+PROMPT_IP,IP,IP
+TITLE_LOBBY,Lobby,Vestíbulo
+TITLE_OPTIONS,Options,Opciones
+TEXT_WAITING,Waiting for host...,Esperando al servidor...
+TEXT_GAMESETTINGS,Game Settings,Opciones del Juego
+TEXT_SETTING_TIMELIMIT,Time Limit,Fecha Límite
+TEXT_SETTING_PEEK,Peek Word Count,Número de Palabras para Espiar
+TEXT_SETTING_THEME,Show Random Theme,Mostrar un Tema Aletorio
+BUTTON_START,Start Game,Empezar el Juego
+TEXTEDIT_SECOND,sec,seg
+TEXT_OFF,OFF,APA.
+TEXT_ON,ON,ENC.
+TEXT_PLAYERS,Players,Jugadores
+TEXT_HOST,Host,Servidor
+TEXT_YOU,You!,¡Ud.!
+,,
+PROMPT_START,Start writing a story.,Empiece a escribir un cuento.
+PROMPT_START_THEME,Start writing a story with the theme:,Empiece a escribir un cuento que tiene el tema:
+PROMPT_CONTINUE,Continue the story.,Continúe el cuento.
+PROMPT_CONTINUE_THEME,Continue the story. Theme:,Continúe el cuento. Tema:
+TEXT_COMPLETE,Game Complete,Juego Completo
+PROMPT_STARTED,Story started by:,El cuento que empezó de:

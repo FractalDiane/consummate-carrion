@@ -104,7 +104,7 @@ func _on_ButtonHost_pressed() -> void:
 	get_tree().set_network_peer(peer)
 	
 	init_network_manager(peer)
-	$ClickBlock.show()
+	$CanvasLayer/ClickBlock.show()
 	transition_to_lobby = true
 	$TimerTransition.start()
 
@@ -120,9 +120,20 @@ func _on_ButtonJoin_pressed() -> void:
 	get_tree().set_network_peer(peer)
 	
 #	init_network_manager(peer)
-#	$ClickBlock.show()
+#	$CanvasLayer/ClickBlock.show()
 #	transition_to_lobby = true
 #	$TimerTransition.start()
+
+
+func _on_ButtonOptions_pressed() -> void:
+	$CanvasLayer/ClickBlock.show()
+	_on_TimerOptions_timeout()
+	#$TitleScreen/TimerOptions.start()
+
+
+func _on_ButtonExit_pressed() -> void:
+	$CanvasLayer/ClickBlock.show()
+	$TitleScreen/TimerExit.start()
 	
 	
 func init_network_manager(peer: NetworkedMultiplayerENet) -> void:
@@ -131,9 +142,6 @@ func init_network_manager(peer: NetworkedMultiplayerENet) -> void:
 	NetworkManager.add_player(get_tree().get_network_unique_id())
 	
 	lobby_init()
-
-func _on_ButtonExit_button_down() -> void:
-	get_tree().quit()
 
 
 func _on_TimerTransition_timeout() -> void:
@@ -149,14 +157,25 @@ func _on_TimerTransition_timeout() -> void:
 	
 func _on_join_succeeded(peer: NetworkedMultiplayerENet) -> void:
 	init_network_manager(peer)
-	$ClickBlock.show()
+	$CanvasLayer/ClickBlock.show()
 	transition_to_lobby = true
 	$TimerTransition.start()
 	$TitleScreen/TimerTimeout.stop()
 	
 	
+func _on_TimerOptions_timeout() -> void:
+	var options := preload("res://scenes/options.tscn").instance() as Control
+	options.rect_position.y = -720
+	get_tree().get_current_scene().add_child(options)
+	$AnimationPlayer.play("to_options")
+	
+	
 func _on_TimerTimeout_timeout() -> void:
 	NetworkManager.show_notification("Failed to connect to the indicated server.")
+	
+	
+func _on_TimerExit_timeout() -> void:
+	get_tree().quit()
 
 # LOBBY ===========================================================================================
 
@@ -268,18 +287,20 @@ func _on_TimerRemoveMe_timeout() -> void:
 
 
 func _on_ButtonExitLobby_pressed() -> void:
-	$ClickBlock.show()
+	$CanvasLayer/ClickBlock.show()
 	transition_to_lobby = false
 	$TimerTransition.start()
 
 
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
-	$ClickBlock.hide()
+	$CanvasLayer/ClickBlock.hide()
 	if anim_name == "to_title":
 		for child in $Lobby/Players.get_children():
 			child.queue_free()
 	elif anim_name == "to_game":
 		get_tree().change_scene(game_scene)
+	elif anim_name == "to_options":
+		get_tree().change_scene("res://scenes/options.tscn")
 			
 			
 func _on_TimerStart_timeout() -> void:
@@ -294,7 +315,7 @@ func _on_ButtonStart_pressed() -> void:
 remotesync func start_game_effects() -> void:
 	$Music.stop()
 	$Lobby/SoundStart.play()
-	$ClickBlock.show()
+	$CanvasLayer/ClickBlock.show()
 	$Lobby/TimerStart.start()
 	
 	

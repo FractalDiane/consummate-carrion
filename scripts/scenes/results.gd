@@ -2,10 +2,15 @@ extends Control
 
 var page_index := 0
 
+var story_to_save := String()
+var prompt_to_save := String()
+
 onready var prompt := $Prompt as Label
 onready var story := $StoryBase/Story as TextEdit
 
 func _ready() -> void:
+	$CanvasLayer/SaveDialog.current_dir = OS.get_system_dir(OS.SYSTEM_DIR_DOWNLOADS)
+	
 	if not get_tree().is_network_server():
 		$ButtonLeft.hide()
 		$ButtonRight.hide()
@@ -19,23 +24,6 @@ remotesync func set_player_ready(ready_state: int) -> void:
 		match ready_state:
 			NetworkManager.ReadyState.ResultsStart:
 				rpc("show_current_story")
-#				rotate_players(true)
-#				rpc("sync_story_info", stories, player_order, false)
-#				rpc("begin_game")
-#			ReadyState.RoundTimer:
-#				rpc("end_round")
-#			ReadyState.StorySync:
-#				rpc("setup_story", true)
-#			ReadyState.RoundEndHalfFlip:
-#				if game_completed:
-#					rpc("show_game_finished")
-#
-#				rpc("end_round_2")
-#			ReadyState.RoundEndFullFlip:
-#				if not game_completed:
-#					rpc("start_new_round", false)
-#				else:
-#					rpc("goto_results")
 				
 		NetworkManager.clear_players_ready(ready_state)
 	
@@ -68,3 +56,19 @@ func _on_ButtonLeft_pressed() -> void:
 func _on_ButtonRight_pressed() -> void:
 	rpc("move_page", true)
 	rpc("show_current_story")
+
+
+func _on_ButtonSave_pressed() -> void:
+	story_to_save = story.get_text()
+	prompt_to_save = prompt.get_text()
+	$CanvasLayer/SaveDialog.popup()
+
+
+func _on_SaveDialog_file_selected(path: String) -> void:
+	if not path.empty():
+		var file := File.new()
+		file.open(path, File.WRITE)
+		file.store_string("Consummate Carrion\n")
+		file.store_string(prompt_to_save + "\n")
+		file.store_string(story_to_save + "\n")
+		file.close()

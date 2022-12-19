@@ -1,7 +1,6 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
-[ext_resource path="res://fonts/font_display2.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/scenes/title.gd" type="Script" id=3]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=5]
@@ -96,6 +95,21 @@ tracks/1/keys = {
 "transitions": PoolRealArray( -4, 1 ),
 "update": 0,
 "values": [ Vector2( 1408, 0 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "to_options"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -4, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 720 ) ]
 }
 
 [sub_resource type="Animation" id=16]
@@ -296,6 +310,159 @@ tracks/3/keys = {
 "values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=22]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "click"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -68, -33 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "click_small"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D2:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1.125 ), Vector2( 1.5, 1.688 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Polygon2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 8, -9 ), Vector2( -12.8, 28.2 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Polygon2D2:color")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0.137255, 0.533333, 0.470588, 1 ), Color( 0.137255, 0.533333, 0.470588, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Polygon2D:color")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
 [sub_resource type="ShaderMaterial" id=7]
 shader = ExtResource( 9 )
 shader_param/cutoff = 0.0
@@ -393,6 +560,7 @@ tracks/0/keys = {
 [node name="Title" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_bottom = -0.000732422
 script = ExtResource( 3 )
 __meta__ = {
 "_edit_lock_": true,
@@ -418,11 +586,13 @@ polygon = PoolVector2Array( 1224, 624, 1136, 368, 896, 616, 712, 216, 480, 640, 
 anims/RESET = SubResource( 13 )
 anims/to_game = SubResource( 17 )
 anims/to_lobby = SubResource( 12 )
+anims/to_options = SubResource( 25 )
 anims/to_title = SubResource( 16 )
 
 [node name="TitleScreen" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_bottom = 0.000732422
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -668,51 +838,68 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonExit" type="Button" parent="TitleScreen"]
-visible = false
-margin_left = 32.0
-margin_top = 32.0
-margin_right = 104.0
-margin_bottom = 114.0
-custom_fonts/font = ExtResource( 2 )
-text = "<-"
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="ButtonMenu" parent="TitleScreen" instance=ExtResource( 8 )]
+[node name="ButtonOptions" parent="TitleScreen" instance=ExtResource( 8 )]
 margin_left = 24.0
 margin_top = 32.0
 margin_right = 128.0
 margin_bottom = 112.0
 is_small = true
 
-[node name="Polygon2D2" parent="TitleScreen/ButtonMenu" index="0"]
+[node name="Polygon2D2" parent="TitleScreen/ButtonOptions" index="0"]
 polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
 
-[node name="Polygon2D" parent="TitleScreen/ButtonMenu" index="1"]
+[node name="Polygon2D" parent="TitleScreen/ButtonOptions" index="1"]
 position = Vector2( -120, -9 )
 polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
 
-[node name="AnimationPlayer" parent="TitleScreen/ButtonMenu" index="5"]
+[node name="AnimationPlayer" parent="TitleScreen/ButtonOptions" index="5"]
 anims/RESET = SubResource( 19 )
 anims/click = SubResource( 20 )
 anims/click_small = SubResource( 21 )
 
-[node name="Line" type="Polygon2D" parent="TitleScreen/ButtonMenu"]
+[node name="Line" type="Polygon2D" parent="TitleScreen/ButtonOptions"]
 position = Vector2( 5, -17 )
 antialiased = true
 polygon = PoolVector2Array( 27, 46, 68, 42, 70, 30, 24, 37 )
 
-[node name="Line2" type="Polygon2D" parent="TitleScreen/ButtonMenu"]
+[node name="Line2" type="Polygon2D" parent="TitleScreen/ButtonOptions"]
 position = Vector2( 6, 4 )
 antialiased = true
 polygon = PoolVector2Array( 27, 48, 70, 42, 70, 30, 29, 35 )
 
-[node name="Line3" type="Polygon2D" parent="TitleScreen/ButtonMenu"]
+[node name="Line3" type="Polygon2D" parent="TitleScreen/ButtonOptions"]
 position = Vector2( 9, 26 )
 antialiased = true
 polygon = PoolVector2Array( 28, 45, 67, 44, 70, 30, 25, 35 )
+
+[node name="ButtonExit" parent="TitleScreen" instance=ExtResource( 8 )]
+margin_left = 24.0
+margin_top = 624.0
+margin_right = 128.0
+margin_bottom = 704.0
+is_small = true
+
+[node name="Polygon2D2" parent="TitleScreen/ButtonExit" index="0"]
+polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
+
+[node name="Polygon2D" parent="TitleScreen/ButtonExit" index="1"]
+position = Vector2( -120, -9 )
+polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
+
+[node name="AnimationPlayer" parent="TitleScreen/ButtonExit" index="5"]
+anims/RESET = SubResource( 22 )
+anims/click = SubResource( 23 )
+anims/click_small = SubResource( 24 )
+
+[node name="Door" type="Polygon2D" parent="TitleScreen/ButtonExit"]
+position = Vector2( -8, 0 )
+antialiased = true
+polygon = PoolVector2Array( 45, 27, 45, 14, 83, 14, 84, 68, 47, 68, 47, 57, 52, 57, 52, 64, 79, 63, 77, 20, 51, 19, 51, 27 )
+
+[node name="Arrow" type="Polygon2D" parent="TitleScreen/ButtonExit"]
+position = Vector2( 7, 5 )
+antialiased = true
+polygon = PoolVector2Array( 56, 34, 28, 35, 27, 21, 14, 41, 29, 54, 28, 42, 56, 41 )
 
 [node name="ClickBlock" type="ColorRect" parent="TitleScreen"]
 visible = false
@@ -755,6 +942,13 @@ one_shot = true
 wait_time = 10.0
 one_shot = true
 
+[node name="TimerOptions" type="Timer" parent="TitleScreen"]
+wait_time = 0.3
+one_shot = true
+
+[node name="TimerExit" type="Timer" parent="TitleScreen"]
+one_shot = true
+
 [node name="ColorRect" type="ColorRect" parent="TitleScreen"]
 visible = false
 material = SubResource( 11 )
@@ -769,6 +963,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 1408.0
 margin_right = 1408.0
+margin_bottom = 0.000732422
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -1045,11 +1240,16 @@ one_shot = true
 wait_time = 0.2
 one_shot = true
 
-[node name="ClickBlock" type="ColorRect" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ClickBlock" type="ColorRect" parent="CanvasLayer"]
 visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_top = -744.0
 margin_right = 1408.0
+margin_bottom = 0.000732422
 color = Color( 0, 0, 0, 0 )
 __meta__ = {
 "_edit_lock_": true,
@@ -1064,11 +1264,13 @@ volume_db = -60.0
 [connection signal="text_changed" from="TitleScreen/EditName" to="." method="_on_EditName_text_changed"]
 [connection signal="pressed" from="TitleScreen/ButtonHost" to="." method="_on_ButtonHost_pressed"]
 [connection signal="pressed" from="TitleScreen/ButtonJoin" to="." method="_on_ButtonJoin_pressed"]
-[connection signal="button_down" from="TitleScreen/ButtonExit" to="." method="_on_ButtonExit_button_down"]
-[connection signal="pressed" from="TitleScreen/ButtonMenu" to="." method="_on_ButtonExitLobby_pressed"]
+[connection signal="pressed" from="TitleScreen/ButtonOptions" to="." method="_on_ButtonOptions_pressed"]
+[connection signal="pressed" from="TitleScreen/ButtonExit" to="." method="_on_ButtonExit_pressed"]
 [connection signal="timeout" from="TitleScreen/TimerTransition" to="." method="_on_TimerTransition_timeout"]
 [connection signal="timeout" from="TitleScreen/TimerLobby" to="." method="_on_TimerLobby_timeout"]
 [connection signal="timeout" from="TitleScreen/TimerTimeout" to="." method="_on_TimerTimeout_timeout"]
+[connection signal="timeout" from="TitleScreen/TimerOptions" to="." method="_on_TimerOptions_timeout"]
+[connection signal="timeout" from="TitleScreen/TimerExit" to="." method="_on_TimerExit_timeout"]
 [connection signal="pressed" from="Lobby/ButtonStart" to="." method="_on_ButtonStart_pressed"]
 [connection signal="value_changed" from="Lobby/Settings/HBoxContainer/SpinBoxTime" to="." method="_on_SpinBoxTime_value_changed"]
 [connection signal="value_changed" from="Lobby/Settings/HBoxContainer2/SpinBoxWords" to="." method="_on_SpinBoxWords_value_changed"]
@@ -1082,5 +1284,6 @@ volume_db = -60.0
 [connection signal="timeout" from="Lobby/TimerStart2" to="." method="_on_TimerStart2_timeout"]
 [connection signal="timeout" from="TimerTransition" to="." method="_on_TimerTransition_timeout"]
 
-[editable path="TitleScreen/ButtonMenu"]
+[editable path="TitleScreen/ButtonOptions"]
+[editable path="TitleScreen/ButtonExit"]
 [editable path="Lobby/ButtonExitLobby"]
