@@ -1,24 +1,15 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/scenes/options.gd" type="Script" id=3]
-[ext_resource path="res://textures/slider.png" type="Texture" id=4]
-[ext_resource path="res://textures/slider_h.png" type="Texture" id=5]
 [ext_resource path="res://prefabs/cc_button.tscn" type="PackedScene" id=6]
 [ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=7]
 [ext_resource path="res://prefabs/eyes.tscn" type="PackedScene" id=8]
+[ext_resource path="res://prefabs/cc_slider.tscn" type="PackedScene" id=9]
 [ext_resource path="res://prefabs/cc_checkbutton.tscn" type="PackedScene" id=10]
 
 [sub_resource type="StyleBoxEmpty" id=1]
-
-[sub_resource type="StyleBoxLine" id=2]
-grow_end = -4.0
-thickness = 10
-
-[sub_resource type="StyleBoxLine" id=4]
-color = Color( 0, 0.5, 0.5, 1 )
-thickness = 10
 
 [sub_resource type="StyleBoxEmpty" id=6]
 
@@ -382,7 +373,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_horizontal_guides_": [ 720.0 ],
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 2560.0 ]
 }
 
 [node name="LabelOptions" type="RichTextLabel" parent="."]
@@ -439,20 +432,9 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SliderSound" type="HSlider" parent="OptionsList/VolumeSound"]
+[node name="SliderSound" parent="OptionsList/VolumeSound" instance=ExtResource( 9 )]
 margin_left = 303.0
 margin_right = 870.0
-margin_bottom = 92.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-custom_icons/grabber_highlight = ExtResource( 5 )
-custom_icons/grabber = ExtResource( 4 )
-custom_styles/slider = SubResource( 2 )
-custom_styles/grabber_area_highlight = SubResource( 4 )
-custom_styles/grabber_area = SubResource( 4 )
-max_value = 1.0
-step = 0.01
-value = 1.0
 
 [node name="Value" type="Label" parent="OptionsList/VolumeSound"]
 margin_left = 874.0
@@ -489,20 +471,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="SliderMusic" type="HSlider" parent="OptionsList/VolumeMusic"]
+[node name="SliderMusic" parent="OptionsList/VolumeMusic" instance=ExtResource( 9 )]
 margin_left = 303.0
 margin_right = 870.0
-margin_bottom = 92.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-custom_icons/grabber_highlight = ExtResource( 5 )
-custom_icons/grabber = ExtResource( 4 )
-custom_styles/slider = SubResource( 2 )
-custom_styles/grabber_area_highlight = SubResource( 4 )
-custom_styles/grabber_area = SubResource( 4 )
-max_value = 1.0
-step = 0.01
-value = 1.0
+sound_on_change = false
 
 [node name="Value" type="Label" parent="OptionsList/VolumeMusic"]
 margin_left = 874.0
@@ -691,17 +663,22 @@ bbcode_text = "[center][color=#ead692]Developed by[/color]
 Diane Sparks
 
 [color=#ead692]Music by[/color]
-[...]
-"
+[...]"
 text = "Developed by
 Diane Sparks
 
 Music by
-[...]
-"
+[...]"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="ButtonLicense" parent="Credits" instance=ExtResource( 6 )]
+margin_left = 480.0
+margin_top = 536.0
+margin_right = 800.0
+margin_bottom = 608.0
+text = "License Info"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/from_credits = SubResource( 17 )
@@ -764,6 +741,7 @@ __meta__ = {
 [connection signal="pressed" from="ButtonCredits" to="." method="_on_ButtonCredits_pressed"]
 [connection signal="pressed" from="ButtonBack" to="." method="_on_ButtonBack_pressed"]
 [connection signal="pressed" from="ButtonBack2" to="." method="_on_ButtonBack2_pressed"]
+[connection signal="pressed" from="Credits/ButtonLicense" to="." method="_on_ButtonLicense_pressed"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="timeout" from="TimerCredits" to="." method="_on_TimerCredits_timeout"]
 

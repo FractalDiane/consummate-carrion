@@ -1,7 +1,9 @@
 extends Control
 
+export(bool) var skip := true
+
 func _ready() -> void:
-	if OS.has_feature("editor"):
+	if skip and OS.has_feature("editor"):
 		_on_AnimationPlayerTransition_animation_finished("")
 
 

@@ -15,6 +15,8 @@ func is_cc_button_pressed() -> bool:
 
 func set_cc_button_checked(checked: bool) -> void:
 	button.set_pressed_no_signal(checked)
+	text.text = "  ON" if checked else "OFF  "
+	text.align = Label.ALIGN_LEFT if checked else Label.ALIGN_RIGHT
 
 
 func _on_CheckButton_toggled(button_pressed: bool) -> void:

@@ -1,5 +1,7 @@
 extends Node
 
+signal fullscreen_changed(fullscreen)
+
 const OPTIONS_PATH := "user://options.cfg"
 
 var user_options := ConfigFile.new()
@@ -11,15 +13,28 @@ func _ready() -> void:
 		options_exist = true
 		
 		
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("fullscreen"):
+		var is_fullscreen := OS.is_window_fullscreen()
+		update_options(
+			user_options.get_value("Options", "volume_sound", 100),
+			user_options.get_value("Options", "volume_music", 100),
+			not is_fullscreen,
+			user_options.get_value("Options", "reduce_motion", false)
+		)
+		
+		emit_signal("fullscreen_changed", not is_fullscreen)
+		
+		
 func do_options_exist() -> bool:
 	return options_exist
 
 
 func update_options(volume_sound: int, volume_music: int, fullscreen: bool, reduce_motion: bool) -> void:
 	user_options.set_value("Options", "volume_sound", volume_sound)
-	AudioServer.set_bus_volume_db(0, remap(volume_sound, 0, 100, -60, 4))
+	AudioServer.set_bus_volume_db(0, linear2db(float(volume_sound) / 100.0))
 	user_options.set_value("Options", "volume_music", volume_music)
-	AudioServer.set_bus_volume_db(1, remap(volume_music, 0, 100, -60, 4))
+	AudioServer.set_bus_volume_db(1, linear2db(float(volume_music) / 100.0))
 	user_options.set_value("Options", "fullscreen", fullscreen)
 	OS.set_window_fullscreen(fullscreen)
 	user_options.set_value("Options", "reduce_motion", reduce_motion)
@@ -30,10 +45,10 @@ func update_options(volume_sound: int, volume_music: int, fullscreen: bool, redu
 
 func load_options() -> void:
 	var volume_sound := user_options.get_value("Options", "volume_sound") as int
-	AudioServer.set_bus_volume_db(0, remap(volume_sound, 0, 100, -60, 4))
+	AudioServer.set_bus_volume_db(0, linear2db(float(volume_sound) / 100.0))
 		
 	var volume_music := user_options.get_value("Options", "volume_music") as int
-	AudioServer.set_bus_volume_db(1, remap(volume_music, 0, 100, -60, 4))
+	AudioServer.set_bus_volume_db(1, linear2db(float(volume_music) / 100.0))
 		
 	var fullscreen := user_options.get_value("Options", "fullscreen") as bool
 	OS.set_window_fullscreen(fullscreen)

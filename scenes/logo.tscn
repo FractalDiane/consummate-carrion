@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://fonts/font_logo.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/font_logo_2.tres" type="DynamicFont" id=1]
 [ext_resource path="res://audio/sound/theme_ding.ogg" type="AudioStream" id=2]
 [ext_resource path="res://scripts/scenes/logo.gd" type="Script" id=3]
 [ext_resource path="res://audio/sound/key.ogg" type="AudioStream" id=4]
@@ -243,8 +243,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 3 )
 __meta__ = {
-"_edit_use_anchors_": false
+"_edit_use_anchors_": false,
+"_edit_vertical_guides_": [ 640.0 ]
 }
+skip = false
 
 [node name="Fade" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -262,6 +264,7 @@ anims/logo = SubResource( 1 )
 anims/to_title = SubResource( 2 )
 
 [node name="Timer" type="Timer" parent="."]
+wait_time = 0.35
 one_shot = true
 autostart = true
 
@@ -270,9 +273,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -336.0
+margin_left = -396.0
 margin_top = -72.0
-margin_right = -296.0
+margin_right = -356.0
 margin_bottom = -32.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -286,9 +289,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -280.0
+margin_left = -340.0
 margin_top = -72.0
-margin_right = -240.0
+margin_right = -300.0
 margin_bottom = -32.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -302,9 +305,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -224.0
+margin_left = -284.0
 margin_top = -72.0
-margin_right = -184.0
+margin_right = -244.0
 margin_bottom = -32.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -318,9 +321,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -336.0
+margin_left = -396.0
 margin_top = -16.0
-margin_right = -296.0
+margin_right = -356.0
 margin_bottom = 24.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -334,9 +337,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -224.0
+margin_left = -284.0
 margin_top = -16.0
-margin_right = -184.0
+margin_right = -244.0
 margin_bottom = 24.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -350,9 +353,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -336.0
+margin_left = -396.0
 margin_top = 40.0
-margin_right = -296.0
+margin_right = -356.0
 margin_bottom = 80.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -366,9 +369,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -280.0
+margin_left = -340.0
 margin_top = 40.0
-margin_right = -240.0
+margin_right = -300.0
 margin_bottom = 80.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -382,9 +385,9 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -224.0
+margin_left = -284.0
 margin_top = 40.0
-margin_right = -184.0
+margin_right = -244.0
 margin_bottom = 80.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
@@ -398,14 +401,15 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -152.0
-margin_top = -48.0
-margin_right = 333.0
-margin_bottom = 52.0
+margin_left = -212.0
+margin_top = -72.0
+margin_right = 489.0
+margin_bottom = 80.0
 rect_scale = Vector2( 1e-05, 1 )
 custom_colors/font_color = Color( 0.917647, 0.839216, 0.572549, 1 )
 custom_fonts/font = ExtResource( 1 )
 text = "Studio Fractal"
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }

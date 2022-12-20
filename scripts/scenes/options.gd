@@ -31,6 +31,13 @@ func _ready() -> void:
 		checkbox_fullscreen.set_cc_button_checked(OptionsManager.user_options.get_value("Options", "fullscreen", false) as bool)
 		checkbox_reducemotion.set_cc_button_checked(OptionsManager.user_options.get_value("Options", "reduce_motion", false) as bool)
 
+	OptionsManager.connect("fullscreen_changed", self, "_on_fullscreen_changed")
+
+
+func _on_fullscreen_changed(fullscreen: bool) -> void:
+	value_fullscreen = fullscreen
+	checkbox_fullscreen.set_cc_button_checked(fullscreen)
+
 
 func _on_SliderSound_value_changed(value: float) -> void:
 	var to_int := int(value * 100)
@@ -89,4 +96,6 @@ func _on_ButtonBack2_pressed() -> void:
 	$AnimationPlayer.play("from_credits")
 
 
-
+func _on_ButtonLicense_pressed() -> void:
+	var path := OS.get_executable_path().get_base_dir() + "/LICENSE_THIRDPARTY.txt"
+	OS.shell_open(path)

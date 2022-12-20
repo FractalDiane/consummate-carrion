@@ -82,6 +82,7 @@ func _ready() -> void:
 	if get_tree().get_current_scene() == self:
 		$Music.play()
 		$TitleScreen/Title.set_bbcode("[tornado radius=5]Consummate Carrion[/tornado]")
+		$CanvasLayer/ClickBlock.hide()
 		
 	#$AnimationPlayer.play_backwards("transition")
 	#if NetworkManager.title_transition:
