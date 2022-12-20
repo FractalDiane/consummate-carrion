@@ -1,0 +1,57 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://theme_main.tres" type="Theme" id=1]
+[ext_resource path="res://fonts/font_display_new_checkbutton.tres" type="DynamicFont" id=2]
+[ext_resource path="res://scripts/cc_checkbutton.gd" type="Script" id=3]
+[ext_resource path="res://audio/sound/hover.ogg" type="AudioStream" id=4]
+[ext_resource path="res://audio/sound/switch_on.ogg" type="AudioStream" id=5]
+[ext_resource path="res://audio/sound/switch_off.ogg" type="AudioStream" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="CCCheckButton" type="Control"]
+margin_right = 112.0
+margin_bottom = 48.0
+rect_pivot_offset = Vector2( 56, 24 )
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CheckButton" type="CheckButton" parent="."]
+margin_right = 76.0
+margin_bottom = 40.0
+theme = ExtResource( 1 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/focus = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Text" type="Label" parent="."]
+margin_right = 120.0
+margin_bottom = 56.0
+custom_fonts/font = ExtResource( 2 )
+text = "OFF  "
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SoundHover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+
+[node name="SoundClickOn" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+volume_db = 2.0
+
+[node name="SoundClickOff" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = 2.0
+
+[connection signal="focus_entered" from="CheckButton" to="." method="_on_CheckButton_focus_entered"]
+[connection signal="focus_exited" from="CheckButton" to="." method="_on_CheckButton_focus_exited"]
+[connection signal="mouse_entered" from="CheckButton" to="." method="_on_CheckButton_mouse_entered"]
+[connection signal="mouse_exited" from="CheckButton" to="." method="_on_CheckButton_mouse_exited"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_CheckButton_toggled"]

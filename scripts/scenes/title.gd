@@ -18,7 +18,7 @@ onready var edit_host_port := $TitleScreen/EditHostPort as LineEdit
 onready var players_grid := $Lobby/Players as GridContainer
 onready var spinbox_timer := $Lobby/Settings/HBoxContainer/SpinBoxTime as SpinBox
 onready var spinbox_words := $Lobby/Settings/HBoxContainer2/SpinBoxWords as SpinBox
-onready var button_theme := $Lobby/Settings/HBoxContainer3/CheckButtonTheme as CheckButton
+onready var button_theme := $Lobby/Settings/HBoxContainer3/CheckButtonTheme
 
 const Themes := [
 	"Trains",
@@ -232,7 +232,7 @@ puppet func sync_setting_displays(time: float, words: float, show_theme: bool) -
 	
 	spinbox_timer.set_value(time)
 	spinbox_words.set_value(words)
-	button_theme.set_pressed(show_theme)
+	button_theme.set_cc_button_checked(show_theme)
 	
 	spinbox_timer.connect("value_changed", self, "_on_SpinBoxTime_value_changed")
 	spinbox_words.connect("value_changed", self, "_on_SpinBoxWords_value_changed")
@@ -242,19 +242,19 @@ puppet func sync_setting_displays(time: float, words: float, show_theme: bool) -
 func _on_SpinBoxTime_value_changed(value: float) -> void:
 	if get_tree().is_network_server():
 		NetworkManager.rpc("set_timer_max", int(value))
-		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
+		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_cc_button_pressed())
 	
 	
 func _on_SpinBoxWords_value_changed(value: float) -> void:
 	if get_tree().is_network_server():
 		NetworkManager.rpc("set_peek_words", int(value))
-		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
+		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_cc_button_pressed())
 	
 	
 func _on_CheckButtonTheme_toggled(button_pressed: bool) -> void:
 	if get_tree().is_network_server():
 		NetworkManager.rpc("set_show_theme", button_pressed)
-		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_pressed())
+		rpc("sync_setting_displays", spinbox_timer.get_value(), spinbox_words.get_value(), button_theme.is_cc_button_pressed())
 	
 	
 func _on_player_connected(id: int) -> void:

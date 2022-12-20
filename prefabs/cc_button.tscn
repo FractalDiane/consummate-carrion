@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/cc_button.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=2]
@@ -116,6 +116,21 @@ tracks/3/keys = {
 "values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=12]
+resource_name = "click_new"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
+}
+
 [sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Polygon2D2:scale")
@@ -180,7 +195,18 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="PolygonShadow" type="Control" parent="."]
+margin_left = -16.0
+margin_right = 336.0
+margin_bottom = 72.0
+rect_pivot_offset = Vector2( 176, 40 )
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Polygon2D2" type="Polygon2D" parent="."]
+visible = false
 position = Vector2( 8, -9 )
 scale = Vector2( 1, 1.125 )
 color = Color( 0.137255, 0.533333, 0.470588, 1 )
@@ -214,7 +240,10 @@ stream = ExtResource( 4 )
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 9 )
 anims/click = SubResource( 10 )
+anims/click_new = SubResource( 12 )
 anims/click_small = SubResource( 11 )
+
+[node name="TweenShadow" type="Tween" parent="."]
 
 [connection signal="focus_entered" from="." to="." method="_on_CCButton_focus_entered"]
 [connection signal="focus_exited" from="." to="." method="_on_CCButton_focus_exited"]

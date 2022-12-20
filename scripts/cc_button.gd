@@ -2,7 +2,11 @@ extends Button
 
 export(bool) var is_small := false
 
+var spawned_shadow: Polygon2D = null
+
 onready var polygon := $Polygon2D as Polygon2D
+onready var polygon_shadow := $PolygonShadow as Control
+onready var tween_shadow := $TweenShadow
 onready var sound_hover := $SoundHover as AudioStreamPlayer
 onready var sound_click := $SoundClick as AudioStreamPlayer
 
@@ -11,6 +15,9 @@ const COLOR_HOVER := Color.teal
 
 func _ready() -> void:
 	$Text.set_text(text)
+	
+	polygon_shadow.rect_pivot_offset = Vector2(46, 46) if is_small else Vector2(176, 32)
+	polygon_shadow.rect_position = Vector2(-6, 0) if is_small else Vector2.ZERO
 	
 #	var new_points := PoolVector2Array()
 #	for point in polygon.polygon:
@@ -49,4 +56,16 @@ func _on_CCButton_focus_exited() -> void:
 
 func _on_CCButton_pressed() -> void:
 	sound_click.play()
-	$AnimationPlayer.play("click_small" if is_small else "click")
+	
+	spawned_shadow = polygon.duplicate()
+	polygon_shadow.add_child(spawned_shadow)
+	tween_shadow.remove_all()
+	tween_shadow.interpolate_property(polygon_shadow, "rect_scale", Vector2.ONE, Vector2(2.0, 2.0), 1.0)
+	tween_shadow.interpolate_property(polygon_shadow, "modulate:a", 1.0, 0.0, 1.0)
+	tween_shadow.start()
+	
+	$AnimationPlayer.play("click_new")
+
+
+func _on_TweenShadow_tween_all_completed() -> void:
+	spawned_shadow.queue_free()

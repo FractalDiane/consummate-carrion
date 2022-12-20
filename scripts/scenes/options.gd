@@ -4,8 +4,8 @@ var options := ConfigFile.new()
 
 onready var slider_sound := $OptionsList/VolumeSound/SliderSound as HSlider
 onready var slider_music := $OptionsList/VolumeMusic/SliderMusic as HSlider
-onready var checkbox_fullscreen := $OptionsList/Checkboxes/Fullscreen/ButtonFullscreen as CheckButton
-onready var checkbox_reducemotion := $OptionsList/Checkboxes/ReduceMotion/ButtonMotion as CheckButton
+onready var checkbox_fullscreen := $OptionsList/Checkboxes/Fullscreen/ButtonFullscreen
+onready var checkbox_reducemotion := $OptionsList/Checkboxes/ReduceMotion/ButtonMotion
 
 onready var number_sound := $OptionsList/VolumeSound/Value
 onready var number_music := $OptionsList/VolumeMusic/Value
@@ -28,8 +28,8 @@ func _ready() -> void:
 		slider_music.value = float(music_value) / 100.0
 		number_music.text = str(music_value)
 		
-		checkbox_fullscreen.set_pressed_no_signal(OptionsManager.user_options.get_value("Options", "fullscreen", false) as bool)
-		checkbox_reducemotion.set_pressed_no_signal(OptionsManager.user_options.get_value("Options", "reduce_motion", false) as bool)
+		checkbox_fullscreen.set_cc_button_checked(OptionsManager.user_options.get_value("Options", "fullscreen", false) as bool)
+		checkbox_reducemotion.set_cc_button_checked(OptionsManager.user_options.get_value("Options", "reduce_motion", false) as bool)
 
 
 func _on_SliderSound_value_changed(value: float) -> void:

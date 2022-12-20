@@ -8,7 +8,7 @@
 [ext_resource path="res://prefabs/cc_button.tscn" type="PackedScene" id=6]
 [ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=7]
 [ext_resource path="res://prefabs/eyes.tscn" type="PackedScene" id=8]
-[ext_resource path="res://theme_main.tres" type="Theme" id=9]
+[ext_resource path="res://prefabs/cc_checkbutton.tscn" type="PackedScene" id=10]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -542,11 +542,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonFullscreen" type="CheckButton" parent="OptionsList/Checkboxes/Fullscreen"]
+[node name="ButtonFullscreen" parent="OptionsList/Checkboxes/Fullscreen" instance=ExtResource( 10 )]
 margin_left = 219.0
-margin_right = 285.0
+margin_right = 219.0
 margin_bottom = 51.0
-theme = ExtResource( 9 )
 
 [node name="ReduceMotion" type="HBoxContainer" parent="OptionsList/Checkboxes"]
 margin_left = 482.0
@@ -571,11 +570,10 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="ButtonMotion" type="CheckButton" parent="OptionsList/Checkboxes/ReduceMotion"]
+[node name="ButtonMotion" parent="OptionsList/Checkboxes/ReduceMotion" instance=ExtResource( 10 )]
 margin_left = 307.0
-margin_right = 373.0
+margin_right = 307.0
 margin_bottom = 51.0
-theme = ExtResource( 9 )
 
 [node name="ButtonCredits" parent="." instance=ExtResource( 6 )]
 anchor_left = 0.5
@@ -602,14 +600,14 @@ custom_styles/disabled = SubResource( 8 )
 custom_styles/normal = SubResource( 5 )
 is_small = true
 
-[node name="Polygon2D2" parent="ButtonBack" index="0"]
+[node name="Polygon2D2" parent="ButtonBack" index="1"]
 polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
 
-[node name="Polygon2D" parent="ButtonBack" index="1"]
+[node name="Polygon2D" parent="ButtonBack" index="2"]
 position = Vector2( -120, -9 )
 polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
 
-[node name="AnimationPlayer" parent="ButtonBack" index="5"]
+[node name="AnimationPlayer" parent="ButtonBack" index="6"]
 anims/RESET = SubResource( 9 )
 anims/click = SubResource( 10 )
 anims/click_small = SubResource( 11 )
@@ -633,14 +631,14 @@ custom_styles/disabled = SubResource( 8 )
 custom_styles/normal = SubResource( 5 )
 is_small = true
 
-[node name="Polygon2D2" parent="ButtonBack2" index="0"]
+[node name="Polygon2D2" parent="ButtonBack2" index="1"]
 polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
 
-[node name="Polygon2D" parent="ButtonBack2" index="1"]
+[node name="Polygon2D" parent="ButtonBack2" index="2"]
 position = Vector2( -120, -9 )
 polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
 
-[node name="AnimationPlayer" parent="ButtonBack2" index="5"]
+[node name="AnimationPlayer" parent="ButtonBack2" index="6"]
 anims/RESET = SubResource( 14 )
 anims/click = SubResource( 15 )
 anims/click_small = SubResource( 16 )

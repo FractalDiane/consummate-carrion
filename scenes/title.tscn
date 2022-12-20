@@ -1,6 +1,7 @@
 [gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
+[ext_resource path="res://fonts/font_display_new_checkbutton.tres" type="DynamicFont" id=2]
 [ext_resource path="res://scripts/scenes/title.gd" type="Script" id=3]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=5]
@@ -11,9 +12,9 @@
 [ext_resource path="res://textures/transition_swirl.png" type="Texture" id=10]
 [ext_resource path="res://audio/sound/whoosh.ogg" type="AudioStream" id=11]
 [ext_resource path="res://audio/sound/whoosh2.ogg" type="AudioStream" id=12]
+[ext_resource path="res://prefabs/cc_checkbutton.tscn" type="PackedScene" id=13]
 [ext_resource path="res://audio/sound/ding2.ogg" type="AudioStream" id=14]
 [ext_resource path="res://fonts/font_display_new_l.tres" type="DynamicFont" id=15]
-[ext_resource path="res://fonts/font_display_new_s.tres" type="DynamicFont" id=16]
 [ext_resource path="res://theme_main.tres" type="Theme" id=18]
 
 [sub_resource type="Animation" id=13]
@@ -506,56 +507,15 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3 ]
 }
 
-[sub_resource type="ShaderMaterial" id=14]
-shader = ExtResource( 9 )
-shader_param/cutoff = 1.0
-shader_param/mask = ExtResource( 10 )
-
 [sub_resource type="Animation" id=9]
 length = 0.001
-tracks/0/type = "value"
-tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 1.0 ]
-}
 
 [sub_resource type="Animation" id=15]
 resource_name = "init"
-tracks/0/type = "value"
-tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
 
 [sub_resource type="Animation" id=8]
 resource_name = "transition"
 length = 1.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("Transition:material:shader_param/cutoff")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1.2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ 1.0, 0.0 ]
-}
 
 [node name="Title" type="Control"]
 anchor_right = 1.0
@@ -845,14 +805,14 @@ margin_right = 128.0
 margin_bottom = 112.0
 is_small = true
 
-[node name="Polygon2D2" parent="TitleScreen/ButtonOptions" index="0"]
+[node name="Polygon2D2" parent="TitleScreen/ButtonOptions" index="1"]
 polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
 
-[node name="Polygon2D" parent="TitleScreen/ButtonOptions" index="1"]
+[node name="Polygon2D" parent="TitleScreen/ButtonOptions" index="2"]
 position = Vector2( -120, -9 )
 polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
 
-[node name="AnimationPlayer" parent="TitleScreen/ButtonOptions" index="5"]
+[node name="AnimationPlayer" parent="TitleScreen/ButtonOptions" index="6"]
 anims/RESET = SubResource( 19 )
 anims/click = SubResource( 20 )
 anims/click_small = SubResource( 21 )
@@ -879,14 +839,14 @@ margin_right = 128.0
 margin_bottom = 704.0
 is_small = true
 
-[node name="Polygon2D2" parent="TitleScreen/ButtonExit" index="0"]
+[node name="Polygon2D2" parent="TitleScreen/ButtonExit" index="1"]
 polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
 
-[node name="Polygon2D" parent="TitleScreen/ButtonExit" index="1"]
+[node name="Polygon2D" parent="TitleScreen/ButtonExit" index="2"]
 position = Vector2( -120, -9 )
 polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
 
-[node name="AnimationPlayer" parent="TitleScreen/ButtonExit" index="5"]
+[node name="AnimationPlayer" parent="TitleScreen/ButtonExit" index="6"]
 anims/RESET = SubResource( 22 )
 anims/click = SubResource( 23 )
 anims/click_small = SubResource( 24 )
@@ -1083,26 +1043,26 @@ margin_left = -424.0
 margin_top = -224.0
 margin_right = -9.0
 margin_bottom = -56.0
-custom_constants/separation = 16
+custom_constants/separation = 28
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Lobby/Settings"]
 margin_right = 415.0
-margin_bottom = 41.0
+margin_bottom = 36.0
 custom_constants/separation = 20
 
 [node name="LabelTimeLimit" type="Label" parent="Lobby/Settings/HBoxContainer"]
-margin_right = 157.0
-margin_bottom = 41.0
-custom_fonts/font = ExtResource( 16 )
+margin_right = 136.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 2 )
 text = "Time Limit"
 
 [node name="SpinBoxTime" type="SpinBox" parent="Lobby/Settings/HBoxContainer"]
-margin_left = 177.0
+margin_left = 156.0
 margin_right = 415.0
-margin_bottom = 41.0
+margin_bottom = 36.0
 size_flags_horizontal = 3
 theme = ExtResource( 18 )
 min_value = 10.0
@@ -1112,22 +1072,22 @@ align = 1
 suffix = "sec"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="Lobby/Settings"]
-margin_top = 57.0
+margin_top = 64.0
 margin_right = 415.0
-margin_bottom = 98.0
+margin_bottom = 100.0
 custom_constants/separation = 20
 
 [node name="LabelWords" type="Label" parent="Lobby/Settings/HBoxContainer2"]
-margin_right = 254.0
-margin_bottom = 41.0
-custom_fonts/font = ExtResource( 16 )
+margin_right = 223.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 2 )
 text = "Peek Word Count"
 align = 2
 
 [node name="SpinBoxWords" type="SpinBox" parent="Lobby/Settings/HBoxContainer2"]
-margin_left = 274.0
+margin_left = 243.0
 margin_right = 415.0
-margin_bottom = 41.0
+margin_bottom = 36.0
 size_flags_horizontal = 3
 theme = ExtResource( 18 )
 min_value = 1.0
@@ -1136,22 +1096,23 @@ value = 10.0
 align = 1
 
 [node name="HBoxContainer3" type="HBoxContainer" parent="Lobby/Settings"]
-margin_top = 114.0
+margin_top = 128.0
 margin_right = 415.0
-margin_bottom = 155.0
-custom_constants/separation = 20
+margin_bottom = 168.0
+size_flags_vertical = 7
+custom_constants/separation = 8
 
 [node name="LabelTheme" type="Label" parent="Lobby/Settings/HBoxContainer3"]
-margin_right = 319.0
-margin_bottom = 41.0
-custom_fonts/font = ExtResource( 16 )
+margin_top = 2.0
+margin_right = 278.0
+margin_bottom = 38.0
+custom_fonts/font = ExtResource( 2 )
 text = "Show Random Theme"
 
-[node name="CheckButtonTheme" type="CheckButton" parent="Lobby/Settings/HBoxContainer3"]
-margin_left = 339.0
-margin_right = 405.0
-margin_bottom = 41.0
-theme = ExtResource( 18 )
+[node name="CheckButtonTheme" parent="Lobby/Settings/HBoxContainer3" instance=ExtResource( 13 )]
+margin_left = 286.0
+margin_right = 286.0
+margin_bottom = 40.0
 
 [node name="SettingsBlocker" type="ColorRect" parent="Lobby"]
 anchor_left = 1.0
@@ -1173,10 +1134,10 @@ margin_right = 128.0
 margin_bottom = 112.0
 is_small = true
 
-[node name="Polygon2D2" parent="Lobby/ButtonExitLobby" index="0"]
+[node name="Polygon2D2" parent="Lobby/ButtonExitLobby" index="1"]
 polygon = PoolVector2Array( 16, 15.1111, 72, 8, 104, 43.5556, 80, 79.1111, 16, 79.1111, -8, 50.6667 )
 
-[node name="Polygon2D" parent="Lobby/ButtonExitLobby" index="1"]
+[node name="Polygon2D" parent="Lobby/ButtonExitLobby" index="2"]
 position = Vector2( -120, -9 )
 polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 144, 79.1111, 120, 50.6667 )
 
@@ -1184,17 +1145,6 @@ polygon = PoolVector2Array( 144, 15.1111, 200, 8, 232, 43.5556, 208, 79.1111, 14
 position = Vector2( 10, 2 )
 antialiased = true
 polygon = PoolVector2Array( 40, 16, 16, 40, 40, 64, 40, 48, 70, 46, 70, 30, 40, 32 )
-
-[node name="Transition" type="ColorRect" parent="Lobby"]
-material = SubResource( 14 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-color = Color( 0, 0, 0, 1 )
-__meta__ = {
-"_edit_lock_": true,
-"_edit_use_anchors_": false
-}
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Lobby"]
 anims/RESET = SubResource( 9 )
