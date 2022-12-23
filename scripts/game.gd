@@ -107,7 +107,7 @@ puppetsync func end_round() -> void:
 	
 	
 puppetsync func end_round_2() -> void:
-	$AnimationPlayerRound.play("unflip_story")
+	$AnimationPlayerRound.play("unflip_story_reducedmotion" if OptionsManager.reduce_motion_enabled() else "unflip_story")
 	
 	
 puppetsync func show_game_finished() -> void:
@@ -119,9 +119,12 @@ puppetsync func goto_results() -> void:
 	NetworkManager.player_stories = stories.duplicate()
 	
 	var results := preload("res://scenes/results.tscn").instance() as Control
-	results.rect_position.x = 1280
-	get_tree().get_current_scene().add_child(results)
-	anim_player.play("to_results")
+	$InstancedScene.add_child(results)
+	if OptionsManager.reduce_motion_enabled():
+		anim_player.play("to_results_reducedmotion")
+	else:
+		results.rect_position.x = 1280
+		anim_player.play("to_results")
 	
 	
 puppetsync func setup_story(after_first_round: bool) -> void:
@@ -200,7 +203,7 @@ func rotate_array(array: Array, amount: int) -> Array:
 
 
 func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
-	if anim_name == "transition":
+	if anim_name == "transition" or anim_name == "transition_reducedmotion":
 		story_text.set_readonly(false)
 		rpc_id(1, "set_player_ready", NetworkManager.ReadyState.GameStart)
 	elif anim_name == "to_title":
@@ -216,27 +219,30 @@ func _on_server_disconnect() -> void:
 	
 func return_to_title() -> void:
 	var title := preload("res://scenes/title.tscn").instance() as Control
-	title.rect_position.x = -2560
-	get_tree().get_current_scene().add_child(title)
-	anim_player.play("to_title")
+	$InstancedScene.add_child(title)
+	if OptionsManager.reduce_motion_enabled():
+		anim_player.play("to_title_reducedmotion")
+	else:
+		title.rect_position.x = -2560
+		anim_player.play("to_title")
 	
 
 func _on_TimerRoundEnd_timeout() -> void:
-	$AnimationPlayerRound.play("flip_story")
+	$AnimationPlayerRound.play("flip_story_reducedmotion" if OptionsManager.reduce_motion_enabled() else "flip_story")
 	if current_round + 1 == NetworkManager.get_player_count():
 		$AnimationPlayerRound2.play("flip_prompt")
 
 
 func _on_AnimationPlayerRound_animation_finished(anim_name: String) -> void:
-	if anim_name == "flip_story":
+	if anim_name == "flip_story" or anim_name == "flip_story_reducedmotion":
 		if get_tree().is_network_server():
 			rotate_players(not game_started)
 			rpc_id(1, "set_player_ready", NetworkManager.ReadyState.StorySync)
 			rpc("sync_story_info", stories, player_order, true)
-	elif anim_name == "unflip_story":
+	elif anim_name == "unflip_story" or anim_name == "unflip_story_reducedmotion":
 		rpc_id(1, "set_player_ready", NetworkManager.ReadyState.RoundEndFullFlip)
 	
 
 func _on_AnimationPlayerPrompt_animation_finished(_anim_name: String) -> void:
 	if not prompt_retyped:
-		anim_player.play("transition")
+		anim_player.play("transition_reducedmotion" if OptionsManager.reduce_motion_enabled() else "transition")

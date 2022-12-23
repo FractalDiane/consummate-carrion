@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://scripts/cc_button.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=2]
@@ -131,6 +131,21 @@ tracks/0/keys = {
 "values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0, 0, 0, 1 ) ]
 }
 
+[sub_resource type="Animation" id=13]
+resource_name = "click_new_d"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Polygon2D:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0.890196, 0.72549, 1 ), Color( 0.2, 0.2, 0.2, 1 ) ]
+}
+
 [sub_resource type="Animation" id=11]
 tracks/0/type = "value"
 tracks/0/path = NodePath("Polygon2D2:scale")
@@ -236,11 +251,13 @@ stream = ExtResource( 3 )
 
 [node name="SoundClick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+volume_db = -4.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 9 )
 anims/click = SubResource( 10 )
 anims/click_new = SubResource( 12 )
+anims/click_new_d = SubResource( 13 )
 anims/click_small = SubResource( 11 )
 
 [node name="TweenShadow" type="Tween" parent="."]

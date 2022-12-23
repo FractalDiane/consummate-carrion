@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://fonts/font_logo_2.tres" type="DynamicFont" id=1]
 [ext_resource path="res://audio/sound/theme_ding.ogg" type="AudioStream" id=2]
@@ -21,7 +21,7 @@ tracks/0/keys = {
 "values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
 }
 tracks/1/type = "value"
-tracks/1/path = NodePath("Logo:rect_scale")
+tracks/1/path = NodePath("LogoBase/Logo:rect_scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/imported = false
@@ -33,7 +33,7 @@ tracks/1/keys = {
 "values": [ Vector2( 0, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
 }
 tracks/2/type = "value"
-tracks/2/path = NodePath("Logo2:rect_scale")
+tracks/2/path = NodePath("LogoBase/Logo2:rect_scale")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
@@ -45,7 +45,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 0 ), Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
 }
 tracks/3/type = "value"
-tracks/3/path = NodePath("Logo3:rect_scale")
+tracks/3/path = NodePath("LogoBase/Logo3:rect_scale")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/imported = false
@@ -57,7 +57,7 @@ tracks/3/keys = {
 "values": [ Vector2( 0, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
 }
 tracks/4/type = "value"
-tracks/4/path = NodePath("Logo4:rect_scale")
+tracks/4/path = NodePath("LogoBase/Logo4:rect_scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/imported = false
@@ -69,7 +69,7 @@ tracks/4/keys = {
 "values": [ Vector2( 1, 0 ), Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Logo5:rect_scale")
+tracks/5/path = NodePath("LogoBase/Logo5:rect_scale")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -81,7 +81,7 @@ tracks/5/keys = {
 "values": [ Vector2( 0, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Logo6:rect_scale")
+tracks/6/path = NodePath("LogoBase/Logo6:rect_scale")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -93,7 +93,7 @@ tracks/6/keys = {
 "values": [ Vector2( 1, 0 ), Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Logo7:rect_scale")
+tracks/7/path = NodePath("LogoBase/Logo7:rect_scale")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -105,7 +105,7 @@ tracks/7/keys = {
 "values": [ Vector2( 0, 1 ), Vector2( 1e-05, 1 ), Vector2( 1, 1 ) ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Logo8:rect_scale")
+tracks/8/path = NodePath("LogoBase/Logo8:rect_scale")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -117,7 +117,7 @@ tracks/8/keys = {
 "values": [ Vector2( 1, 0 ), Vector2( 1, 1e-05 ), Vector2( 1, 1 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("LogoText:rect_scale")
+tracks/9/path = NodePath("LogoBase/LogoText:rect_scale")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -238,6 +238,69 @@ tracks/2/keys = {
 "values": [ 4.0, -60.0 ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "to_title_reducedmotion"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( -4, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( -1280, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("SoundType:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -60.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("SoundDing:volume_db")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 4.0, -60.0 ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("LogoBase:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("NewScene:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
 [node name="Logo" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -246,7 +309,6 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_edit_vertical_guides_": [ 640.0 ]
 }
-skip = false
 
 [node name="Fade" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -262,21 +324,36 @@ anims/logo = SubResource( 1 )
 
 [node name="AnimationPlayerTransition" type="AnimationPlayer" parent="."]
 anims/to_title = SubResource( 2 )
+anims/to_title_reducedmotion = SubResource( 3 )
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.35
 one_shot = true
 autostart = true
 
-[node name="Logo" type="ColorRect" parent="."]
+[node name="NewScene" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LogoBase" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -396.0
-margin_top = -72.0
-margin_right = -356.0
-margin_bottom = -32.0
+margin_left = 224.0
+margin_top = 268.0
+margin_right = 264.0
+margin_bottom = 308.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -284,15 +361,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo2" type="ColorRect" parent="."]
+[node name="Logo2" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -340.0
-margin_top = -72.0
-margin_right = -300.0
-margin_bottom = -32.0
+margin_left = 280.0
+margin_top = 268.0
+margin_right = 320.0
+margin_bottom = 308.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -300,15 +377,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo3" type="ColorRect" parent="."]
+[node name="Logo3" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -284.0
-margin_top = -72.0
-margin_right = -244.0
-margin_bottom = -32.0
+margin_left = 336.0
+margin_top = 268.0
+margin_right = 376.0
+margin_bottom = 308.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -316,15 +393,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo4" type="ColorRect" parent="."]
+[node name="Logo4" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -396.0
-margin_top = -16.0
-margin_right = -356.0
-margin_bottom = 24.0
+margin_left = 224.0
+margin_top = 324.0
+margin_right = 264.0
+margin_bottom = 364.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -332,15 +409,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo5" type="ColorRect" parent="."]
+[node name="Logo5" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -284.0
-margin_top = -16.0
-margin_right = -244.0
-margin_bottom = 24.0
+margin_left = 336.0
+margin_top = 324.0
+margin_right = 376.0
+margin_bottom = 364.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -348,15 +425,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo6" type="ColorRect" parent="."]
+[node name="Logo6" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -396.0
-margin_top = 40.0
-margin_right = -356.0
-margin_bottom = 80.0
+margin_left = 224.0
+margin_top = 380.0
+margin_right = 264.0
+margin_bottom = 420.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -364,15 +441,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo7" type="ColorRect" parent="."]
+[node name="Logo7" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -340.0
-margin_top = 40.0
-margin_right = -300.0
-margin_bottom = 80.0
+margin_left = 280.0
+margin_top = 380.0
+margin_right = 320.0
+margin_bottom = 420.0
 rect_scale = Vector2( 1e-05, 1 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -380,15 +457,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Logo8" type="ColorRect" parent="."]
+[node name="Logo8" type="ColorRect" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -284.0
-margin_top = 40.0
-margin_right = -244.0
-margin_bottom = 80.0
+margin_left = 336.0
+margin_top = 380.0
+margin_right = 376.0
+margin_bottom = 420.0
 rect_scale = Vector2( 1, 1e-05 )
 rect_pivot_offset = Vector2( 20, 20 )
 color = Color( 0.917647, 0.839216, 0.572549, 1 )
@@ -396,15 +473,15 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="LogoText" type="Label" parent="."]
+[node name="LogoText" type="Label" parent="LogoBase"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -212.0
-margin_top = -72.0
-margin_right = 489.0
-margin_bottom = 80.0
+margin_left = 408.0
+margin_top = 268.0
+margin_right = 1109.0
+margin_bottom = 420.0
 rect_scale = Vector2( 1e-05, 1 )
 custom_colors/font_color = Color( 0.917647, 0.839216, 0.572549, 1 )
 custom_fonts/font = ExtResource( 1 )

@@ -391,6 +391,7 @@ bbcode_enabled = true
 bbcode_text = "[center][tornado radius=5 freq=0]Options[/tornado][/center]"
 meta_underlined = false
 text = "Options"
+scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -435,6 +436,8 @@ __meta__ = {
 [node name="SliderSound" parent="OptionsList/VolumeSound" instance=ExtResource( 9 )]
 margin_left = 303.0
 margin_right = 870.0
+focus_next = NodePath("../../VolumeMusic/SliderMusic")
+focus_previous = NodePath("../../../ButtonBack")
 
 [node name="Value" type="Label" parent="OptionsList/VolumeSound"]
 margin_left = 874.0
@@ -474,6 +477,8 @@ __meta__ = {
 [node name="SliderMusic" parent="OptionsList/VolumeMusic" instance=ExtResource( 9 )]
 margin_left = 303.0
 margin_right = 870.0
+focus_next = NodePath("../../Checkboxes/Fullscreen/ButtonFullscreen")
+focus_previous = NodePath("../../VolumeSound/SliderSound")
 sound_on_change = false
 
 [node name="Value" type="Label" parent="OptionsList/VolumeMusic"]
@@ -518,6 +523,8 @@ __meta__ = {
 margin_left = 219.0
 margin_right = 219.0
 margin_bottom = 51.0
+focus_next = NodePath("../../ReduceMotion/ButtonMotion")
+focus_previous = NodePath("../../../VolumeMusic/SliderMusic")
 
 [node name="ReduceMotion" type="HBoxContainer" parent="OptionsList/Checkboxes"]
 margin_left = 482.0
@@ -546,6 +553,8 @@ __meta__ = {
 margin_left = 307.0
 margin_right = 307.0
 margin_bottom = 51.0
+focus_next = NodePath("../../../../ButtonCredits")
+focus_previous = NodePath("../../Fullscreen/ButtonFullscreen")
 
 [node name="ButtonCredits" parent="." instance=ExtResource( 6 )]
 anchor_left = 0.5
@@ -556,6 +565,9 @@ margin_left = -160.0
 margin_top = -176.0
 margin_right = 160.0
 margin_bottom = -104.0
+focus_neighbour_bottom = NodePath("../ButtonBack")
+focus_next = NodePath("../ButtonBack")
+focus_previous = NodePath("../OptionsList/Checkboxes/ReduceMotion/ButtonMotion")
 text = "Credits"
 
 [node name="ButtonBack" parent="." instance=ExtResource( 6 )]
@@ -565,6 +577,9 @@ margin_left = 16.0
 margin_top = -112.0
 margin_right = 120.0
 margin_bottom = -32.0
+focus_neighbour_top = NodePath("../ButtonCredits")
+focus_next = NodePath("../OptionsList/VolumeSound/SliderSound")
+focus_previous = NodePath("../ButtonCredits")
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = SubResource( 7 )
 custom_styles/focus = SubResource( 3 )
@@ -596,6 +611,9 @@ margin_left = 1312.0
 margin_top = -112.0
 margin_right = 1416.0
 margin_bottom = -32.0
+focus_neighbour_top = NodePath("../Credits/ButtonLicense")
+focus_next = NodePath("../Credits/ButtonLicense")
+focus_previous = NodePath("../Credits/ButtonLicense")
 custom_styles/hover = SubResource( 6 )
 custom_styles/pressed = SubResource( 7 )
 custom_styles/focus = SubResource( 3 )
@@ -627,6 +645,7 @@ margin_left = 1280.0
 margin_right = 1280.0
 mouse_filter = 2
 __meta__ = {
+"_edit_lock_": true,
 "_edit_use_anchors_": false
 }
 
@@ -678,6 +697,9 @@ margin_left = 480.0
 margin_top = 536.0
 margin_right = 800.0
 margin_bottom = 608.0
+focus_neighbour_bottom = NodePath("../../ButtonBack2")
+focus_next = NodePath("../../ButtonBack2")
+focus_previous = NodePath("../../ButtonBack2")
 text = "License Info"
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

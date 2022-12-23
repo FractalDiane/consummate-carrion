@@ -3,6 +3,7 @@ extends Node
 signal fullscreen_changed(fullscreen)
 
 const OPTIONS_PATH := "user://options.cfg"
+const SOUND_CLICK := preload("res://audio/sound/click2.ogg")
 
 var user_options := ConfigFile.new()
 var options_exist := false
@@ -28,6 +29,19 @@ func _process(_delta: float) -> void:
 		
 func do_options_exist() -> bool:
 	return options_exist
+
+
+func reduce_motion_enabled() -> bool:
+	return user_options.get_value("Options", "reduce_motion", false) as bool
+	
+	
+func play_sound_click() -> void:
+	var player := AudioStreamPlayer.new()
+	player.stream = SOUND_CLICK
+	player.volume_db = -4
+	player.connect("finished", player, "queue_free")
+	get_tree().get_root().add_child(player)
+	player.play()
 
 
 func update_options(volume_sound: int, volume_music: int, fullscreen: bool, reduce_motion: bool) -> void:

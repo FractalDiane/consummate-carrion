@@ -9,16 +9,20 @@ const DEFAULT_PORT := 31400
 const MAX_PLAYERS := 12
 
 var transition_to_lobby := false
+var in_lobby := false
 
 onready var edit_name := $TitleScreen/EditName as LineEdit
 onready var edit_join_ip := $TitleScreen/EditJoinIp as LineEdit
 onready var edit_join_port := $TitleScreen/EditJoinPort as LineEdit
 onready var edit_host_port := $TitleScreen/EditHostPort as LineEdit
+onready var button_options := $TitleScreen/ButtonOptions as Control
 
 onready var players_grid := $Lobby/Players as GridContainer
+onready var button_start := $Lobby/ButtonStart as Control
+onready var button_exit_lobby := $Lobby/ButtonExitLobby as Control
 onready var spinbox_timer := $Lobby/Settings/HBoxContainer/SpinBoxTime as SpinBox
 onready var spinbox_words := $Lobby/Settings/HBoxContainer2/SpinBoxWords as SpinBox
-onready var button_theme := $Lobby/Settings/HBoxContainer3/CheckButtonTheme
+onready var button_theme := $Lobby/Settings/HBoxContainer3/CheckButtonTheme as Control
 
 const Themes := [
 	"Trains",
@@ -73,7 +77,6 @@ const Themes := [
 	"Haunted House",
 ]
 
-
 func _ready() -> void:
 	$TitleScreen/ButtonHost.set_cc_button_enabled(false)
 	$TitleScreen/ButtonJoin.set_cc_button_enabled(false)
@@ -84,12 +87,18 @@ func _ready() -> void:
 		$TitleScreen/Title.set_bbcode("[tornado radius=5]Consummate Carrion[/tornado]")
 		$CanvasLayer/ClickBlock.hide()
 		
-	#$AnimationPlayer.play_backwards("transition")
-	#if NetworkManager.title_transition:
-	#	$SoundTransition2.play()
-	#	NetworkManager.title_transition = false
-
-	#NetworkManager.show_notification("HELLO THIS IS A NOTIFICATION YEAH")
+	if OptionsManager.reduce_motion_enabled():
+		$TitleScreen/Title.set_bbcode("Consummate Carrion")
+		$Lobby/LabelLobby.set_bbcode("Lobby")
+	
+	
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("ui_focus_next") or Input.is_action_just_pressed("ui_focus_prev"):
+		if get_focus_owner() == null:
+			if in_lobby:
+				button_exit_lobby.grab_focus()
+			else:
+				button_options.grab_focus()
 
 # TITLE SCREEN ====================================================================================
 
@@ -147,7 +156,12 @@ func init_network_manager(peer: NetworkedMultiplayerENet) -> void:
 
 func _on_TimerTransition_timeout() -> void:
 	#$SoundTransition.play(0.25)
-	$AnimationPlayer.play("to_lobby" if transition_to_lobby else "to_title")
+	var anim := "to_lobby" if transition_to_lobby else "to_title"
+	$AnimationPlayer.play(anim)
+	if OptionsManager.reduce_motion_enabled():
+		$AnimationPlayer.seek(1, true)
+		_on_AnimationPlayer_animation_finished(anim)
+		
 	if transition_to_lobby:
 		$Lobby/TimerAddMe.start()
 	else:
@@ -165,10 +179,14 @@ func _on_join_succeeded(peer: NetworkedMultiplayerENet) -> void:
 	
 	
 func _on_TimerOptions_timeout() -> void:
-	var options := preload("res://scenes/options.tscn").instance() as Control
-	options.rect_position.y = -720
-	get_tree().get_current_scene().add_child(options)
-	$AnimationPlayer.play("to_options")
+	if OptionsManager.reduce_motion_enabled():
+		get_tree().change_scene("res://scenes/options.tscn")
+		OptionsManager.play_sound_click()
+	else:
+		var options := preload("res://scenes/options.tscn").instance() as Control
+		options.rect_position.y = -720
+		get_tree().get_current_scene().add_child(options)
+		$AnimationPlayer.play("to_options")
 	
 	
 func _on_TimerTimeout_timeout() -> void:
@@ -189,6 +207,13 @@ func lobby_init() -> void:
 	else:
 		$Lobby/SettingsBlocker.hide()
 		$Lobby/LabelWaiting.hide()
+		button_exit_lobby.focus_next = button_start.get_path()
+		button_exit_lobby.focus_previous = button_theme.get_path()
+		
+	in_lobby = true
+	
+	if get_focus_owner() != null:
+		get_focus_owner().release_focus()
 		
 		#_on_SpinBoxTime_value_changed(spinbox_timer.value)
 		#_on_SpinBoxWords_value_changed(spinbox_words.value)
@@ -200,6 +225,13 @@ func lobby_deinit() -> void:
 	NetworkManager.disconnect("player_disconnected", self, "_on_player_disconnected")
 	if not get_tree().is_network_server():
 		get_tree().disconnect("server_disconnected", self, "_on_server_disconnect")
+		
+	button_exit_lobby.focus_next = button_exit_lobby.get_path()
+	button_exit_lobby.focus_previous = button_exit_lobby.get_path()
+	in_lobby = false
+	
+	if get_focus_owner() != null:
+		get_focus_owner().release_focus()
 	
 
 func add_player(player_name: String, is_me: bool, is_host: bool) -> void:
@@ -262,7 +294,7 @@ func _on_player_connected(id: int) -> void:
 	add_player(NetworkManager.players[id]["name"], false, id == 1)
 	_on_SpinBoxTime_value_changed(spinbox_timer.value)
 	_on_SpinBoxWords_value_changed(spinbox_words.value)
-	_on_CheckButtonTheme_toggled(button_theme.pressed)
+	_on_CheckButtonTheme_toggled(button_theme.is_cc_button_pressed())
 	
 	
 func _on_player_disconnected(_id: int, player_name: String) -> void:
@@ -298,7 +330,7 @@ func _on_AnimationPlayer_animation_finished(anim_name: String) -> void:
 	if anim_name == "to_title":
 		for child in $Lobby/Players.get_children():
 			child.queue_free()
-	elif anim_name == "to_game":
+	elif anim_name == "to_game" or anim_name == "to_game_reducedmotion":
 		get_tree().change_scene(game_scene)
 	elif anim_name == "to_options":
 		get_tree().change_scene("res://scenes/options.tscn")
@@ -329,4 +361,4 @@ remotesync func start_game() -> void:
 		shuffled.shuffle()
 		NetworkManager.rpc("set_random_theme", shuffled[0])
 	
-	$AnimationPlayer.play("to_game")
+	$AnimationPlayer.play("to_game_reducedmotion" if OptionsManager.reduce_motion_enabled() else "to_game")

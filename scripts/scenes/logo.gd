@@ -9,9 +9,13 @@ func _ready() -> void:
 
 func goto_title() -> void:
 	var title := preload("res://scenes/title.tscn").instance() as Control
-	title.rect_position.x = 1280
-	get_tree().get_current_scene().add_child(title)
-	$AnimationPlayerTransition.play("to_title")
+	$NewScene.add_child(title)
+	if OptionsManager.reduce_motion_enabled():
+		$NewScene.modulate.a = 0.0
+		$AnimationPlayerTransition.play("to_title_reducedmotion")
+	else:
+		title.rect_position.x = 1280
+		$AnimationPlayerTransition.play("to_title")
 	
 
 func _on_AnimationPlayerTransition_animation_finished(_anim_name: String) -> void:

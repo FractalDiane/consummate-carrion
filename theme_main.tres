@@ -1,8 +1,18 @@
-[gd_resource type="Theme" load_steps=5 format=2]
+[gd_resource type="Theme" load_steps=6 format=2]
 
 [ext_resource path="res://fonts/font_display_new_xs_2.tres" type="DynamicFont" id=1]
 [ext_resource path="res://textures/radio_off2.png" type="Texture" id=2]
 [ext_resource path="res://textures/radio_on2.png" type="Texture" id=3]
+
+[sub_resource type="StyleBoxFlat" id=7]
+bg_color = Color( 0, 0, 0, 1 )
+draw_center = false
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color( 0.917647, 0.839216, 0.572549, 1 )
+border_blend = true
 
 [sub_resource type="StyleBoxFlat" id=6]
 bg_color = Color( 0, 0, 0, 1 )
@@ -11,4 +21,5 @@ bg_color = Color( 0, 0, 0, 1 )
 default_font = ExtResource( 1 )
 CheckButton/icons/off = ExtResource( 2 )
 CheckButton/icons/on = ExtResource( 3 )
+LineEdit/styles/focus = SubResource( 7 )
 LineEdit/styles/normal = SubResource( 6 )

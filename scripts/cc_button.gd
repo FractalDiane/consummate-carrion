@@ -19,28 +19,23 @@ func _ready() -> void:
 	polygon_shadow.rect_pivot_offset = Vector2(46, 46) if is_small else Vector2(176, 32)
 	polygon_shadow.rect_position = Vector2(-6, 0) if is_small else Vector2.ZERO
 	
-#	var new_points := PoolVector2Array()
-#	for point in polygon.polygon:
-#		var new_point := Vector2(point.x + rand_range(-10, 10), point.y + rand_range(-10, 10))
-#		new_points.push_back(new_point)
-#
-#	polygon.polygon = new_points
-	
 
 func set_cc_button_enabled(enabled: bool) -> void:
 	disabled = not enabled
 	if enabled:
-		$Polygon2D.color = Color.black
+		polygon.color = COLOR_UNHOVER
 	else:
-		$Polygon2D.color = Color(0.2, 0.2, 0.2)		
+		polygon.color = Color(0.2, 0.2, 0.2)		
 
 
 func _on_CCButton_mouse_entered() -> void:
-	grab_focus()
+	if not disabled:
+		grab_focus()
 
 
 func _on_CCButton_mouse_exited() -> void:
-	release_focus()
+	if not disabled:
+		release_focus()
 
 
 func _on_CCButton_focus_entered() -> void:
@@ -58,13 +53,14 @@ func _on_CCButton_pressed() -> void:
 	sound_click.play()
 	
 	spawned_shadow = polygon.duplicate()
+	spawned_shadow.color = COLOR_HOVER
 	polygon_shadow.add_child(spawned_shadow)
 	tween_shadow.remove_all()
-	tween_shadow.interpolate_property(polygon_shadow, "rect_scale", Vector2.ONE, Vector2(2.0, 2.0), 1.0)
+	tween_shadow.interpolate_property(polygon_shadow, "rect_scale", Vector2.ONE, Vector2(2.0, 2.0) if is_small else Vector2(1.5, 1.5), 1.0)
 	tween_shadow.interpolate_property(polygon_shadow, "modulate:a", 1.0, 0.0, 1.0)
 	tween_shadow.start()
 	
-	$AnimationPlayer.play("click_new")
+	$AnimationPlayer.play("click_new_d" if disabled else "click_new")
 
 
 func _on_TweenShadow_tween_all_completed() -> void:

@@ -5,6 +5,8 @@ var page_index := 0
 var story_to_save := String()
 var prompt_to_save := String()
 
+var colors_mode := false
+
 onready var prompt := $Prompt as Label
 onready var story := $StoryBase/Story as TextEdit
 
@@ -14,6 +16,7 @@ func _ready() -> void:
 	if not get_tree().is_network_server():
 		$ButtonLeft.hide()
 		$ButtonRight.hide()
+		$ButtonExit.hide()
 	else:
 		$ButtonLeft.set_cc_button_enabled(false)
 
@@ -38,10 +41,20 @@ puppetsync func show_current_story() -> void:
 	
 		
 puppetsync func move_page(right: bool) -> void:
-	page_index += 1 - 2 * int(not right)
+	page_index = clamp(page_index + (1 if right else -1), 0, NetworkManager.get_player_count() - 1)
 	if get_tree().is_network_server():
 		$ButtonLeft.set_cc_button_enabled(page_index > 0)
 		$ButtonRight.set_cc_button_enabled(page_index < NetworkManager.get_player_count() - 1)
+		
+		
+puppetsync func return_to_lobby() -> void:
+	var title := preload("res://scenes/title.tscn").instance()
+	$ChildScene.add_child(title)
+	if OptionsManager.reduce_motion_enabled():
+		$AnimationPlayer.play("to_lobby_reducedmotion")
+	else:
+		title.rect_position.x = -1280
+		$AnimationPlayer.play("to_lobby")
 
 
 func _on_TimerStart_timeout() -> void:
@@ -72,3 +85,17 @@ func _on_SaveDialog_file_selected(path: String) -> void:
 		file.store_string(prompt_to_save + "\n")
 		file.store_string(story_to_save + "\n")
 		file.close()
+		
+		
+func _on_ButtonColors_pressed() -> void:
+	colors_mode = not colors_mode
+	
+
+
+func _on_ButtonExit_pressed() -> void:
+	$TimerExit.start()
+
+
+func _on_TimerExit_timeout() -> void:
+	if get_tree().is_network_server():
+		rpc("return_to_lobby")
