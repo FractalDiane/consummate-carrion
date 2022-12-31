@@ -36,15 +36,15 @@ puppetsync func show_current_story() -> void:
 	var story_text := story_array.join(" ")
 	story.set_text(story_text)
 	
-	prompt.set_text("Story started by " + NetworkManager.players[NetworkManager.player_stories[page_index]["owner"]]["name"])
+	prompt.set_text("Story started by " + NetworkManager.players_cached[NetworkManager.player_stories[page_index]["owner"]]["name"])
 	$AnimationPlayerPrompt.play("type_prompt")
 	
 		
 puppetsync func move_page(right: bool) -> void:
-	page_index = int(clamp(page_index + (1 if right else -1), 0, NetworkManager.get_player_count() - 1))
+	page_index = int(clamp(page_index + (1 if right else -1), 0, NetworkManager.get_cached_player_count() - 1))
 	if get_tree().is_network_server():
 		$ButtonLeft.set_cc_button_enabled(page_index > 0)
-		$ButtonRight.set_cc_button_enabled(page_index < NetworkManager.get_player_count() - 1)
+		$ButtonRight.set_cc_button_enabled(page_index < NetworkManager.get_cached_player_count() - 1)
 		
 		
 puppetsync func return_to_lobby() -> void:

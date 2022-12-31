@@ -131,7 +131,7 @@ puppetsync func setup_story(after_first_round: bool) -> void:
 	if after_first_round:
 		current_round += 1
 		
-	if current_round < NetworkManager.get_player_count():
+	if current_round < NetworkManager.get_cached_player_count():
 		var current_story: Dictionary = stories[player_order.find(get_tree().get_network_unique_id())]
 		
 		var split_total := PoolStringArray(current_story["text"]).join(" ").split(" ")
@@ -229,7 +229,8 @@ func return_to_title() -> void:
 
 func _on_TimerRoundEnd_timeout() -> void:
 	$AnimationPlayerRound.play("flip_story_reducedmotion" if OptionsManager.reduce_motion_enabled() else "flip_story")
-	if current_round + 1 == NetworkManager.get_player_count():
+	print(NetworkManager.get_cached_player_count())
+	if current_round + 1 == NetworkManager.get_cached_player_count():
 		$AnimationPlayerRound2.play("flip_prompt")
 
 

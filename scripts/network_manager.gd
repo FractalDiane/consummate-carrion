@@ -10,6 +10,7 @@ var my_connection: NetworkedMultiplayerENet = null
 var player_order_initial := []
 var player_order := []
 var players := {}
+var players_cached := {}
 var self_data := { "name": "" }
 
 var players_ready := {}
@@ -91,6 +92,10 @@ func get_player_count() -> int:
 	return players.size()
 	
 	
+func get_cached_player_count() -> int:
+	return players_cached.size()
+	
+	
 func randomize_player_order() -> void:
 	player_order.shuffle()
 	
@@ -113,6 +118,7 @@ func clear_players_ready(ready_stage: int) -> void:
 		
 puppetsync func set_player_order_initial(order: Array) -> void:
 	player_order_initial = order
+	players_cached = players.duplicate(true)
 	
 	
 puppetsync func set_timer_max(value: int) -> void:
