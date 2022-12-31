@@ -7,6 +7,7 @@ const NotificationPrefab := preload("res://prefabs/notification.tscn")
 
 var my_connection: NetworkedMultiplayerENet = null
 
+var player_order_initial := []
 var player_order := []
 var players := {}
 var self_data := { "name": "" }
@@ -27,6 +28,7 @@ var client_name := String()
 var is_client := false
 
 var title_transition := false
+var coming_from_game := false
 
 enum ReadyState {
 	GameStart,
@@ -69,11 +71,13 @@ func show_notification(what: String) -> void:
 	
 
 func add_player(id: int) -> void:
+	player_order_initial.push_back(id)
 	player_order.push_back(id)
 	players[id] = self_data
 	
 	
 func remove_player(id: int) -> void:
+	player_order_initial.erase(id)
 	player_order.erase(id)
 	players.erase(id)
 	
@@ -105,6 +109,10 @@ func are_all_players_ready(ready_stage: int) -> bool:
 func clear_players_ready(ready_stage: int) -> void:
 	if players_ready.has(ready_stage):
 		players_ready[ready_stage].clear()
+		
+		
+puppetsync func set_player_order_initial(order: Array) -> void:
+	player_order_initial = order
 	
 	
 puppetsync func set_timer_max(value: int) -> void:

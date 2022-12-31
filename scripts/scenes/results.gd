@@ -41,15 +41,18 @@ puppetsync func show_current_story() -> void:
 	
 		
 puppetsync func move_page(right: bool) -> void:
-	page_index = clamp(page_index + (1 if right else -1), 0, NetworkManager.get_player_count() - 1)
+	page_index = int(clamp(page_index + (1 if right else -1), 0, NetworkManager.get_player_count() - 1))
 	if get_tree().is_network_server():
 		$ButtonLeft.set_cc_button_enabled(page_index > 0)
 		$ButtonRight.set_cc_button_enabled(page_index < NetworkManager.get_player_count() - 1)
 		
 		
 puppetsync func return_to_lobby() -> void:
+	NetworkManager.coming_from_game = true
 	var title := preload("res://scenes/title.tscn").instance()
-	$ChildScene.add_child(title)
+	$ChildScene2.add_child(title)
+	#title.call_deferred("jump_to_lobby")
+	#title.call_deferred("lobby_init", true)
 	if OptionsManager.reduce_motion_enabled():
 		$AnimationPlayer.play("to_lobby_reducedmotion")
 	else:
@@ -58,6 +61,7 @@ puppetsync func return_to_lobby() -> void:
 
 
 func _on_TimerStart_timeout() -> void:
+	#return_to_lobby()
 	rpc_id(1, "set_player_ready", NetworkManager.ReadyState.ResultsStart)
 
 
@@ -91,7 +95,6 @@ func _on_ButtonColors_pressed() -> void:
 	colors_mode = not colors_mode
 	
 
-
 func _on_ButtonExit_pressed() -> void:
 	$TimerExit.start()
 
@@ -99,3 +102,8 @@ func _on_ButtonExit_pressed() -> void:
 func _on_TimerExit_timeout() -> void:
 	if get_tree().is_network_server():
 		rpc("return_to_lobby")
+
+
+func _on_AnimationPlayer_animation_finished(_anim_name: String) -> void:
+	get_tree().change_scene("res://scenes/title.tscn")
+	#get_tree().get_current_scene().jump_to_lobby()

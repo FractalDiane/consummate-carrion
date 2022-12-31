@@ -90,6 +90,12 @@ func _ready() -> void:
 	if OptionsManager.reduce_motion_enabled():
 		$TitleScreen/Title.set_bbcode("Consummate Carrion")
 		$Lobby/LabelLobby.set_bbcode("Lobby")
+		
+	if NetworkManager.coming_from_game:
+		jump_to_lobby()
+		lobby_init(true)
+		if get_tree().get_current_scene() == self:
+			NetworkManager.coming_from_game = false
 	
 	
 func _process(_delta: float) -> void:
@@ -151,7 +157,29 @@ func init_network_manager(peer: NetworkedMultiplayerENet) -> void:
 	NetworkManager.my_connection = peer
 	NetworkManager.add_player(get_tree().get_network_unique_id())
 	
-	lobby_init()
+	lobby_init(true)
+	
+	
+func jump_to_lobby() -> void:
+	$AnimationPlayer.play("to_lobby")
+	$AnimationPlayer.seek(1)
+	_on_AnimationPlayer_animation_finished("to_lobby")
+	for player in NetworkManager.player_order_initial:
+		add_player(NetworkManager.players[player]["name"], player == get_tree().get_network_unique_id(), player == 1)
+	if get_tree().is_network_server():
+		spinbox_timer.disconnect("value_changed", self, "_on_SpinBoxTime_value_changed")
+		spinbox_words.disconnect("value_changed", self, "_on_SpinBoxWords_value_changed")
+		button_theme.disconnect("toggled", self, "_on_CheckButtonTheme_toggled")
+		
+		spinbox_timer.set_value(NetworkManager.timer_max)
+		spinbox_words.set_value(NetworkManager.peek_words)
+		button_theme.set_cc_button_checked(NetworkManager.show_theme)
+		
+		spinbox_timer.connect("value_changed", self, "_on_SpinBoxTime_value_changed")
+		spinbox_words.connect("value_changed", self, "_on_SpinBoxWords_value_changed")
+		button_theme.connect("toggled", self, "_on_CheckButtonTheme_toggled")
+	
+		rpc("sync_setting_displays", NetworkManager.timer_max, NetworkManager.peek_words, NetworkManager.show_theme)
 
 
 func _on_TimerTransition_timeout() -> void:
@@ -198,11 +226,14 @@ func _on_TimerExit_timeout() -> void:
 
 # LOBBY ===========================================================================================
 
-func lobby_init() -> void:
-	NetworkManager.connect("player_connected", self, "_on_player_connected")
-	NetworkManager.connect("player_disconnected", self, "_on_player_disconnected")
+func lobby_init(signals: bool) -> void:
+	if signals:
+		NetworkManager.connect("player_connected", self, "_on_player_connected")
+		NetworkManager.connect("player_disconnected", self, "_on_player_disconnected")
+		
 	if not get_tree().is_network_server():
-		get_tree().connect("server_disconnected", self, "_on_server_disconnect", [], CONNECT_REFERENCE_COUNTED)
+		if signals:
+			get_tree().connect("server_disconnected", self, "_on_server_disconnect", [], CONNECT_REFERENCE_COUNTED)
 		$Lobby/ButtonStart.hide()
 	else:
 		$Lobby/SettingsBlocker.hide()
@@ -356,6 +387,7 @@ remotesync func start_game() -> void:
 	if get_tree().is_network_server():
 		NetworkManager.randomize_player_order()
 		NetworkManager.rpc("set_player_order", NetworkManager.player_order)
+		NetworkManager.rpc("set_player_order_initial", NetworkManager.player_order_initial)
 		
 		var shuffled := Themes.duplicate()
 		shuffled.shuffle()
