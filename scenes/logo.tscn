@@ -309,6 +309,7 @@ __meta__ = {
 "_edit_use_anchors_": false,
 "_edit_vertical_guides_": [ 640.0 ]
 }
+skip = false
 
 [node name="Fade" type="ColorRect" parent="."]
 anchor_right = 1.0

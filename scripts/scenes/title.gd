@@ -96,6 +96,11 @@ func _ready() -> void:
 		lobby_init(true)
 		if get_tree().get_current_scene() == self:
 			NetworkManager.coming_from_game = false
+			
+	edit_name.text = NetworkManager.cached_name
+	edit_host_port.text = NetworkManager.cached_host_port
+	edit_join_ip.text = NetworkManager.cached_join_ip
+	edit_join_port.text = NetworkManager.cached_join_port
 	
 	
 func _process(_delta: float) -> void:
@@ -119,6 +124,9 @@ func _on_ButtonHost_pressed() -> void:
 	peer.create_server(int(port) if not port.empty() else DEFAULT_PORT, MAX_PLAYERS)
 	get_tree().set_network_peer(peer)
 	
+	NetworkManager.cached_name = edit_name.get_text()
+	NetworkManager.cached_host_port = edit_host_port.get_text()
+	
 	init_network_manager(peer)
 	$CanvasLayer/ClickBlock.show()
 	transition_to_lobby = true
@@ -134,6 +142,10 @@ func _on_ButtonJoin_pressed() -> void:
 	peer.connect("connection_succeeded", self, "_on_join_succeeded", [peer], CONNECT_ONESHOT | CONNECT_REFERENCE_COUNTED)
 	$TitleScreen/TimerTimeout.start()
 	get_tree().set_network_peer(peer)
+	
+	NetworkManager.cached_name = edit_name.get_text()
+	NetworkManager.cached_join_ip = edit_join_ip.get_text()
+	NetworkManager.cached_join_port = edit_join_port.get_text()
 	
 #	init_network_manager(peer)
 #	$CanvasLayer/ClickBlock.show()

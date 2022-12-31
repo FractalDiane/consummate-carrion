@@ -7,6 +7,11 @@ const NotificationPrefab := preload("res://prefabs/notification.tscn")
 
 var my_connection: NetworkedMultiplayerENet = null
 
+var cached_name := String()
+var cached_host_port := String()
+var cached_join_ip := String()
+var cached_join_port := String()
+
 var player_order_initial := []
 var player_order := []
 var players := {}

@@ -451,6 +451,7 @@ text = "100"
 align = 2
 
 [node name="VolumeMusic" type="HBoxContainer" parent="OptionsList"]
+visible = false
 margin_top = 116.0
 margin_right = 960.0
 margin_bottom = 208.0
@@ -493,9 +494,9 @@ text = "100"
 align = 2
 
 [node name="Checkboxes" type="HBoxContainer" parent="OptionsList"]
-margin_top = 232.0
+margin_top = 116.0
 margin_right = 960.0
-margin_bottom = 283.0
+margin_bottom = 167.0
 
 [node name="Fullscreen" type="HBoxContainer" parent="OptionsList/Checkboxes"]
 margin_right = 478.0
@@ -679,15 +680,9 @@ margin_bottom = 312.0
 custom_fonts/normal_font = ExtResource( 7 )
 bbcode_enabled = true
 bbcode_text = "[center][color=#ead692]Developed by[/color]
-Diane Sparks
-
-[color=#ead692]Music by[/color]
-[...]"
+Diane Sparks"
 text = "Developed by
-Diane Sparks
-
-Music by
-[...]"
+Diane Sparks"
 __meta__ = {
 "_edit_use_anchors_": false
 }
