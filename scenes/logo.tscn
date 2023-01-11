@@ -494,10 +494,12 @@ __meta__ = {
 
 [node name="SoundType" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+bus = "Sound"
 
 [node name="SoundDing" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
 volume_db = 4.0
+bus = "Sound"
 
 [connection signal="animation_finished" from="AnimationPlayerTransition" to="." method="_on_AnimationPlayerTransition_animation_finished"]
 [connection signal="timeout" from="Timer" to="AnimationPlayer" method="play" binds= [ "logo" ]]

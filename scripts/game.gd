@@ -14,6 +14,12 @@ var game_completed := false
 
 var current_story_text := String()
 
+var music_choices := [
+	preload("res://audio/music/game1.ogg"),
+	preload("res://audio/music/game2.ogg"),
+	preload("res://audio/music/game3.ogg"),
+]
+
 onready var prompt := $Prompt as Label
 onready var story_text := $StoryBase/Story as TextEdit
 onready var timer_node := $Timer as Control
@@ -21,6 +27,9 @@ onready var anim_player := $AnimationPlayer as AnimationPlayer
 onready var sound_tick := $SoundTick as AudioStreamPlayer
 
 func _ready() -> void:
+	music_choices.shuffle()
+	$Music.stream = music_choices[0]
+	
 	if get_tree().is_network_server():
 		for player in NetworkManager.player_order:
 			var new_story := {}
@@ -49,7 +58,10 @@ func _process(delta: float) -> void:
 		if not my_timer_up and timer_count <= 0.0:
 			sound_tick.stop()
 			$SoundRoundEnd.play()
-			$Music.set_stream_paused(true)
+			if current_round == NetworkManager.get_cached_player_count():
+				$AnimationPlayerFadeMusic.play("fade_music")
+			else:
+				$Music.set_stream_paused(true)
 			
 			rpc_id(1, "send_story_info", current_story_text.replace(my_current_prefix, "").strip_edges())
 			rpc_id(1, "set_player_ready", NetworkManager.ReadyState.RoundTimer)
@@ -77,7 +89,6 @@ remotesync func set_player_ready(ready_state: int) -> void:
 			NetworkManager.ReadyState.RoundEndFullFlip:
 				if not game_completed:
 					rpc("start_new_round", false)
-					$Music.set_stream_paused(false)
 				else:
 					rpc("goto_results")
 				
@@ -154,6 +165,7 @@ puppetsync func setup_story(after_first_round: bool) -> void:
 	
 
 puppetsync func start_new_round(first_round: bool) -> void:
+	$Music.set_stream_paused(false)
 	if not first_round and not prompt_retyped:
 		if NetworkManager.show_theme:
 			prompt.text = "Continue the story. Theme: " + NetworkManager.random_theme
@@ -218,6 +230,7 @@ func _on_server_disconnect() -> void:
 	
 	
 func return_to_title() -> void:
+	$AnimationPlayerFadeMusic.play("fade_music")
 	var title := preload("res://scenes/title.tscn").instance() as Control
 	$InstancedScene.add_child(title)
 	if OptionsManager.reduce_motion_enabled():
@@ -229,7 +242,6 @@ func return_to_title() -> void:
 
 func _on_TimerRoundEnd_timeout() -> void:
 	$AnimationPlayerRound.play("flip_story_reducedmotion" if OptionsManager.reduce_motion_enabled() else "flip_story")
-	print(NetworkManager.get_cached_player_count())
 	if current_round + 1 == NetworkManager.get_cached_player_count():
 		$AnimationPlayerRound2.play("flip_prompt")
 
@@ -247,3 +259,7 @@ func _on_AnimationPlayerRound_animation_finished(anim_name: String) -> void:
 func _on_AnimationPlayerPrompt_animation_finished(_anim_name: String) -> void:
 	if not prompt_retyped:
 		anim_player.play("transition_reducedmotion" if OptionsManager.reduce_motion_enabled() else "transition")
+
+
+func _on_AnimationPlayerFadeMusic_animation_finished(_anim_name: String) -> void:
+	$Music.stop()

@@ -1,6 +1,7 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://fonts/font_display_new.tres" type="DynamicFont" id=1]
+[ext_resource path="res://audio/music/title.ogg" type="AudioStream" id=2]
 [ext_resource path="res://scripts/scenes/title.gd" type="Script" id=3]
 [ext_resource path="res://fonts/font_display_new_m.tres" type="DynamicFont" id=4]
 [ext_resource path="res://fonts/font_display_new_xs.tres" type="DynamicFont" id=5]
@@ -957,10 +958,12 @@ __meta__ = {
 
 [node name="SoundTransition" type="AudioStreamPlayer" parent="TitleScreen"]
 stream = ExtResource( 11 )
+bus = "Sound"
 
 [node name="SoundTransition2" type="AudioStreamPlayer" parent="TitleScreen"]
 stream = ExtResource( 12 )
 volume_db = -2.0
+bus = "Sound"
 
 [node name="TimerTransition" type="Timer" parent="TitleScreen"]
 wait_time = 0.3
@@ -1237,13 +1240,16 @@ anims/transition = SubResource( 8 )
 [node name="SoundStart" type="AudioStreamPlayer" parent="Lobby"]
 stream = ExtResource( 14 )
 volume_db = -5.0
+bus = "Sound"
 
 [node name="SoundTransition" type="AudioStreamPlayer" parent="Lobby"]
 stream = ExtResource( 11 )
+bus = "Sound"
 
 [node name="SoundTransition2" type="AudioStreamPlayer" parent="Lobby"]
 stream = ExtResource( 12 )
 volume_db = -2.0
+bus = "Sound"
 
 [node name="TimerConnectTimeout" type="Timer" parent="Lobby"]
 wait_time = 3.0
@@ -1289,8 +1295,14 @@ __meta__ = {
 }
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
 volume_db = -60.0
 bus = "Music"
+
+[node name="MusicDistorted" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 2 )
+volume_db = -6.0
+bus = "Music2"
 
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="text_changed" from="TitleScreen/EditName" to="." method="_on_EditName_text_changed"]

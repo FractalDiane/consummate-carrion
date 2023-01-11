@@ -11,6 +11,8 @@ const MAX_PLAYERS := 12
 var transition_to_lobby := false
 var in_lobby := false
 
+var title_music: Node = null
+
 onready var edit_name := $TitleScreen/EditName as LineEdit
 onready var edit_join_ip := $TitleScreen/EditJoinIp as LineEdit
 onready var edit_join_port := $TitleScreen/EditJoinPort as LineEdit
@@ -78,12 +80,16 @@ const Themes := [
 ]
 
 func _ready() -> void:
-	$TitleScreen/ButtonHost.set_cc_button_enabled(false)
-	$TitleScreen/ButtonJoin.set_cc_button_enabled(false)
-	$Lobby/ButtonStart.set_cc_button_enabled(false)
+	title_music = get_tree().get_root().get_node_or_null("TitleMusic")
+	if title_music == null:
+		title_music = preload("res://prefabs/title_music.tscn").instance() as Node
+		get_tree().get_root().add_child(title_music)
 	
 	if get_tree().get_current_scene() == self:
-		$Music.play()
+		if not title_music.get_node("Music").is_playing():
+			title_music.get_node("Music").play()
+			title_music.get_node("MusicDistorted").play()
+
 		$TitleScreen/Title.set_bbcode("[tornado radius=5]Consummate Carrion[/tornado]")
 		$CanvasLayer/ClickBlock.hide()
 		
@@ -101,6 +107,10 @@ func _ready() -> void:
 	edit_host_port.text = NetworkManager.cached_host_port
 	edit_join_ip.text = NetworkManager.cached_join_ip
 	edit_join_port.text = NetworkManager.cached_join_port
+	
+	$TitleScreen/ButtonHost.set_cc_button_enabled(not NetworkManager.cached_name.empty())
+	$TitleScreen/ButtonJoin.set_cc_button_enabled(not NetworkManager.cached_name.empty())
+	$Lobby/ButtonStart.set_cc_button_enabled(NetworkManager.get_player_count() >= 3)
 	
 	
 func _process(_delta: float) -> void:
@@ -160,6 +170,7 @@ func _on_ButtonOptions_pressed() -> void:
 
 
 func _on_ButtonExit_pressed() -> void:
+	title_music.get_node("AnimationPlayer").play("fade_out")
 	$CanvasLayer/ClickBlock.show()
 	$TitleScreen/TimerExit.start()
 	
@@ -174,6 +185,7 @@ func init_network_manager(peer: NetworkedMultiplayerENet) -> void:
 	
 func jump_to_lobby() -> void:
 	$AnimationPlayer.play("to_lobby")
+	title_music.get_node("AnimationPlayer").play("fade_to_lobby")
 	$AnimationPlayer.seek(1)
 	_on_AnimationPlayer_animation_finished("to_lobby")
 	for player in NetworkManager.player_order_initial:
@@ -197,6 +209,7 @@ func jump_to_lobby() -> void:
 func _on_TimerTransition_timeout() -> void:
 	#$SoundTransition.play(0.25)
 	var anim := "to_lobby" if transition_to_lobby else "to_title"
+	title_music.get_node("AnimationPlayer").play("fade_from_lobby" if anim == "to_title" else "fade_to_lobby")
 	$AnimationPlayer.play(anim)
 	if OptionsManager.reduce_motion_enabled():
 		$AnimationPlayer.seek(1, true)
@@ -390,7 +403,9 @@ func _on_ButtonStart_pressed() -> void:
 	
 remotesync func start_game_effects() -> void:
 	$Music.stop()
+	$MusicDistorted.stop()
 	$Lobby/SoundStart.play()
+	title_music.queue_free()
 	$CanvasLayer/ClickBlock.show()
 	$Lobby/TimerStart.start()
 	

@@ -1,0 +1,129 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://audio/music/title.ogg" type="AudioStream" id=1]
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -60.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MusicDistorted:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ -6.0 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_from_lobby"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 5.66001, 1 ),
+"update": 0,
+"values": [ -6.0, -60.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MusicDistorted:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.176678, 1 ),
+"update": 0,
+"values": [ -60.0, -6.0 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "fade_out"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = false
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 5.66001, 1 ),
+"update": 0,
+"values": [ -6.0, -60.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MusicDistorted:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 5.66001, 1 ),
+"update": 0,
+"values": [ -6.0, -60.0 ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "fade_to_lobby"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 0.176678, 1 ),
+"update": 0,
+"values": [ -60.0, -6.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("MusicDistorted:volume_db")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 5.66, 1 ),
+"update": 0,
+"values": [ -6.0, -60.0 ]
+}
+
+[node name="TitleMusic" type="Node"]
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -60.0
+bus = "Music"
+
+[node name="MusicDistorted" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+volume_db = -6.0
+bus = "Music2"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 4 )
+anims/fade_from_lobby = SubResource( 2 )
+anims/fade_out = SubResource( 3 )
+anims/fade_to_lobby = SubResource( 1 )

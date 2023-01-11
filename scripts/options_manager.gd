@@ -38,6 +38,7 @@ func reduce_motion_enabled() -> bool:
 func play_sound_click() -> void:
 	var player := AudioStreamPlayer.new()
 	player.stream = SOUND_CLICK
+	player.bus = "Sound"
 	player.volume_db = -4
 	player.connect("finished", player, "queue_free")
 	get_tree().get_root().add_child(player)
@@ -46,9 +47,10 @@ func play_sound_click() -> void:
 
 func update_options(volume_sound: int, volume_music: int, fullscreen: bool, reduce_motion: bool) -> void:
 	user_options.set_value("Options", "volume_sound", volume_sound)
-	AudioServer.set_bus_volume_db(0, linear2db(float(volume_sound) / 100.0))
+	AudioServer.set_bus_volume_db(1, linear2db(float(volume_sound) / 100.0))
 	user_options.set_value("Options", "volume_music", volume_music)
-	AudioServer.set_bus_volume_db(1, linear2db(float(volume_music) / 100.0))
+	AudioServer.set_bus_volume_db(2, linear2db(float(volume_music) / 100.0))
+	AudioServer.set_bus_volume_db(3, linear2db(float(volume_music) / 100.0))
 	user_options.set_value("Options", "fullscreen", fullscreen)
 	OS.set_window_fullscreen(fullscreen)
 	user_options.set_value("Options", "reduce_motion", reduce_motion)
@@ -59,10 +61,11 @@ func update_options(volume_sound: int, volume_music: int, fullscreen: bool, redu
 
 func load_options() -> void:
 	var volume_sound := user_options.get_value("Options", "volume_sound") as int
-	AudioServer.set_bus_volume_db(0, linear2db(float(volume_sound) / 100.0))
+	AudioServer.set_bus_volume_db(1, linear2db(float(volume_sound) / 100.0))
 		
 	var volume_music := user_options.get_value("Options", "volume_music") as int
-	AudioServer.set_bus_volume_db(1, linear2db(float(volume_music) / 100.0))
+	AudioServer.set_bus_volume_db(2, linear2db(float(volume_music) / 100.0))
+	AudioServer.set_bus_volume_db(3, linear2db(float(volume_music) / 100.0))
 		
 	var fullscreen := user_options.get_value("Options", "fullscreen") as bool
 	OS.set_window_fullscreen(fullscreen)

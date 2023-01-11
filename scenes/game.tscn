@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://scripts/game.gd" type="Script" id=1]
 [ext_resource path="res://fonts/font_display_new_xl.tres" type="DynamicFont" id=2]
@@ -475,6 +475,21 @@ tracks/2/keys = {
 "values": [ 0.0, 31, 100 ]
 }
 
+[sub_resource type="Animation" id=22]
+resource_name = "fade_music"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Music:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 5.66, 1 ),
+"update": 0,
+"values": [ -6.0, -60.0 ]
+}
+
 [node name="Game" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -615,22 +630,29 @@ anims/flip_prompt_reducedmotion = SubResource( 19 )
 anims/type_prompt = SubResource( 13 )
 anims/type_prompt_theme = SubResource( 14 )
 
+[node name="AnimationPlayerFadeMusic" type="AnimationPlayer" parent="."]
+anims/fade_music = SubResource( 22 )
+
 [node name="SoundTick" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )
 volume_db = 8.0
+bus = "Sound"
 
 [node name="SoundRoundEnd" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 6 )
+bus = "Sound"
 
 [node name="SoundType" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
+bus = "Sound"
 
 [node name="SoundTheme" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 9 )
 volume_db = 4.0
+bus = "Sound"
 
 [node name="Music" type="AudioStreamPlayer" parent="."]
-volume_db = -60.0
+volume_db = -6.0
 bus = "Music"
 
 [node name="TimerRoundEnd" type="Timer" parent="."]
@@ -641,4 +663,5 @@ one_shot = true
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_AnimationPlayer_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayerRound" to="." method="_on_AnimationPlayerRound_animation_finished"]
 [connection signal="animation_finished" from="AnimationPlayerPrompt" to="." method="_on_AnimationPlayerPrompt_animation_finished"]
+[connection signal="animation_finished" from="AnimationPlayerFadeMusic" to="." method="_on_AnimationPlayerFadeMusic_animation_finished"]
 [connection signal="timeout" from="TimerRoundEnd" to="." method="_on_TimerRoundEnd_timeout"]
